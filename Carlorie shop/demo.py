@@ -106,6 +106,7 @@ class user:
     _age=0
     _gender=''
     _daily_cal=0
+    _logs=dict()
     def __init__(self,username='',hight=0,weight=0,fat_rate=0,age=0,gender=0,daily_cal=0) -> None:
         self._username=username
         self._hight=hight
@@ -159,6 +160,7 @@ class daily:
     _protein =0
     _carbohydrate=0
     _fat=0
+    _logs=list()
     def __init__(self,daily_cal=0,protein =0,carbohydrate=0,fat=0) -> None:
         self._daily_cal=daily_cal   
         self._protein =protein
@@ -184,6 +186,16 @@ class daily:
 
     def save_log(self):
         pass
+
+def input_user_info():
+    username=input("username:")
+    hight=input("hight:")
+    weight=input('weight:')
+    fat_rate=input('fate_rate:')
+    age=input('age:')
+    gender=input('gender:')
+    daily_cal=input('daily_cal:')
+    return user(username,hight,weight,fat_rate,age,gender,daily_cal)
 if __name__ == "__main__":
-    print(123)
-    pass
+    gw=input_user_info()
+    print(f"name: {gw.get_username()} age:{gw.get_age()}") 
