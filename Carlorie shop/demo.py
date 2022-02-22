@@ -155,13 +155,15 @@ class user:
 
 
 class daily:
+    _username=''
     _daily_cal=0   
     _date=datetime.today() 
     _protein =0
     _carbohydrate=0
     _fat=0
     _logs=list()
-    def __init__(self,daily_cal=0,protein =0,carbohydrate=0,fat=0) -> None:
+    def __init__(self,username='',daily_cal=0,protein =0,carbohydrate=0,fat=0) -> None:
+        self._username=username   
         self._daily_cal=daily_cal   
         self._protein =protein
         self._carbohydrate=carbohydrate
@@ -196,6 +198,8 @@ def input_user_info():
     gender=input('gender:')
     daily_cal=input('daily_cal:')
     return user(username,hight,weight,fat_rate,age,gender,daily_cal)
+
+
 if __name__ == "__main__":
     gw=input_user_info()
     print(f"name: {gw.get_username()} age:{gw.get_age()}") 
