@@ -1,0 +1,4 @@
+meal_id,food_id,food_name,user_name,time,type,weight,calorie_rate,carbohydrate,protein,fat,calorie_cost
+1,1,pizza,GW,2022-02-21T14:10:19Z,L,300,235,53.68,32.8,13.52,705.0
+2,2,pizza,GW,2022-16-16T22-16-01,B,200,235,53.68,32.8,13.52,470.0
+4,4,红烧肉,GW,2022-02-21T22:40:40,DA,421,341,0.0,34.71,65.29,1435.61
