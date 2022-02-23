@@ -1,0 +1,29 @@
+.inputBox {
+  outline-style: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 9px 9px;
+  width: 300px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Microsoft soft";
+  margin-left: 40%;
+  margin-right: 40%;
+}
+
+.inputBox:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.loginPageText {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: "Microsoft soft";
+  margin-left: 40%;
+  margin-right: 40%;
+}
