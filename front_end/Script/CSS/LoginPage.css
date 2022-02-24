@@ -1,14 +1,18 @@
+h1 {
+  margin-left: 6%;
+}
+
 .inputBox {
   outline-style: none;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 9px 9px;
-  width: 300px;
+  width: 409px;
   font-size: 14px;
   font-weight: 700;
   font-family: "Microsoft soft";
-  margin-left: 40%;
-  margin-right: 40%;
+  margin-left: 6%;
+  margin-right: 20%;
 }
 
 .inputBox:focus {
@@ -24,6 +28,31 @@
   font-size: 24px;
   font-weight: 700;
   font-family: "Microsoft soft";
-  margin-left: 40%;
-  margin-right: 40%;
+  margin-left: 6%;
+  margin-right: 20%;
+}
+
+.loginBtn {
+  color: #444444;
+  background: #f3f3f3;
+  border: 1px #dadada solid;
+  padding: 5px 10px;
+  border-radius: 2px;
+  font-weight: bold;
+  font-size: 15pt;
+  outline: none;
+  width: 200px;
+  height: 50px;
+  margin-left: 6%;
+}
+
+.loginBtn:hover {
+  border: 1px #c6c6c6 solid;
+  box-shadow: 1px 1px 1px #eaeaea;
+  color: #333333;
+  background: #f7f7f7;
+}
+
+.loginBtn:active {
+  box-shadow: inset 1px 1px 1px #dfdfdf;
 }
