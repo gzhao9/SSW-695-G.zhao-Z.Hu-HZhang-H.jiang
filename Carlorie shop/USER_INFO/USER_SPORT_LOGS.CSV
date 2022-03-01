@@ -1,4 +1,4 @@
 sport_id,sports_name,date,user_name,duration,calorie_cost,type
-1,run,2022-02-22,GW,50,600,O
+1,run,2022-02-22,GW,50,600,0
 2,walk,2022-02-22,GW,45,300,0
 3,walk,2022-02-22,GW,45,341,0
