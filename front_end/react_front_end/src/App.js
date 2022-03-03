@@ -7,7 +7,7 @@ import SignUpComponent from './Pages/SignUpPage/SignUpComponent'
 function App() {
   return (
     <div className="App">
-      <LoginComponent/>
+      <SignUpComponent/>
     </div>
   );
 }

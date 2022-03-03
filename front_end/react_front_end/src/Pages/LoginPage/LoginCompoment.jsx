@@ -1,5 +1,6 @@
 import React from "react"
 import Header from '../../Components/Header/Header'
+import {Link,Route} from 'react-router-dom'
 import SignUpComponent from "../SignUpPage/SignUpComponent"
 import './LoginPage.css'
 import '../../Components/ButtonWide/ButtonWide.css'
@@ -48,6 +49,10 @@ class LoginComponent extends React.Component{
                     <p className="loginText">Or</p>
                     <button to='signUp' className="btnWide">Sign Up with Email</button>
                 </div>
+                {/* <div>
+                    <Route path="/" component={LoginComponent}></Route>
+                    <Route path="/signUp" component={SignUpComponent}></Route>
+                </div> */}
             </div>
         ) 
     }

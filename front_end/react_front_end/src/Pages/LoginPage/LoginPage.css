@@ -5,34 +5,10 @@
   background-color: #dfdfdf;
 }
 
-.loginBtn {
-  color: #c6c6c6;
-  background: darkslategray;
-  border: 1px #dadada solid;
-  padding: 5px 10px;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 15pt;
-  outline: none;
-  width: 80%;
-  height: 50px;
-}
-
-.loginBtn:hover {
-  border: 1px #c6c6c6 solid;
-  box-shadow: 1px 1px 1px #eaeaea;
-  color: #c6c6c6;
-  background: rgb(66, 110, 110);
-}
-
-.loginBtn:active {
-  box-shadow: inset 1px 1px 1px #dfdfdf;
-}
-
 .loginText {
   text-align: center;
   color: #444444;
   font-family: "Times New Roman", Times, serif;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
 }
