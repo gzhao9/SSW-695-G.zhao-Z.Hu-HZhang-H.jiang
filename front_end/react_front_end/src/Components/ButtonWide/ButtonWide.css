@@ -1,0 +1,23 @@
+.btnWide {
+  color: #c6c6c6;
+  background: darkslategray;
+  border: 1px #dadada solid;
+  padding: 5px 10px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 15pt;
+  outline: none;
+  width: 80%;
+  height: 50px;
+}
+
+.btnWide:hover {
+  border: 1px #c6c6c6 solid;
+  box-shadow: 1px 1px 1px #eaeaea;
+  color: #c6c6c6;
+  background: rgb(66, 110, 110);
+}
+
+.btnWide:active {
+  box-shadow: inset 1px 1px 1px #dfdfdf;
+}

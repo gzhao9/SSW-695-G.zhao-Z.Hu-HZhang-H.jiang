@@ -1,0 +1,13 @@
+.headerText {
+  text-align: center;
+  line-height: 50px;
+  color: beige;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Microsoft soft";
+}
+
+.headBackground {
+  background-color: darkslategrey;
+  height: 50px;
+}
