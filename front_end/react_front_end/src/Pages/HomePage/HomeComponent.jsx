@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import './HomePage.css'
 import logo from './logo.svg';
 
@@ -8,15 +9,23 @@ export default class HomeComponent extends Component {
         <div className="Home">
         <header className="Home-header">
           <img src={logo} className="Home-logo" alt="logo" />
-          <p>
+          <p className="Home-link">
             Welcome to Calorie Shop!
           </p>
-          <a
+          <br />
+          <Link
             className="Home-link"
-            href="https://reactjs.org"
+            to="/login"
           >
             Sign in
-          </a>
+          </Link>
+          <br />
+          <Link
+            className="Home-link"
+            to="/foodPage"
+          >
+            Start Calorie Shopping!
+          </Link>
         </header>
       </div>
     )

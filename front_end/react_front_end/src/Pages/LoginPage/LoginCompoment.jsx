@@ -1,6 +1,6 @@
 import React from "react"
 import Header from '../../Components/Header/Header'
-import {Link,Route} from 'react-router-dom'
+import {Link,Route,useNavigate} from 'react-router-dom'
 import SignUpComponent from "../SignUpPage/SignUpComponent"
 import './LoginPage.css'
 import '../../Components/ButtonWide/ButtonWide.css'
@@ -28,9 +28,6 @@ class LoginComponent extends React.Component{
         }
         alert('Send request:\nusername: ' + username + '\npassword: ' + password)
     }
-    handleBack = (event) => {
-        window.history.back(-1)
-    }
 
     render(){
         return (
@@ -47,12 +44,8 @@ class LoginComponent extends React.Component{
                 <div>
                     <button type="submit" onClick={this.handleSubmit} className="btnWide">Sign In</button><br/>
                     <p className="loginText">Or</p>
-                    <button to='signUp' className="btnWide">Sign Up with Email</button>
+                    <Link to='/signUp'>Sign Up with Email</Link>
                 </div>
-                {/* <div>
-                    <Route path="/" component={LoginComponent}></Route>
-                    <Route path="/signUp" component={SignUpComponent}></Route>
-                </div> */}
             </div>
         ) 
     }
