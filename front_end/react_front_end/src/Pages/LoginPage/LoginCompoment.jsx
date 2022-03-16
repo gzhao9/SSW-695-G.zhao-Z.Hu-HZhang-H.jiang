@@ -1,7 +1,6 @@
 import React from "react"
 import Header from '../../Components/Header/Header'
 import {Link,Route,useNavigate} from 'react-router-dom'
-import SignUpComponent from "../SignUpPage/SignUpComponent"
 import './LoginPage.css'
 import '../../Components/ButtonWide/ButtonWide.css'
 import '../../Components/InputBox/InputBox.css'

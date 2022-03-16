@@ -1,5 +1,4 @@
 import React from 'react'
-import '../../css/bootstrap.css'
 
 export default function CalorieInfoBlock(props) {
     const {totalCalorie} = props

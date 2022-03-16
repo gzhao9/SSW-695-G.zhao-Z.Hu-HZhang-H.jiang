@@ -1,6 +1,5 @@
 import React from 'react'
 import echarts from 'echarts/lib/echarts'
-import '../../css/bootstrap.css'
 
 
 export default function NutritionInfoBlock(props) {

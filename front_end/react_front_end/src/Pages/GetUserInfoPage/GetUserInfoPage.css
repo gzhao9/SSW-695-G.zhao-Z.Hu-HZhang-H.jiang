@@ -1,0 +1,12 @@
+.getUserInfoPg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #dfdfdf;
+}
+
+.site-page-header {
+  border: 1px solid antiquewhite;
+  background-color: darkslategray;
+  text-decoration: solid;
+}

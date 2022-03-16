@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useRoutes} from 'react-router-dom'
+import { Button } from 'antd';
 import './HomePage.css'
-import logo from './logo.svg';
+import logo from './logo.png';
 
-export default class HomeComponent extends Component {
-  render() {
-    return (
-        <div className="Home">
+export default function HomeComponent() {
+  return (
+    <div className="Home">
         <header className="Home-header">
           <img src={logo} className="Home-logo" alt="logo" />
+          <br />
           <p className="Home-link">
             Welcome to Calorie Shop!
           </p>
@@ -26,8 +27,15 @@ export default class HomeComponent extends Component {
           >
             Start Calorie Shopping!
           </Link>
+          <br />
+          <Link
+            className="Home-link"
+            to="/getUserInfoPage"
+          >
+            Input User Info
+          </Link>
         </header>
       </div>
-    )
-  }
+  )
 }
+
