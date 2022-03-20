@@ -1,11 +1,21 @@
-import React from 'react'
+import React from "react";
 
 export default function CalorieInfoBlock(props) {
-    const {totalCalorie} = props
-    return (
-        <div className='container'>
-            <p className='foodNameText'>Total Calorie:</p>
-            <p className='foodCalorieText'>{totalCalorie} kcal</p>
-        </div>
-    )
+  const { totalCalorie } = props;
+  return (
+    <div>
+      <p
+        className="foodNameText"
+        style={{ color: "#2F4F4F", fontSize: "18px" }}
+      >
+        Total Calorie:
+      </p>
+      <p
+        className="foodCalorieText"
+        style={{ color: "#2F4F4F", fontSize: "18px" }}
+      >
+        {totalCalorie} kcal
+      </p>
+    </div>
+  );
 }

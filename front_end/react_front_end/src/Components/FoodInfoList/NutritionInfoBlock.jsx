@@ -1,5 +1,5 @@
 import React from 'react'
-import echarts from 'echarts/lib/echarts'
+import { Table } from 'antd'
 
 
 export default function NutritionInfoBlock(props) {
@@ -8,18 +8,45 @@ export default function NutritionInfoBlock(props) {
     let carboRate = totalCarbo / totalWeight
     let fatRate = totalFat / totalWeight
     let proteinRate = totalProtein / totalWeight
+    const column = [
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: 'Rate (%)',
+          dataIndex: 'rate',
+          key: 'rate',
+        },
+        {
+          title: 'Weight (g)',
+          dataIndex: 'weight',
+          key: 'weight',
+        }]
+    const dataSource = [
+        {
+          key: '1',
+          name: 'Carbohydrates',
+          rate: Math.round(carboRate * 10000) / 100,
+          weight: Math.round(totalCarbo * 100) / 100
+        },
+        {
+          key: '2',
+          name: 'Proteins',
+          rate: Math.round(proteinRate * 10000) / 100,
+          weight: Math.round(totalProtein * 100) / 100
+        },
+        {
+          key: '3',
+          name: 'Fat',
+          rate: Math.round(fatRate * 10000) / 100,
+          weight: Math.round(totalFat * 100) / 100
+        },
+      ];
     return (
-        <div className='container'>
-            <span className='foodNameText'>
-                Carbohydrates: <br/>
-                Proteins: <br/>
-                Fat: 
-            </span>
-            <span className='foodCalorieText'>
-                {Math.round(carboRate * 10000) / 100}%,   {Math.round(totalCarbo * 100) / 100}g <br/>
-                {Math.round(proteinRate * 10000) / 100}%,   {Math.round(totalProtein * 100) / 100}g <br/>
-                {Math.round(fatRate * 10000) / 100}%,   {Math.round(totalFat * 100) / 100}g
-            </span>
+        <div>
+            <Table columns={column} dataSource={dataSource} pagination={false}></Table>
         </div>
     )
 }

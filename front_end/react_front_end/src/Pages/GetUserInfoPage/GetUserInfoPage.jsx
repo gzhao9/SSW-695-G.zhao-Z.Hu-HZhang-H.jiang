@@ -1,123 +1,147 @@
-import React, { Component } from 'react'
-import { Button, PageHeader, Form, Input, InputNumber } from 'antd';
-import Header from '../../Components/Header/Header';
-import './GetUserInfoPage.css'
+import React, { Component } from "react";
+import { Button, Form, Input, InputNumber, Checkbox, Select } from "antd";
+import Header from "../../Components/Header/Header";
+import "./GetUserInfoPage.css";
+import "../../Components/ButtonWide/ButtonWide.css";
+import { useNavigate } from "react-router-dom";
 
-export default class GetUserInfoPage extends Component {
+export default function GetUserInfoPage() {
+  const { Option } = Select;
+  const navigate = useNavigate();
 
-  onFinish = (values) => {
-    console.log('Success:', values);
-  }
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    navigate("/foodPage");
+  };
 
-  onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  }
-  render() {
-    return (
-      <div className='getUserInfoPg'>
-         <Header headerText='Get User Info Page' />
-          <Form
-            name="basic"
-            labelCol={{
-              span: 3,
-            }}
-            wrapperCol={{
-              span: 6,
-            }}
-            onFinish={this.onFinish}
-            onFinishFailed={this.onFinishFailed}
-            autoComplete="off"
-          >
-            <Form.Item
-              style={{marginLeft: '10%', marginRight: '10%'}}
-              
-              label="Full Name"
-              name="fullName"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your name!',
-                },
-              ]}
-            >
-              <Input/>
-            </Form.Item>
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+  return (
+    <div>
+      <Header headerText="Input Necessary Information" />
+      <Form
+        name="getUserInfo"
+        style={{ marginLeft: "10%", marginRight: "10%", marginTop: "10%" }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+        layout="vertical"
+        initialValues={{ isVegan: false, allergySource: [] }}
+      >
+        <Form.Item
+          label="Full Name"
+          name="fullName"
+          rules={[
+            {
+              required: true,
+              message: "Please input your name!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-            <Form.Item
-              style={{marginLeft: '10%', marginRight: '10%'}}
-              
-              label="Age"
-              name="age"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your age!',
-                },
-              ]}
-            >
-              <InputNumber
-                style={{float: 'left'}}
-                min={0}
-                max={150}
-                precision={0}
-              />
-            </Form.Item>
+        <Form.Item
+          label="Age"
+          name="age"
+          rules={[
+            {
+              required: true,
+              message: "Please input your age!",
+            },
+          ]}
+        >
+          <InputNumber
+            style={{ float: "left" }}
+            min={0}
+            max={150}
+            precision={0}
+          />
+        </Form.Item>
 
-            <Form.Item
-              style={{marginLeft: '10%', marginRight: '10%'}}
-              
-              label="Height (cm)"
-              name="height"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your height!',
-                },
-              ]}
-            >
-              <InputNumber
-                style={{float: 'left'}}
-                min={0}
-                max={500}
-                precision={2}
-              />
-            </Form.Item>
+        <Form.Item
+          label="Height (cm)"
+          name="height"
+          rules={[
+            {
+              required: true,
+              message: "Please input your height!",
+            },
+          ]}
+        >
+          <InputNumber
+            style={{ float: "left" }}
+            min={0}
+            max={500}
+            precision={2}
+          />
+        </Form.Item>
 
-            <Form.Item
-              style={{marginLeft: '10%', marginRight: '10%'}}
-              
-              label="Weight (kg)"
-              name="weight"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your weight!',
-                },
-              ]}
-            >
-              <InputNumber
-                style={{float: 'left'}}
-                min={0}
-                max={1000}
-                precision={2}
-              />
-            </Form.Item>
+        <Form.Item
+          label="Weight (kg)"
+          name="weight"
+          rules={[
+            {
+              required: true,
+              message: "Please input your weight!",
+            },
+          ]}
+        >
+          <InputNumber
+            style={{ float: "left" }}
+            min={0}
+            max={1000}
+            precision={2}
+          />
+        </Form.Item>
 
-            <br />
+        <Form.Item label="I am a vegan" name="isVegan" valuePropName="checked">
+          <Checkbox style={{ float: "left" }} />
+        </Form.Item>
 
-            <Form.Item
-              
-              wrapperCol={{
-                offset: 0,
-                span: 16,
-              }}
-            >
-              <Button type="primary" htmlType="submit" style={{width: '80%', height:'50px', borderRadius:'25px'}}>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-      </div>
-    )
-  }
+        <Form.Item label="Allergy Source" name="allergySource">
+          <Select mode="multiple" optionLabelProp="label">
+            <Option value="milk" label="Milk">
+              Milk
+            </Option>
+            <Option value="eggs" label="Eggs">
+              Eggs
+            </Option>
+            <Option value="peanuts" label="Peanuts">
+              Peanuts
+            </Option>
+            <Option value="treenuts" label="Tree Nuts">
+              Tree Nuts
+            </Option>
+            <Option value="soy" label="Soy">
+              Soy
+            </Option>
+            <Option value="wheat" label="Wheat">
+              Wheat
+            </Option>
+            <Option value="fish" label="Fish">
+              Fish
+            </Option>
+            <Option value="shellfish" label="Shellfish">
+              Shellfish
+            </Option>
+          </Select>
+        </Form.Item>
+
+        <br />
+
+        <Form.Item
+          wrapperCol={{
+            offset: 0,
+            span: 16,
+          }}
+        >
+          <Button type="primary" htmlType="submit" className="btnWide">
+            Next
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
+  );
 }

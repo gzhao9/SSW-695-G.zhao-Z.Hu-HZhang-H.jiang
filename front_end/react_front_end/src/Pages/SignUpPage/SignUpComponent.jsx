@@ -1,79 +1,111 @@
-import React, { Component } from 'react'
-import Header from '../../Components/Header/Header'
-import '../../Components/ButtonWide/ButtonWide.css'
-import './SignUpPage.css'
+import React, { Component } from "react";
+import { useNavigate } from "react-router-dom";
+import { Form, Input, Button } from "antd";
+import Header from "../../Components/Header/Header";
+import "../../Components/ButtonWide/ButtonWide.css";
+import "./SignUpPage.css";
 
-export default class SignUpComponent extends Component {
-  state = {username: '', password: '', confirmPassword: ''}
-  handleChangeUsername = (event) => {
-      this.setState({username:event.target.value})
-  }
-  handleChangePassword = (event) => {
-      this.setState({password:event.target.value})
-  }
-  handleChangeConfirmPassword = (event) => {
-      this.setState({confirmPassword:event.target.value})
-  }
-  handleSubmit = (event) => {
-    const {username, password, confirmPassword} = this.state
-    if(username === ''){
-      alert('Please input the username')
-      return
-    }
-    if(password === ''){
-      alert('Please input the password')
-      return
-    }
-    if(!this.checkEmail(username)){
-      alert('Invalid Email address!')
-      return
-    }
-    if(!this.checkPassword(password)){
-      alert('Invalid Password!')
-      return
-    }
-    if(confirmPassword !== password){
-      alert('Please input the same password')
-      return
-    }
-    alert('Send request:\nusername: ' + username + '\npassword: ' + password)
-  }
+export default function SignUpComponent() {
+  const navigate = useNavigate();
 
-  checkEmail(email){
-    const words = email.split('@')
-    if(words.length !== 2){
-      return false
-    }
-    const tail = words[1].split('.')
-    if(tail.length !== 2){
-      return false
-    }
-    return true
-  }
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    navigate("/getUserInfoPage");
+  };
 
-  checkPassword(password){
-    return password.length <= 32 && password.length >= 8
-  }
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
+  return (
+    <div>
+      <Header headerText="Sign Up" />
+      <h2 className="signupText">
+        Start your diet meal plan with Calorie Shopping!
+      </h2>
+      <Form
+        name="register"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        layout="vertical"
+        scrollToFirstError
+        style={{ marginLeft: "10%", marginRight: "10%" }}
+      >
+        <Form.Item
+          name="email"
+          label="E-mail"
+          rules={[
+            {
+              type: "email",
+              message: "The input is not valid E-mail!",
+            },
+            {
+              required: true,
+              message: "Please input your E-mail!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+            () => ({
+              validator(_, value) {
+                if (value && (value.length < 8 || value.length > 32)) {
+                  return Promise.reject(
+                    new Error(
+                      "The length of the password should be from 8 to 32!"
+                    )
+                  );
+                }
+                return Promise.resolve();
+              },
+            }),
+          ]}
+          hasFeedback
+        >
+          <Input.Password />
+        </Form.Item>
+        <Form.Item
+          name="confirm"
+          label="Confirm Password"
+          dependencies={["password"]}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Please confirm your password!",
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
 
-  render() {
-    return (
-      <div className="signupPg">
-        <Header headerText='Sign up'/>
-        <div style={{marginTop: '100px', marginBottom: '100px'}}>
-            <p className="signupText">Start your diet meal plan with Calorie Shopping!</p>
-        </div>
-        
-        <div style={{marginBottom: '100px'}}>
-            <input type="text"  onChange={this.handleChangeUsername} className='inputBox' placeholder='Email' /><br />
-            <input type="password"  onChange={this.handleChangePassword} className='inputBox' placeholder='Password (8 ~ 32 characters)' /><br />
-            <input type="password"  onChange={this.handleChangeConfirmPassword} className='inputBox' placeholder='Confirm Password' /><br />
-        </div>
-        <div>
-            <button type="submit" onClick={this.handleSubmit} className="btnWide">Start the Calorie Shopping!</button><br/>
-        </div>
-        
-      </div>
-    )
-  }
+                return Promise.reject(
+                  new Error("The two passwords that you entered do not match!")
+                );
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <br />
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="btnWide">
+            Start Calorie Shopping!
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
+  );
 }

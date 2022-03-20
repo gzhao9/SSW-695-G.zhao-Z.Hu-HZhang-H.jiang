@@ -1,14 +1,20 @@
-import React from 'react'
-import FoodInfo from './FoodInfo'
-import './FoodList.css'
-
+import React from "react";
+import FoodInfo from "./FoodInfo";
+import { List } from "antd";
+import "./FoodList.css";
 
 export default function FoodInfoList(props) {
-    return (
-        <div className='foodInfoListItem'>
-            {props.foodInfo.map((item, index) => {
-                return <FoodInfo key={index} foodInfo={item}/>
-            })}
-        </div>
-    )
+  return (
+    <div className="foodInfoListItem">
+      <List
+        bordered
+        dataSource={props.foodInfo}
+        renderItem={(item) => (
+          <List.Item>
+            <FoodInfo foodInfo={item} />
+          </List.Item>
+        )}
+      />
+    </div>
+  );
 }
