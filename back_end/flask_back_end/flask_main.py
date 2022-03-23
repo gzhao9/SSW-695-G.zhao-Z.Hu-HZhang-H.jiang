@@ -1,4 +1,4 @@
-from flask import Flask,make_response,json
+from flask import Flask,make_response,json,render_template
 import json
 import get_food_nutrient
 
@@ -16,9 +16,13 @@ def foodNutrient():
         'nutrient protein:': nutrientProtein,
         'nutrient fat': nutrientFat,
         'nutrient Carbohydrate': nutrientCarbohydrate
-
     }
+    # return data.json()
     return make_response(data)
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 
 if __name__ == '__main__':
