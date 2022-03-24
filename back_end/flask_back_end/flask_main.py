@@ -4,6 +4,8 @@ import json
 import csv
 #import pandas as pd
 
+import get_food_nutrient
+
 app = Flask(__name__)
 
 @app.route('/input_food',methods=['GET','POST'])
@@ -86,6 +88,34 @@ def helloword(username='GW'):
     result+="</tbody></table>"
     #return result
     return render_template('user_info.html',rows=user_info)
+
+@app.route('/searchFood',methods=['GET','POST'])
+def searchFood():
+    foodName = request.form.get('foodname')
+    search = request.form.get('Search')
+    if search == 'Search':
+        return redirect('/foodNutrient/' + foodName)
+    return render_template('search_food.html')
+
+
+@app.route('/foodNutrient/<foodname>')
+def foodNutrient(foodname):
+    foodName = foodname
+    with open('back_end\\flask_back_end\\apikey.txt', mode='r') as api:
+        API_KEY = api.read()
+    ans = get_food_nutrient.call_API(foodName, API_KEY)
+    nutrientProtein = ans['foods'][1]['foodNutrients'][0]['value']
+    nutrientFat = ans['foods'][1]['foodNutrients'][1]['value']
+    nutrientCarbohydrate = ans['foods'][1]['foodNutrients'][2]['value']
+    data = {
+        'food name:': foodName,
+        'nutrient protein:': nutrientProtein,
+        'nutrient fat': nutrientFat,
+        'nutrient Carbohydrate': nutrientCarbohydrate
+    }
+    # return data.json()
+    return make_response(data)
+
 
 if __name__ == '__main__':
     app.run()
