@@ -1,9 +1,30 @@
-<table><tbody>    
-        {% for row in rows %}
-        <tr>
-            {% for i in range(len(row)) %}
-            <td>{{rows[i]}}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-</tbody></table>
+<html>
+
+<head>
+    <title>Flask Intro - login page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Please login</h1>
+        <br>
+
+        <table border="1">
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    {% for i in row %}
+                    <td>{{i}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+</html>

@@ -13,11 +13,12 @@
           request.form.username }}">
          <input type="password" placeholder="Password" name="password" value="{{
           request.form.password }}">
+          <br>
         <input class="btn btn-default" type="submit" value="Login">
         <input class="btn btn-default" type="submit" name="Register" value="Register">
       </form>
       {% if result %}
-        <p class="error"><strong>Error:</strong> user not found or wrong password
+        <p class="error"><strong>Error:</strong> username has already existed
       {% endif %}
     </div>
   </body>

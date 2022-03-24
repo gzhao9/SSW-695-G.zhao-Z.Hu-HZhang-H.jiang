@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <title>Flask Intro - login page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Please input food info</h1>
+        <br>
+        <form action="" method="post">
+
+            <table border="1">
+                <tr>
+                    <td>
+                        <p><strong>Food name:</strong>
+                    <td>
+                        <input type="text" placeholder="Food name" name="food_name" value="{{
+          request.form.food_name }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>Type:</strong>
+                    <td>
+                        <input type="text" placeholder="Type" name="Type" value="{{
+          request.form.Type }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>calorie_rate:</strong>
+                    <td>
+                        <input type="text" placeholder="calorie_rate" name="calorie_rate" value="{{
+            request.form.calorie_rate }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>carbohydrate:</strong>
+                    <td>
+                        <input type="text" placeholder="carbohydrate" name="carbohydrate" value="{{
+            request.form.carbohydrate }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>carbohydrate:</strong>
+                    <td>
+                        <input type="text" placeholder="carbohydrate" name="carbohydrate" value="{{
+                request.form.carbohydrate }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>carbohydrate:</strong>
+                    <td>
+                        <input type="text" placeholder="carbohydrate" name="carbohydrate" value="{{
+                    request.form.carbohydrate }}">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <input class="btn btn-default" type="submit" value="submit">
+        </form>
+    </div>
+</body>
+
+</html>
