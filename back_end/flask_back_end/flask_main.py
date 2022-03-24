@@ -10,6 +10,35 @@ app = Flask(__name__)
 
 @app.route('/input_food',methods=['GET','POST'])
 def input_food():
+    reader=list()
+    with open('back_end\\flask_back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
+        readers = csv.reader(inp)
+        reader=[row for row in readers]
+
+
+    meal_id=food_id=str(len(reader))
+    user_name='GW'
+    date='2022-03-24'
+    food_name=request.form.get('food_name')
+    Type=request.form.get('Type')
+    weight=request.form.get('weight')
+    calorie_rate=request.form.get('calorie_rate')
+    carbohydrate=request.form.get('carbohydrate')
+    protein=request.form.get('protein')
+    fat=request.form.get('fat')
+    try:
+        calorie_cost=float(calorie_rate)*float(weight)
+        calorie_cost=str(calorie_cost)
+        reader.append([meal_id,food_id,food_name,user_name,date,Type,weight,calorie_rate,carbohydrate,protein,fat,calorie_cost])
+        
+        with open('back_end\\flask_back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', 'w') as f:
+            s=''
+            for key in reader:
+                s+=(",".join(key)+'\n')
+            f.write(s)
+        return redirect('/today/'+ "GW")
+    except:
+        calorie_cost=0
     return render_template('input_food.html')
 
 @app.route('/register',methods=['GET','POST'])
@@ -25,7 +54,7 @@ def register():
     with open('back_end\\flask_back_end\\USER_INFO\\LOGIN.CSV', mode='r') as inp:
         reader = csv.reader(inp)
         user_info = {rows[0]:rows[1] for rows in reader}
-    result=False
+    result=None
 
     if username is not None:
         if username in user_info.keys():
@@ -76,13 +105,33 @@ def login():
 def homepage(username):
     username = username
     userinfo = request.form.get('Check')
+    today = request.form.get('today')
     if userinfo == 'Check':
         return redirect('/user_info/'+ username)
     search = request.form.get('Search')
     if search == 'Search':
         return redirect('/searchFood')
+    
+    if today == 'today':
+        return redirect('/today/'+username)
     return render_template('homepage.html')
 
+@app.route('/today/<username>',methods=['GET','POST'])
+def userfoodInfo(username):
+    with open('back_end\\flask_back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
+        reader = csv.reader(inp)
+        user_info = [rows for rows in reader if (rows[3]==username and rows[4]=='2022-03-24') or rows[0]=='meal_id']
+    #print(user_info)
+    #return "<p>Hello, World!</p>"
+    result=f"<h2>{username}'s info</h2><table><tbody>"
+    for row in user_info:
+        result+="<tr>"
+        for c in row:
+            result+=f"<td>{c}</td>"
+        result+="</tr>"
+    result+="</tbody></table>"
+    #return result
+    return render_template('user_info.html',title=f"{username} Foods logs",rows=user_info)
 
 @app.route('/user_info/<username>',methods=['GET','POST'])
 def userInfo(username):
@@ -99,12 +148,15 @@ def userInfo(username):
         result+="</tr>"
     result+="</tbody></table>"
     #return result
-    return render_template('user_info.html',rows=user_info)
+    return render_template('user_info.html',title=f"{username}'s Info logs",rows=user_info)
 
 @app.route('/searchFood',methods=['GET','POST'])
 def searchFood():
+    Input= request.form.get('Input')
     foodName = request.form.get('foodname')
     search = request.form.get('Search')
+    if Input == 'Input':
+        return redirect('/input_food')
     if search == 'Search':
         return redirect('/foodNutrient/' + foodName)
     return render_template('search_food.html')
