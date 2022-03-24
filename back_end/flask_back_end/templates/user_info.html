@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block body %}
+<h2>{{tetle}}</h2>
+<h3>{{tetle_title}}</h3>
+<table border="1">
+    {% for row in rows %}
+    <tr>
+        {% for i in range(len(row)) %}
+        <td>{{rows[i]}}</td>
+        {% endfor %}
+    </tr>
+
+    </tr>
+    {% endfor %}
+</table>
+</html>

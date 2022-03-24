@@ -6,6 +6,7 @@ import csv
 
 app = Flask(__name__)
 
+
 @app.route('/login',methods=['GET','POST'])
 def login():
     username=request.form.get('username')
@@ -15,19 +16,23 @@ def login():
     with open('back_end\\flask_back_end\\USER_INFO\\LOGIN.CSV', mode='r') as inp:
         reader = csv.reader(inp)
         user_info = {rows[0]:rows[1] for rows in reader}
-
+    
     try:
         result=(user_info[username]!=password)
-        if result:
-            return redirect(url_for('helloword'))
-            
+        if not result:
+            return redirect(url_for('helloword'))            
     except:        
-        result=True
+        result=False
     return render_template('login.html',result=result)
 
-@app.route('/FoodPage',methods=['GET','POST'])
+@app.route('/user_info',methods=['GET','POST'])
 def helloword():
-    return "<h1>food page</h1>"
+    username='GW'
+    with open('back_end\\flask_back_end\\USER_INFO\\USER_BASE_INFO.CSV', mode='r') as inp:
+        reader = csv.reader(inp)
+        user_info = [rows for rows in reader if rows[1]==username or rows[0]=='info_id']
+    return "<p>Hello, World!</p>"
+    render_template('user_info.html',rows=user_info)
 
 if __name__ == '__main__':
     app.run()
