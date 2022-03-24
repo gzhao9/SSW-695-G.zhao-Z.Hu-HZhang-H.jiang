@@ -15,8 +15,8 @@
           request.form.password }}">
         <input class="btn btn-default" type="submit" value="Login">
       </form>
-      {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}
+      {% if result %}
+        <p class="error"><strong>Error:</strong> user not found or wrong password
       {% endif %}
     </div>
   </body>
