@@ -11,7 +11,7 @@ def login():
 
 @app.route('/FoodPage')
 def helloword():
-    return react("FoodPage.jsx")
+    return "<h1>food page</h1>"
 
 if __name__ == '__main__':
     app.run()
