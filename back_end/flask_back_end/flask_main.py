@@ -67,13 +67,25 @@ def login():
     try:
         result=(user_info[username]!=password)
         if not result:
-            return redirect('/user_info/'+username)
+            return redirect('/home/'+username)
     except:        
         result=False
     return render_template('login.html',result=result)
 
+@app.route('/home/<username>',methods=['GET','POST'])
+def homepage(username):
+    username = username
+    userinfo = request.form.get('Check')
+    if userinfo == 'Check':
+        return redirect('/user_info/'+ username)
+    search = request.form.get('Search')
+    if search == 'Search':
+        return redirect('/searchFood')
+    return render_template('homepage.html')
+
+
 @app.route('/user_info/<username>',methods=['GET','POST'])
-def helloword(username='GW'):
+def userInfo(username):
     with open('back_end\\flask_back_end\\USER_INFO\\USER_BASE_INFO.CSV', mode='r') as inp:
         reader = csv.reader(inp)
         user_info = [rows for rows in reader if rows[2]==username or rows[0]=='info_id']
