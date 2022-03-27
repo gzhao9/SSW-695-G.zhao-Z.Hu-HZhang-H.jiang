@@ -1,0 +1,41 @@
+login:
+	userId
+	userPassword
+userInfo logs:
+	userId
+	userName
+	gender
+	height
+	weight
+	age
+	fat(體脂率)
+	Static consumption
+	infoDate
+basic foodInfo:
+	foodId
+	foodName
+	foodType
+	protein
+	fat
+	carbohydrate
+	energy
+	sugre
+	VA
+	VC
+mealRecord:
+	userId
+	meal_recordId
+	mealDate
+	foodId
+	mealTpye
+basic sportInfo
+	sportId
+	sportName
+	sportDiscription
+	unitConsumption
+sportRecord:
+	userId
+	spo_recordId
+	sportDate
+	sportId
+	durition
