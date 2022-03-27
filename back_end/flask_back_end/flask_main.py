@@ -1,3 +1,4 @@
+from math import remainder
 from unittest import result
 from flask import Flask,make_response,json,render_template,request,redirect,url_for
 import json
@@ -27,7 +28,7 @@ def input_food():
     protein=request.form.get('protein')
     fat=request.form.get('fat')
     try:
-        calorie_cost=float(calorie_rate)*float(weight)
+        calorie_cost=float(calorie_rate)*float(weight)/100
         calorie_cost=str(calorie_cost)
         reader.append([meal_id,food_id,food_name,user_name,date,Type,weight,calorie_rate,carbohydrate,protein,fat,calorie_cost])
         
@@ -114,7 +115,21 @@ def homepage(username):
     
     if today == 'today':
         return redirect('/today/'+username)
-    return render_template('homepage.html')
+    
+    reader=list()
+    with open('back_end\\flask_back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
+        readers = csv.reader(inp)
+        reader=[row for row in readers]
+    total=[float(a[-1]) for a in reader if a[3]=="GW" and a[4]=='2022-03-24' ]
+    
+    remaind=2400
+    total=int(sum(total))
+    remaind=remaind-total
+    if remaind>=0:
+        advice="You can still enjoy foods today"
+    else:
+        advice="You ate too much today, need to do exercise."
+    return render_template('homepage.html',remaind=remaind,total=total,advice=advice)
 
 @app.route('/today/<username>',methods=['GET','POST'])
 def userfoodInfo(username):
