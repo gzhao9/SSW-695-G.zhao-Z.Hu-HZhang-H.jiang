@@ -7,12 +7,14 @@ import csv
 
 import get_food_nutrient
 
+import flask_db_operate
+
 app = Flask(__name__)
 
 @app.route('/input_food',methods=['GET','POST'])
 def input_food():
     reader=list()
-    with open('back_end\\flask_back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
+    with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
         readers = csv.reader(inp)
         reader=[row for row in readers]
 
@@ -32,7 +34,7 @@ def input_food():
         calorie_cost=str(calorie_cost)
         reader.append([meal_id,food_id,food_name,user_name,date,Type,weight,calorie_rate,carbohydrate,protein,fat,calorie_cost])
         
-        with open('back_end\\flask_back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', 'w') as f:
+        with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', 'w') as f:
             s=''
             for key in reader:
                 s+=(",".join(key)+'\n')
@@ -52,7 +54,7 @@ def register():
     password=request.form.get('password')
     user_info = {}
 
-    with open('back_end\\flask_back_end\\USER_INFO\\LOGIN.CSV', mode='r') as inp:
+    with open('back_end\\USER_INFO\\LOGIN.CSV', mode='r') as inp:
         reader = csv.reader(inp)
         user_info = {rows[0]:rows[1] for rows in reader}
     result=None
@@ -62,7 +64,7 @@ def register():
             result=True
         else:
             user_info[username]=password                    
-            with open('back_end\\flask_back_end\\USER_INFO\\LOGIN.CSV', 'w') as f:
+            with open('back_end\\USER_INFO\\LOGIN.CSV', 'w') as f:
                 for key in user_info.keys():
                     f.write("%s,%s\n" % (key, user_info[key]))
 
@@ -82,7 +84,7 @@ def login():
 
 
     user_info = {}
-    with open('back_end\\flask_back_end\\USER_INFO\\LOGIN.CSV', mode='r') as inp:
+    with open('back_end\\USER_INFO\\LOGIN.CSV', mode='r') as inp:
         reader = csv.reader(inp)
         user_info = {rows[0]:rows[1] for rows in reader}
     
@@ -117,7 +119,7 @@ def homepage(username):
         return redirect('/today/'+username)
     
     reader=list()
-    with open('back_end\\flask_back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
+    with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
         readers = csv.reader(inp)
         reader=[row for row in readers]
     total=[float(a[-1]) for a in reader if a[3]=="GW" and a[4]=='2022-03-24' ]
@@ -133,7 +135,7 @@ def homepage(username):
 
 @app.route('/today/<username>',methods=['GET','POST'])
 def userfoodInfo(username):
-    with open('back_end\\flask_back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
+    with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
         reader = csv.reader(inp)
         user_info = [rows for rows in reader if (rows[3]==username and rows[4]=='2022-03-24') or rows[0]=='meal_id']
     #print(user_info)
@@ -150,7 +152,7 @@ def userfoodInfo(username):
 
 @app.route('/user_info/<username>',methods=['GET','POST'])
 def userInfo(username):
-    with open('back_end\\flask_back_end\\USER_INFO\\USER_BASE_INFO.CSV', mode='r') as inp:
+    with open('back_end\\USER_INFO\\USER_BASE_INFO.CSV', mode='r') as inp:
         reader = csv.reader(inp)
         user_info = [rows for rows in reader if rows[2]==username or rows[0]=='info_id']
     #print(user_info)
@@ -180,19 +182,34 @@ def searchFood():
 @app.route('/foodNutrient/<foodname>')
 def foodNutrient(foodname):
     foodName = foodname
-    with open('back_end\\flask_back_end\\apikey.txt', mode='r') as api:
-        API_KEY = api.read()
+    #  with open('back_end\\apikey.txt', mode='r') as api:
+    #    API_KEY = api.read()
+    API_KEY = 'JkdjMHjQobEeEAVSkii5eg1n5NtTKH0AAL0FgXBb'
     ans = get_food_nutrient.call_API(foodName, API_KEY)
-    nutrientProtein = ans['foods'][1]['foodNutrients'][0]['value']
-    nutrientFat = ans['foods'][1]['foodNutrients'][1]['value']
-    nutrientCarbohydrate = ans['foods'][1]['foodNutrients'][2]['value']
+    fdcId = ans['foods'][0]['fdcId']
+    foodCategory = ans['foods'][0]['foodCategory']
+    # foodWeight = response['foods'][0]['packageWeight']
+    protein = ans['foods'][0]['foodNutrients'][0]['value']
+    fat = ans['foods'][0]['foodNutrients'][1]['value']
+    carbohydrate = ans['foods'][0]['foodNutrients'][2]['value']
+    energy = ans['foods'][0]['foodNutrients'][3]['value']
+    sugre = ans['foods'][0]['foodNutrients'][4]['value']
+    vitamin_A = ans['foods'][0]['foodNutrients'][9]['value']
+    vitamin_C = ans['foods'][0]['foodNutrients'][10]['value']
     data = {
-        'food name:': foodName,
-        'nutrient protein:': nutrientProtein,
-        'nutrient fat': nutrientFat,
-        'nutrient Carbohydrate': nutrientCarbohydrate
+        'foodId': fdcId,
+        'foodName': foodName,
+        'foodType': foodCategory,
+        'protein': protein,
+        'fat':fat,
+        'carbohydrate':carbohydrate,
+        'energy':energy,
+        'sugre':sugre,
+        'va':vitamin_A,
+        'vc':vitamin_C,
     }
     # return data.json()
+    insert = flask_db_operate.insertFood(data)
     return make_response(data)
 
 
