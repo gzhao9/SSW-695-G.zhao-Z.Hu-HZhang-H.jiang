@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Divider, Button, Affix } from "antd";
+import axios from "axios";
 import Header from "../../Components/Header/Header";
 import FoodInfoList from "../../Components/FoodInfoList/FoodInfoList";
 import CalorieInfoBlock from "../../Components/FoodInfoList/CalorieInfoBlock";
@@ -14,6 +15,15 @@ export default function FoodPage() {
   let totalProtein = 0;
   let totalFat = 0;
   let navigate = useNavigate();
+
+  const [foodData, setFoodData] = useState([]);
+
+  // useEffect(() => {
+  //   axios.get("http://localhost:3000/students").then(function (response) {
+  //     setFoodData(response.data)
+  //   });
+  // }, []);
+
   JsonText.map((item) => {
     totalCalorie += item.calorie_cost;
     totalCarbo += item.carbohydrate;

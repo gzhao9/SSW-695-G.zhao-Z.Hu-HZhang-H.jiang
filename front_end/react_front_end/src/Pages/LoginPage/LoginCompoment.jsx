@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../Components/Header/Header";
-import { Link, Route, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import "../../Components/ButtonWide/ButtonWide.css";
 import "../../Components/InputBox/InputBox.css";

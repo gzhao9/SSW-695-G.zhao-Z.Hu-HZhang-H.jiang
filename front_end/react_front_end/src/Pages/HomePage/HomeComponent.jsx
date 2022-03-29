@@ -1,6 +1,5 @@
-import React, { Component } from "react";
-import { Link, useRoutes } from "react-router-dom";
-import { Button } from "antd";
+import React from "react";
+import { Link } from "react-router-dom";
 import "./HomePage.css";
 import logo from "./logo.png";
 
@@ -15,13 +14,8 @@ export default function HomeComponent() {
         <Link className="Home-link" to="/login">
           Sign in
         </Link>
-        <br />
-        <Link className="Home-link" to="/foodPage">
-          Start Calorie Shopping(test link)
-        </Link>
-        <br />
-        <Link className="Home-link" to="/getUserInfoPage">
-          Input User Info(test link)
+        <Link className="Home-link" to="/userInfoPage">
+          UserInfo (test link)
         </Link>
       </header>
     </div>

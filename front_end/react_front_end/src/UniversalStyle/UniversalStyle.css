@@ -1,0 +1,14 @@
+.shownText {
+  color: #444444;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.cardStyle {
+  width: "90%";
+  margin-left: "5%";
+  margin-right: "5%";
+  margin-top: "30px";
+  margin-bottom: "30px";
+}

@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Button, Form, Input, InputNumber, Checkbox, Select } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Checkbox,
+  Select,
+  DatePicker,
+} from "antd";
 import Header from "../../Components/Header/Header";
 import "./GetUserInfoPage.css";
 import "../../Components/ButtonWide/ButtonWide.css";
@@ -10,7 +18,11 @@ export default function GetUserInfoPage() {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const processedValues = {
+      ...values,
+      birthday: values["birthday"].format("YYYY-MM-DD"),
+    };
+    console.log("Success:", processedValues);
     navigate("/foodPage");
   };
 
@@ -43,21 +55,16 @@ export default function GetUserInfoPage() {
         </Form.Item>
 
         <Form.Item
-          label="Age"
-          name="age"
+          label="Birthday"
+          name="birthday"
           rules={[
             {
               required: true,
-              message: "Please input your age!",
+              message: "Please input your birthday!",
             },
           ]}
         >
-          <InputNumber
-            style={{ float: "left" }}
-            min={0}
-            max={150}
-            precision={0}
-          />
+          <DatePicker style={{ float: "left" }} />
         </Form.Item>
 
         <Form.Item

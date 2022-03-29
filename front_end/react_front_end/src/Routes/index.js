@@ -4,6 +4,7 @@ import SignUpComponent from "../Pages/SignUpPage/SignUpComponent";
 import GetUserInfoPage from "../Pages/GetUserInfoPage/GetUserInfoPage";
 import FoodPage from "../Pages/FoodInfoPage/FoodPage";
 import FoodDetailPage from "../Pages/FoodDetailPage/FoodDetailPage";
+import UserInfoPage from "../Pages/UserInfoPage/UserInfoPage";
 
 export default [
   {
@@ -29,5 +30,9 @@ export default [
   {
     path: "/foodDetailPage",
     element: <FoodDetailPage />,
+  },
+  {
+    path: "/userInfoPage",
+    element: <UserInfoPage />,
   },
 ];
