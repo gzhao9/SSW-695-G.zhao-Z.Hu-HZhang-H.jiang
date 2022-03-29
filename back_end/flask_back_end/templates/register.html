@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Flask Intro - Register page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Please Register</h1>
+      <br>
+      <form action="" method="post">
+        <table>
+          <tr>
+        <input type="text" placeholder="Username" name="username" value="{{
+          request.form.username }}">
+          <br></tr><tr>
+         <input type="password" placeholder="Password" name="password" value="{{
+          request.form.password }}"></tr><tr>
+          
+          <input class="btn btn-default" type="submit" value="Register"></tr>
+        </table>
+      </form>
+      {% if result %}
+        <p class="error"><strong>Error:</strong>  username has already existed
+      {% endif %}
+    </div>
+  </body>
+</html>

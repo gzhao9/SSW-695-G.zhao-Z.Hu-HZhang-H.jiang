@@ -1,0 +1,35 @@
+<html>
+
+<head>
+  <title>Flask Intro - Home page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Home page</h1>
+    <br>
+
+    <p><strong>Today Eat:{{total}}</strong>
+      <br>
+    <p><strong>Today calorie remain :{{remaind}}</strong>
+      <br>
+      <p><strong>advice:{{advice}}</strong>
+    <form action="" method="post">
+      <table>
+        <tr>
+          <input class="btn btn-default" type="submit" value="Check" name="Check">
+        </tr>
+        <tr>
+          <input class="btn btn-default" type="submit" value="Search" name="Search">
+        <tr>
+          <input class="btn btn-default" type="submit" value="today" name="today">
+        </tr>
+      </table>
+    </form>
+  </div>
+</body>
+
+</html>
