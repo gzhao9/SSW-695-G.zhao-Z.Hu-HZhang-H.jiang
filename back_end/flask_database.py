@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 class Config:
     ''' Configuration '''
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@localhost/MealPlan'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@localhost/mealplan'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 app.config.from_object(Config)
