@@ -15,8 +15,10 @@ def insertFood(foodDict):
     SQL = "insert into foodInfo(%s) values (%s)"
     RES_SQL = SQL % (cols, val_cols)
     print(RES_SQL)
-    mydb = connect_mydb.mydb
-    cursor = mydb.cursor()
+    # mydb = connect_mydb.mydb
+    # cursor = mydb.cursor()
+    # cursor.execute(RES_SQL)
+    # db.commit()       
     # db.session.add(food1)
     # db.session.commit()
 
