@@ -204,7 +204,7 @@ def foodNutrient(foodname):
         'fat':fat,
         'carbohydrate':carbohydrate,
         'energy':energy,
-        'sugre':sugre,
+        'sugar':sugre,
         'va':vitamin_A,
         'vc':vitamin_C,
     }

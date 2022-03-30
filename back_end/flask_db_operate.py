@@ -12,11 +12,13 @@ def insertFood(foodDict):
     # food1 = foodInfo(foodId = 1, foodName = 'Chadder cheese', foodType = 'cheese', protein = 25.0, fat = 32.1, carbohydrate = 3.57, energy = 393,sugar = 0, va = 1070, vc = 0)
     cols = ','.join("'{}'".format(k) for k in foodDict.keys())
     val_cols = ','.join('%({})s'.format(k) for k in foodDict.keys())
-    SQL = "insert into foodInfo(%s) values (%s)"
+    SQL = "insert into foodinfo (%s) values (%s);"
     RES_SQL = SQL % (cols, val_cols)
     print(RES_SQL)
     mydb = connect_mydb.mydb
     cursor = mydb.cursor()
+    cursor.execute(RES_SQL, foodDict)
+    db.commit()       
     # db.session.add(food1)
     # db.session.commit()
 
