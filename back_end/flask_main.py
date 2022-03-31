@@ -210,6 +210,10 @@ def foodNutrient(foodname):
     }
     # return data.json()
     insert = flask_db_operate.insertFood(data)
+    if insert:
+        print("insert successful")
+    else:
+        print("insert fail")
     return make_response(data)
 
 
