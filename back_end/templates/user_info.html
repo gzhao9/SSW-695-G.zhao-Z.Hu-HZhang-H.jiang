@@ -12,18 +12,27 @@
         <h1>{{title}}</h1>
         <br>
 
-        <table border="1">
-            <tbody>
-                {% for row in rows %}
-                <tr>
-                    {% for i in row %}
-                    <td>{{i}}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
+        <form action="" method="post">
+            <table border="1">
+                <tbody>
+                    <input type="text" placeholder="UserName" name="Name" value="{{ Name }}">
+                    <br>
+                    <input type="text" placeholder="Gender" name="gender" value="{{ gender }}">
+                    <br>
+                    <input type="text" placeholder="Height" name="height" value="{{ height }}">
+                    <br>
+                    <input type="text" placeholder="Weight" name="weight" value="{{ weight }}">
+                    <br>
+                    <input type="text" placeholder="Age" name="age" value="{{ age }}">
+                    <br>
+                    <input type="text" placeholder="FatRate" name="fatRate" value="{{ fatRate }}">
+                    <br>
+                    <input type="text" placeholder="BMR" name="BMR" value="{{ BMR }}">
+                    <br>
+                    <input class="btn btn-default" type="submit" value="Submit" name="Submit">
+                </tbody>
+            </table>
+        </form>
     </div>
 </body>
 

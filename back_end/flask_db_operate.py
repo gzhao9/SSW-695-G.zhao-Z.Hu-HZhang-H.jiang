@@ -54,3 +54,20 @@ def insertLogin(loginDict):
         return True
     else:
         return False
+
+
+# insert into userinfo table, if success, return true, else return false
+def insertUserInfo(userInfoDict):
+    table = "userinfo_logs"
+    placeholders = ','.join(['%s'] * len(userInfoDict))
+    cols = ','.join(userInfoDict.keys())
+    if not findIfInTable(table, 'userId', userInfoDict['userId']):
+        SQL = "insert into %s (%s) values (%s);"
+        RES_SQL = SQL % (table, cols, placeholders)
+        print(RES_SQL)
+        # print('RES_SQL:'+RES_SQL)
+        mycursor.execute(RES_SQL, list(userInfoDict.values()))
+        mydb.commit()
+        return True
+    else:
+        return False

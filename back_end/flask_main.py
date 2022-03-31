@@ -4,6 +4,8 @@ from flask import Flask,make_response,json,render_template,request,redirect,url_
 import json
 import csv
 
+from datetime import datetime
+
 import get_food_nutrient
 
 import flask_db_operate
@@ -43,6 +45,38 @@ def input_food():
         calorie_cost=0
     return render_template('input_food.html')
 
+
+@app.route('/yoursituation/<username>', methods =['GET','POST'])
+def getinfo(username):
+    userId = username
+    userName = request.form.get('Name')
+    gender = request.form.get('gender')
+    height = request.form.get('height')
+    weight = request.form.get('weight')
+    age = request.form.get('age')
+    fatRate = request.form.get('fatRate')
+    BMR = request.form.get('BMR')
+    infoDate = datetime.now()
+    submit = request.form.get('Submit')
+    userInfoDict = {
+        'userId':userId,
+        'userName':userName,
+        'gender':gender,
+        'height':height,
+        'weight':weight,
+        'age':age,
+        'fatRate':fatRate,
+        'BMR':BMR,
+        'infoDate':infoDate
+    }
+    if submit == 'Submit':
+        canRecord = flask_db_operate.insertUserInfo(userInfoDict)
+        if canRecord:
+            return redirect('/home/'+username)
+    return render_template('user_info.html')
+
+
+
 @app.route('/register',methods=['GET','POST'])
 def register():
     
@@ -58,10 +92,9 @@ def register():
         'userPassword': password,
     }
     if(register == 'Register'):
-        print("can!!!")
         canreg = flask_db_operate.insertLogin(userInfo)
         if canreg:
-            return redirect('/login')
+            return redirect('/yoursituation/' + username)
     return render_template('register.html',result=False)
 
 @app.route('/')
@@ -72,6 +105,7 @@ def inddex():
 def login():
     username=request.form.get('username')
     password=request.form.get('password')
+    Login = request.form.get('Login')
     Register=request.form.get('Register')
     
     userInfo = {
@@ -79,11 +113,11 @@ def login():
         'userPassword': password,
     }
     cannotlogin = flask_db_operate.findIfInTable('login', 'userId', userInfo['userId'])
-    if(cannotlogin):
-        return redirect('/home/'+username)
-    else:
-        if Register=="Register":
-            return redirect('/register')
+    if Login == 'Login':
+        if(cannotlogin):
+            return redirect('/home/'+username)
+    if Register=="Register":
+        return redirect('/register')
     return render_template('login.html',result=False)
     
 
