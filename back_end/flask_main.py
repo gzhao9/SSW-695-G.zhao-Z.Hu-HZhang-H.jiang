@@ -10,6 +10,13 @@ import get_food_nutrient
 
 import flask_db_operate
 
+with open('back_end\\apikey.txt', mode='r') as api:
+    API_KEY = api.read()
+
+
+todaytime = '2022-4-1'
+
+
 app = Flask(__name__)
 
 @app.route('/input_food',methods=['GET','POST'])
@@ -135,20 +142,46 @@ def homepage(username):
     if today == 'today':
         return redirect('/today/'+username)
     
-    reader=list()
-    with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
-        readers = csv.reader(inp)
-        reader=[row for row in readers]
-    total=[float(a[-1]) for a in reader if a[3]=="GW" and a[4]=='2022-03-24' ]
+    userinfo = flask_db_operate.findInTable('userinfo_logs', 'userId', username)
+    # if len(userinfo) == 1:
+    userinfores = userinfo[0]
+    print(userinfores)
+    total = 2300
     
-    remaind=2400
-    total=int(sum(total))
-    remaind=remaind-total
+    mealres = flask_db_operate.findInTable('mealrecord', 'mealDate', todaytime)
+    totalenergy = 0.0
+    for i in mealres:
+        canfind = flask_db_operate.findIfInTable('foodInfo', 'foodName', i[4])
+        if canfind:
+            foodenergy = flask_db_operate.findInTable('foodInfo', 'foodName', i[4])
+            totalenergy += foodenergy
+        else:
+            ans = get_food_nutrient.call_API(i[4], API_KEY)
+            foodenergy = ans['foods'][0]['foodNutrients'][3]['value']
+            totalenergy += foodenergy
+    
+    remaind = total - totalenergy
+
     if remaind>=0:
         advice="You can still enjoy foods today"
     else:
         advice="You ate too much today, need to do exercise."
-    return render_template('homepage.html',remaind=remaind,total=total,advice=advice)
+
+
+    # reader=list()
+    # with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
+    #     readers = csv.reader(inp)
+    #     reader=[row for row in readers]
+    # total=[float(a[-1]) for a in reader if a[3]=="GW" and a[4]=='2022-03-24' ]
+    
+    # remaind=2400
+    # total=int(sum(total))
+    # remaind=remaind-total
+    # if remaind>=0:
+    #     advice="You can still enjoy foods today"
+    # else:
+    #     advice="You ate too much today, need to do exercise."
+    return render_template('homepage.html', total = total, remaind = remaind, advice = advice)
 
 @app.route('/today/<username>',methods=['GET','POST'])
 def userfoodInfo(username):
@@ -157,7 +190,7 @@ def userfoodInfo(username):
     # mealDate = datetime.now()
     mealType = request.form.get('mealType')
     foodName = request.form.get('foodName')
-    res_data = flask_db_operate.showTable("mealrecord")
+    res_data = flask_db_operate.findInTable('mealrecord', 'mealDate', todaytime)
 
     mealData = {
         'userId':userId,
@@ -210,9 +243,7 @@ def searchFood():
 @app.route('/foodNutrient/<foodname>')
 def foodNutrient(foodname):
     foodName = foodname
-    #  with open('back_end\\apikey.txt', mode='r') as api:
-    #    API_KEY = api.read()
-    API_KEY = 'JkdjMHjQobEeEAVSkii5eg1n5NtTKH0AAL0FgXBb'
+    # API_KEY = 'JkdjMHjQobEeEAVSkii5eg1n5NtTKH0AAL0FgXBb'
     ans = get_food_nutrient.call_API(foodName, API_KEY)
     fdcId = ans['foods'][0]['fdcId']
     foodCategory = ans['foods'][0]['foodCategory']

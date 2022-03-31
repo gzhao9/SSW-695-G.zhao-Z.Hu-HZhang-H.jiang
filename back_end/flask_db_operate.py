@@ -21,7 +21,7 @@ def insertFood(foodDict):
     else:
         return False
 
-
+# find all data in table
 def showTable(tableName):
     SQL = "select * from %s"
     RES_SQL = SQL % (tableName)
@@ -29,7 +29,7 @@ def showTable(tableName):
     res_data = mycursor.fetchall()
     return res_data
 
-# find in table where id = colName, if exist, return True, else return false
+# find in table where key = colName, if exist, return True, else return false
 def findIfInTable(tableName,colName, colValues):
     if isinstance(colValues, str):
         SQL = "select * from %s where %s = '%s'"
@@ -45,6 +45,20 @@ def findIfInTable(tableName,colName, colValues):
         return False
     return True
 
+
+# find in table where key = colName, return the result
+def findInTable(tableName,colName, colValues):
+    if isinstance(colValues, str):
+        SQL = "select * from %s where %s = '%s'"
+    elif isinstance(colValues, int) or isinstance(colValues, float):
+        SQL = "select * from %s where %s = %s"
+    else:
+        SQL = "select * from %s where %s = '%s'"
+    RES_SQL = SQL % (tableName, colName, colValues)
+    print(RES_SQL)
+    mycursor.execute(RES_SQL)
+    myresult = mycursor.fetchall()
+    return myresult
 
 # insert into login table, if success, return true, else return false
 def insertLogin(loginDict):
