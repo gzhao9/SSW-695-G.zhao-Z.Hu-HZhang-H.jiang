@@ -13,12 +13,12 @@
         <table>
           <tr>
         <input type="text" placeholder="Username" name="username" value="{{
-          request.form.username }}">
+          username }}">
           <br></tr><tr>
-         <input type="password" placeholder="Password" name="password" value="{{
-          request.form.password }}"></tr><tr>
+        <input type="password" placeholder="Password" name="password" value="{{
+          password }}"></tr><tr>
           
-          <input class="btn btn-default" type="submit" value="Register"></tr>
+        <input class="btn btn-default" type="submit" name="Register" value="Register"></tr>
         </table>
       </form>
       {% if result %}

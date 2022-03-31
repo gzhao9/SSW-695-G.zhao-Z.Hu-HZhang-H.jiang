@@ -31,14 +31,52 @@ foodDict = {
 
 # mydb.commit()
 
-def selectRowFromTable(tableName,colName, colValues):
-    SQL = "select * from %s where %s = %s"
+# def selectRowFromTable(tableName,colName, colValues):
+#     SQL = "select * from %s where %s = %s"
+#     RES_SQL = SQL % (tableName, colName, colValues)
+#     mycursor.execute(RES_SQL)
+#     myresult = mycursor.fetchone()
+#     if myresult is None:
+#         return 0
+#     return 1
+
+def findIfInTable(tableName,colName, colValues):
+    SQL = "select * from %s where %s = '%s'"
     RES_SQL = SQL % (tableName, colName, colValues)
+    print(RES_SQL)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchone()
     if myresult is None:
-        return 0
-    return 1
+        return False
+    return True
 
-a = selectRowFromTable("foodinfo", "foodId", 1)
-print(a)
+username = 'gw@zhao.com'
+password = '123456'
+userInfo = {
+        'userId': username,
+        'userPassword': password
+    }
+
+
+# # a = findIfInTable("foodinfo", "foodId", 1)
+# # print(a)
+# cannotlogin = findIfInTable('login', 'userId', userInfo['userId'])
+
+# print(cannotlogin)
+
+def insertLogin(loginDict):
+    table = "login"
+    placeholders = ','.join(['%s'] * len(loginDict))
+    cols = ','.join(loginDict.keys())
+    if not findIfInTable(table, 'userId', loginDict['userId']):
+        SQL = "insert into %s (%s) values (%s);"
+        RES_SQL = SQL % (table, cols, placeholders)
+        print(RES_SQL)
+        # print('RES_SQL:'+RES_SQL)
+        mycursor.execute(RES_SQL, list(loginDict.values()))
+        mydb.commit()
+        return True
+    else:
+        return False
+
+insertLogin(userInfo)

@@ -15,7 +15,7 @@ app = Flask(__name__)
 def input_food():
     reader=list()
     with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
-        readers = csv.reader(inp)
+        readers = csv.reader(inp) 
         reader=[row for row in readers]
 
 
@@ -52,26 +52,18 @@ def register():
          return redirect('/login')
     username=request.form.get('username')
     password=request.form.get('password')
-    user_info = {}
+    register=request.form.get('Register')
 
-    with open('back_end\\USER_INFO\\LOGIN.CSV', mode='r') as inp:
-        reader = csv.reader(inp)
-        user_info = {rows[0]:rows[1] for rows in reader}
-    result=None
-
-    if username is not None:
-        if username in user_info.keys():
-            result=True
-        else:
-            user_info[username]=password                    
-            with open('back_end\\USER_INFO\\LOGIN.CSV', 'w') as f:
-                for key in user_info.keys():
-                    f.write("%s,%s\n" % (key, user_info[key]))
-
-            if username in user_info.keys():
-                return redirect('/login')
-
-    return render_template('register.html',result=result)
+    userInfo = {
+        'userId': username,
+        'userPassword': password,
+    }
+    if(register == 'Register'):
+        print("can!!!")
+        canreg = flask_db_operate.insertLogin(userInfo)
+        if canreg:
+            return redirect('/login')
+    return render_template('register.html',result=False)
 
 @app.route('/')
 def inddex():
@@ -81,28 +73,20 @@ def inddex():
 def login():
     username=request.form.get('username')
     password=request.form.get('password')
-
-
-    user_info = {}
-    with open('back_end\\USER_INFO\\LOGIN.CSV', mode='r') as inp:
-        reader = csv.reader(inp)
-        user_info = {rows[0]:rows[1] for rows in reader}
-    
-    
-    
     Register=request.form.get('Register')
-    if Register=="Register":
-         return redirect('/register')
     
+    userInfo = {
+        'userId': username,
+        'userPassword': password,
+    }
+    cannotlogin = flask_db_operate.findIfInTable('login', 'userId', userInfo['userId'])
+    if(cannotlogin):
+        return redirect('/home/'+username)
+    else:
+        if Register=="Register":
+            return redirect('/register')
+    return render_template('login.html',result=False)
     
-    result=None
-    try:
-        result=(user_info[username]!=password)
-        if not result:
-            return redirect('/home/'+username)
-    except:        
-        result=False
-    return render_template('login.html',result=result)
 
 @app.route('/home/<username>',methods=['GET','POST'])
 def homepage(username):
