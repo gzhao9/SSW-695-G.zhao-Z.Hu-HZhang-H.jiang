@@ -166,21 +166,6 @@ def homepage(username):
         advice="You can still enjoy foods today"
     else:
         advice="You ate too much today, need to do exercise."
-
-
-    # reader=list()
-    # with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
-    #     readers = csv.reader(inp)
-    #     reader=[row for row in readers]
-    # total=[float(a[-1]) for a in reader if a[3]=="GW" and a[4]=='2022-03-24' ]
-    
-    # remaind=2400
-    # total=int(sum(total))
-    # remaind=remaind-total
-    # if remaind>=0:
-    #     advice="You can still enjoy foods today"
-    # else:
-    #     advice="You ate too much today, need to do exercise."
     return render_template('homepage.html', total = total, remaind = remaind, advice = advice)
 
 @app.route('/today/<username>',methods=['GET','POST'])
@@ -216,8 +201,6 @@ def userInfo(username):
     with open('back_end\\USER_INFO\\USER_BASE_INFO.CSV', mode='r') as inp:
         reader = csv.reader(inp)
         user_info = [rows for rows in reader if rows[2]==username or rows[0]=='info_id']
-    #print(user_info)
-    #return "<p>Hello, World!</p>"
     result=f"<h2>{username}'s info</h2><table><tbody>"
     for row in user_info:
         result+="<tr>"
@@ -225,7 +208,6 @@ def userInfo(username):
             result+=f"<td>{c}</td>"
         result+="</tr>"
     result+="</tbody></table>"
-    #return result
     return render_template('user_info.html',title=f"{username}'s Info logs",rows=user_info)
 
 @app.route('/searchFood',methods=['GET','POST'])
