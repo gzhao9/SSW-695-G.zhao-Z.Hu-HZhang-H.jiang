@@ -1,9 +1,9 @@
-from flask_database import db
-from flask_database import foodInfo, mealRecord
+from flask_database_create_table import db
+from flask_database_create_table import foodInfo, mealRecord
 from datetime import datetime
 
 import connect_mydb
-
+ 
 # db.drop_all()
 
 # db.create_all()
