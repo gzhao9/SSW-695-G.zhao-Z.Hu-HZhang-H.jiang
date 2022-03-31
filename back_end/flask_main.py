@@ -152,20 +152,31 @@ def homepage(username):
 
 @app.route('/today/<username>',methods=['GET','POST'])
 def userfoodInfo(username):
-    with open('back_end\\USER_INFO\\USER_FOOD_LOGS.CSV', mode='r') as inp:
-        reader = csv.reader(inp)
-        user_info = [rows for rows in reader if (rows[3]==username and rows[4]=='2022-03-24') or rows[0]=='meal_id']
-    #print(user_info)
-    #return "<p>Hello, World!</p>"
-    result=f"<h2>{username}'s info</h2><table><tbody>"
-    for row in user_info:
-        result+="<tr>"
-        for c in row:
-            result+=f"<td>{c}</td>"
-        result+="</tr>"
-    result+="</tbody></table>"
-    #return result
-    return render_template('user_info.html',title=f"{username} Foods logs",rows=user_info)
+    userId = username
+    mealDate = request.form.get('mealDate')
+    # mealDate = datetime.now()
+    mealType = request.form.get('mealType')
+    foodName = request.form.get('foodName')
+    res_data = flask_db_operate.showTable("mealrecord")
+
+    mealData = {
+        'userId':userId,
+        'mealDate':mealDate,
+        'mealType':mealType,
+        'foodName':foodName,
+    }
+    
+    Inputinfo = request.form.get('Inputinfo')
+    if Inputinfo == 'Inputinfo':
+        caninput = flask_db_operate.insertMealRecord(mealData)
+        if caninput:
+            return redirect('/today/' + userId)
+    
+    ReturnHome = request.form.get('Home')
+    if ReturnHome == 'Home':
+        return redirect('/home/' + userId)
+
+    return render_template('today.html', rows = res_data)
 
 @app.route('/user_info/<username>',methods=['GET','POST'])
 def userInfo(username):

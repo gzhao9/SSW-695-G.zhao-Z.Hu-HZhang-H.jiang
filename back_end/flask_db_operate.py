@@ -22,6 +22,13 @@ def insertFood(foodDict):
         return False
 
 
+def showTable(tableName):
+    SQL = "select * from %s"
+    RES_SQL = SQL % (tableName)
+    mycursor.execute(RES_SQL)
+    res_data = mycursor.fetchall()
+    return res_data
+
 # find in table where id = colName, if exist, return True, else return false
 def findIfInTable(tableName,colName, colValues):
     if isinstance(colValues, str):
@@ -71,3 +78,21 @@ def insertUserInfo(userInfoDict):
         return True
     else:
         return False
+
+
+# insert into meal record table, if success, return true, else return false
+def insertMealRecord(mealDict):
+    table = "mealrecord"
+    placeholders = ','.join(['%s'] * len(mealDict))
+    cols = ','.join(mealDict.keys())
+    if True:
+        SQL = "insert into %s (%s) values (%s);"
+        RES_SQL = SQL % (table, cols, placeholders)
+        print(RES_SQL)
+        mycursor.execute(RES_SQL, list(mealDict.values()))
+        mydb.commit()
+        return True
+    else:
+        return False
+
+

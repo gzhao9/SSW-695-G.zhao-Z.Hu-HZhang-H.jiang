@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>Flask Intro - today page</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{today}}</h1>
+        <br>
+        <form action="" method="post">
+            <table border="1">
+                <tr>
+                    <td>FoodName:</td>
+                    <td>MealType:</td>
+                    <td>MealDate:</td>
+                </tr>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[2] }}</td>
+                </tr>    
+                {% endfor %}   
+                <tbody>
+                    <input type="text" placeholder="MealDate" name="mealDate" value="{{ mealDate }}">
+                    <br>
+                    <input type="text" placeholder="MealType" name="mealType" value="{{ mealType }}">
+                    <br>
+                    <input type="text" placeholder="FoodName" name="foodName" value="{{ foodName }}">
+                    <br>
+                    <input class="btn btn-default" type="submit" value="Inputinfo" name="Inputinfo">
+                    <input class="btn btn-default" type="submit" value="Home" name="Home">
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>
