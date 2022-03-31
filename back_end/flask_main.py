@@ -3,7 +3,6 @@ from unittest import result
 from flask import Flask,make_response,json,render_template,request,redirect,url_for
 import json
 import csv
-#import pandas as pd
 
 import get_food_nutrient
 
