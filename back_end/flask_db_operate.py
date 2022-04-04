@@ -79,7 +79,7 @@ def insertLogin(loginDict):
 
 # insert into userinfo table, if success, return true, else return false
 def insertUserInfo(userInfoDict):
-    table = "userinfo_logs"
+    table = "userInfo_logs"
     placeholders = ','.join(['%s'] * len(userInfoDict))
     cols = ','.join(userInfoDict.keys())
     if not findIfInTable(table, 'userId', userInfoDict['userId']):
@@ -96,7 +96,7 @@ def insertUserInfo(userInfoDict):
 
 # insert into meal record table, if success, return true, else return false
 def insertMealRecord(mealDict):
-    table = "mealrecord"
+    table = "mealRecord"
     placeholders = ','.join(['%s'] * len(mealDict))
     cols = ','.join(mealDict.keys())
     if True:

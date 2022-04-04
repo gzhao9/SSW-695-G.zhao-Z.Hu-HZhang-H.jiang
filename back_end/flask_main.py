@@ -208,7 +208,7 @@ def userInfo(username):
             result+=f"<td>{c}</td>"
         result+="</tr>"
     result+="</tbody></table>"
-    return render_template('user_info.html',title=f"{username}'s Info logs",rows=user_info)
+    return render_template('user_info.html',title=f"{username}'s Info logs",rows=user_info)  
 
 @app.route('/searchFood',methods=['GET','POST'])
 def searchFood():
