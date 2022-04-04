@@ -13,7 +13,7 @@ def insertFood(foodDict):
     cols = ','.join(foodDict.keys())
     if not (findIfInTable(table, 'foodId', foodDict['foodId'])):
         SQL = "insert into %s (%s) values (%s);"
-        RES_SQL = SQL % ("foodinfo", cols, placeholders)
+        RES_SQL = SQL % (table, cols, placeholders)
         # print('RES_SQL:'+RES_SQL)
         mycursor.execute(RES_SQL, list(foodDict.values()))
         mydb.commit()
