@@ -119,6 +119,7 @@ def login():
         'userPassword': password,
     }
     cannotlogin = flask_db_operate.findIfInTable('login', 'userId', userInfo['userId'])
+
     if Login == 'Login':
         if(cannotlogin):
             return redirect('/home/'+username)
@@ -141,13 +142,13 @@ def homepage(username):
     if today == 'today':
         return redirect('/today/'+username)
     
-    userinfo = flask_db_operate.findInTable('userinfo_logs', 'userId', username)
+    userinfo = flask_db_operate.findInTable('userInfo_logs', 'userId', username)
     # if len(userinfo) == 1:
     userinfores = userinfo[0]
     print(userinfores)
     total = 2300
     
-    mealres = flask_db_operate.findInTable('mealrecord', 'mealDate', todaytime)
+    mealres = flask_db_operate.findInTable('mealRecord', 'mealDate', todaytime)
     totalenergy = 0.0
     for i in mealres:
         canfind = flask_db_operate.findIfInTable('foodInfo', 'foodName', i[4])
@@ -174,7 +175,7 @@ def userfoodInfo(username):
     # mealDate = datetime.now()
     mealType = request.form.get('mealType')
     foodName = request.form.get('foodName')
-    res_data = flask_db_operate.findInTable('mealrecord', 'mealDate', todaytime)
+    res_data = flask_db_operate.findInTable('mealRecord', 'mealDate', todaytime)
 
     mealData = {
         'userId':userId,
