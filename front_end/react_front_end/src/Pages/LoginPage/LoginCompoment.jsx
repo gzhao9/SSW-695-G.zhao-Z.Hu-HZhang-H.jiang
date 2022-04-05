@@ -12,7 +12,10 @@ export default function LoginCompoment() {
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    navigate("/foodPage");
+    // axios.post('/login', values).then((response)=>{
+
+    // })
+    navigate("/userInfoPage");
   };
 
   const onFinishFailed = (errorInfo) => {

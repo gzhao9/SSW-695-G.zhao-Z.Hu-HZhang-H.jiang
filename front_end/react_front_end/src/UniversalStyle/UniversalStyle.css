@@ -3,9 +3,10 @@
   font-family: "Times New Roman", Times, serif;
   font-size: 18px;
   font-weight: 700;
+  
 }
 
-.cardStyle {
+.card {
   width: "90%";
   margin-left: "5%";
   margin-right: "5%";

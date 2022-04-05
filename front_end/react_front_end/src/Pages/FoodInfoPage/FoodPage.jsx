@@ -18,13 +18,13 @@ export default function FoodPage() {
 
   const [foodData, setFoodData] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get("http://localhost:3000/students").then(function (response) {
-  //     setFoodData(response.data)
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get("/readUserDate").then(function (response) {
+      setFoodData(response.data.mealInfo);
+    });
+  }, []);
 
-  JsonText.map((item) => {
+  foodData.map((item) => {
     totalCalorie += item.calorie_cost;
     totalCarbo += item.carbohydrate;
     totalProtein += item.protein;
@@ -35,7 +35,7 @@ export default function FoodPage() {
   return (
     <div className="FoodInfoPg">
       <Header headerText="Food Information" />
-      <FoodInfoList foodInfo={JsonText} />
+      <FoodInfoList foodInfo={foodData} />
       <Divider> Calorie Data </Divider>
       <CalorieInfoBlock totalCalorie={totalCalorie} />
       <Divider> Nutrition Data </Divider>

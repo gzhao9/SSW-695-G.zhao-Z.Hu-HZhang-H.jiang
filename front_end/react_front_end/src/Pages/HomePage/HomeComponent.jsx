@@ -14,9 +14,6 @@ export default function HomeComponent() {
         <Link className="Home-link" to="/login">
           Sign in
         </Link>
-        <Link className="Home-link" to="/userInfoPage">
-          UserInfo (test link)
-        </Link>
       </header>
     </div>
   );

@@ -7,6 +7,8 @@ import {
   Checkbox,
   Select,
   DatePicker,
+  Radio,
+  Space,
 } from "antd";
 import Header from "../../Components/Header/Header";
 import "./GetUserInfoPage.css";
@@ -23,7 +25,7 @@ export default function GetUserInfoPage() {
       birthday: values["birthday"].format("YYYY-MM-DD"),
     };
     console.log("Success:", processedValues);
-    navigate("/foodPage");
+    navigate("/userInfoPage");
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -101,6 +103,25 @@ export default function GetUserInfoPage() {
             max={1000}
             precision={2}
           />
+        </Form.Item>
+
+        <Form.Item
+          label="Please choose your meal plan"
+          name="mealPlan"
+          rules={[
+            {
+              required: true,
+              message: "Please choose your meal plan!",
+            },
+          ]}
+        >
+          <Radio.Group size="small" style={{ float: "left" }}>
+            <Space direction="vertical" size="small" align="start">
+              <Radio value="keepHealth">Keep Healthy</Radio>
+              <Radio value="loseWeight">Lose Weight</Radio>
+              <Radio value="buildMuscle">Build Muscle</Radio>
+            </Space>
+          </Radio.Group>
         </Form.Item>
 
         <Form.Item label="I am a vegan" name="isVegan" valuePropName="checked">

@@ -36,6 +36,6 @@
 
 .foodInfoListItem {
   background-color: white;
-  height: 50%;
+  height:fit-content;
   overflow-y: scroll;
 }
