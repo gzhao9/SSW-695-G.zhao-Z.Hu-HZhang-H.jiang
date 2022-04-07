@@ -198,17 +198,13 @@ def userfoodInfo(username):
 
 @app.route('/user_info/<username>',methods=['GET','POST'])
 def userInfo(username):
-    with open('back_end\\USER_INFO\\USER_BASE_INFO.CSV', mode='r') as inp:
-        reader = csv.reader(inp)
-        user_info = [rows for rows in reader if rows[2]==username or rows[0]=='info_id']
-    result=f"<h2>{username}'s info</h2><table><tbody>"
-    for row in user_info:
-        result+="<tr>"
-        for c in row:
-            result+=f"<td>{c}</td>"
-        result+="</tr>"
-    result+="</tbody></table>"
-    return render_template('user_info.html',title=f"{username}'s Info logs",rows=user_info)  
+    userId = username
+    info_res = flask_db_operate.findInTable('userInfo_logs', 'userId', userId)
+    userinfo_dict = {
+        'userId': username,
+        'infomation': info_res,
+    }
+    return userinfo_dict
 
 @app.route('/searchFood',methods=['GET','POST'])
 def searchFood():
@@ -224,38 +220,50 @@ def searchFood():
 
 @app.route('/foodNutrient/<foodname>')
 def foodNutrient(foodname):
-    foodName = foodname
-    # API_KEY = 'JkdjMHjQobEeEAVSkii5eg1n5NtTKH0AAL0FgXBb'
-    ans = get_food_nutrient.call_API(foodName, API_KEY)
-    fdcId = ans['foods'][0]['fdcId']
-    foodCategory = ans['foods'][0]['foodCategory']
-    # foodWeight = response['foods'][0]['packageWeight']
-    protein = ans['foods'][0]['foodNutrients'][0]['value']
-    fat = ans['foods'][0]['foodNutrients'][1]['value']
-    carbohydrate = ans['foods'][0]['foodNutrients'][2]['value']
-    energy = ans['foods'][0]['foodNutrients'][3]['value']
-    sugre = ans['foods'][0]['foodNutrients'][4]['value']
-    vitamin_A = ans['foods'][0]['foodNutrients'][9]['value']
-    vitamin_C = ans['foods'][0]['foodNutrients'][10]['value']
-    data = {
-        'foodId': fdcId,
-        'foodName': foodName,
-        'foodType': foodCategory,
-        'protein': protein,
-        'fat':fat,
-        'carbohydrate':carbohydrate,
-        'energy':energy,
-        'sugar':sugre,
-        'va':vitamin_A,
-        'vc':vitamin_C,
-    }
+    ans = get_food_nutrient.call_API(foodname, API_KEY)
+    # fdcId = ans['foods'][0]['fdcId']
+    # foodCategory = ans['foods'][0]['foodCategory']
+    # # foodWeight = response['foods'][0]['packageWeight']
+    # protein = ans['foods'][0]['foodNutrients'][0]['value']
+    # fat = ans['foods'][0]['foodNutrients'][1]['value']
+    # carbohydrate = ans['foods'][0]['foodNutrients'][2]['value']
+    # energy = ans['foods'][0]['foodNutrients'][3]['value']
+    # sugre = ans['foods'][0]['foodNutrients'][4]['value']
+    # vitamin_A = ans['foods'][0]['foodNutrients'][9]['value']
+    # vitamin_C = ans['foods'][0]['foodNutrients'][10]['value']
+
+    data = list()
+
+    for i in range(len(ans['foods'])):
+        fdcId = ans['foods'][i]['fdcId']
+        foodCategory = ans['foods'][i]['foodCategory']
+        foodDetailInfo = ans['foods'][i]['foodNutrients']
+        fooddata = get_food_nutrient.format_food(fdcId, foodname, foodCategory, foodDetailInfo)
+        data.append(fooddata)
+        # break
+        if i >= 10:
+            break
+
+    # data = {
+    #     'foodId': fdcId,
+    #     'foodName': foodName,
+    #     'foodType': foodCategory,
+    #     'protein': protein,
+    #     'fat':fat,
+    #     'carbohydrate':carbohydrate,
+    #     'energy':energy,
+    #     'sugar':sugre,
+    #     'va':vitamin_A,
+    #     'vc':vitamin_C,
+    # }
     # return data.json()
-    insert = flask_db_operate.insertFood(data)
+    
+    insert = flask_db_operate.insertFood(data[0])
     if insert:
         print("insert successful")
     else:
         print("insert fail")
-    return make_response(data)
+    return make_response(data[0])
 
 
 if __name__ == '__main__':

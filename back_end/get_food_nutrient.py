@@ -7,3 +7,46 @@ def call_API(foodName, apiKey):
     print(res.status_code)
     return res.json()
 
+def format_food(fdcId,foodname,foodCategory,foodNutrientList):
+    protein = 0
+    fat = 0
+    carbohydrate = 0
+    energy = 0
+    sugre = 0 
+    va = 0
+    vc = 0
+    for i in foodNutrientList:
+        if i['nutrientName'] == 'Protein':
+            protein = i['value']
+
+        if i['nutrientName'] == 'Total lipid (fat)':
+            fat = i['value']
+
+        if i['nutrientName'] == 'Carbohydrate, by difference':
+            carbohydrate = i['value']
+
+        if i['nutrientName'] == 'Energy':
+            energy = i['value']
+
+        if i['nutrientName'] == 'sugre':
+            sugre = i['value']
+        
+        if i['nutrientName'] == 'va':
+            va = i['value']
+        
+        if i['nutrientName'] == 'vc':
+            vc = i['value']
+
+    data = {
+        'foodId':fdcId,
+        'foodName': foodname,
+        'foodType': foodCategory,
+        'protein': protein,
+        'fat':fat,
+        'carbohydrate':carbohydrate,
+        'energy':energy,
+        'sugar':sugre,
+        'va':va,
+        'vc':vc,
+    }
+    return data
