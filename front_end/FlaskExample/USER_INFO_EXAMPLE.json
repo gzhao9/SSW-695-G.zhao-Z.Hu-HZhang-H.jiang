@@ -1,0 +1,80 @@
+{
+  "userName": "Tom Clancy",
+  "userEmail": "a@a.com",
+  "password": 1111111,
+  "remainedCalorie": 721,
+  "birthday": "1997-2-19",
+  "avatar": "https://joeschmoe.io/api/v1/random",
+  "mealInfo": [
+    {
+      "meal_id": 1,
+      "food_id": 1,
+      "food_name": "pizza",
+      "user_name": "GW",
+      "date": "2022-02-21",
+      "type": "L",
+      "weight": 300,
+      "calorie_rate": 235,
+      "carbohydrate": 53.68,
+      "protein": 32.8,
+      "fat": 13.52,
+      "calorie_cost": 705
+    },
+    {
+      "meal_id": 2,
+      "food_id": 2,
+      "food_name": "Fried chicken",
+      "user_name": "GW",
+      "date": "2022-02-22",
+      "type": "DA",
+      "weight": 50,
+      "calorie_rate": 567,
+      "carbohydrate": 0,
+      "protein": 75,
+      "fat": 25,
+      "calorie_cost": 283.5
+    },
+    {
+      "meal_id": 3,
+      "food_id": 3,
+      "food_name": "susi",
+      "user_name": "GW",
+      "date": "2022-02-22",
+      "type": "DA",
+      "weight": 234,
+      "calorie_rate": 202,
+      "carbohydrate": 55,
+      "protein": 15,
+      "fat": 30,
+      "calorie_cost": 472.68
+    },
+    {
+      "meal_id": 4,
+      "food_id": 4,
+      "food_name": "apple",
+      "user_name": "GW",
+      "date": "2022-02-22",
+      "type": "BA",
+      "weight": 50,
+      "calorie_rate": 100,
+      "carbohydrate": 45,
+      "protein": 0,
+      "fat": 0,
+      "calorie_cost": 50
+    },
+    {
+      "meal_id": 5,
+      "food_id": 5,
+      "food_name": "noddles",
+      "user_name": "GW",
+      "date": "2022-02-22",
+      "type": "D",
+      "weight": 247,
+      "calorie_rate": 325,
+      "carbohydrate": 75,
+      "protein": 10,
+      "fat": 15,
+      "calorie_cost": 802.75
+    }
+  ]
+}
