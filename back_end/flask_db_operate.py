@@ -60,6 +60,7 @@ def findInTable(tableName,colName, colValues):
     myresult = mycursor.fetchall()
     return myresult
 
+
 # insert into login table, if success, return true, else return false
 def insertLogin(loginDict):
     table = "login"

@@ -151,13 +151,13 @@ def homepage(username):
     mealres = flask_db_operate.findInTable('mealRecord', 'mealDate', todaytime)
     totalenergy = 0.0
     for i in mealres:
-        canfind = flask_db_operate.findIfInTable('foodInfo', 'foodName', i[4])
+        canfind = flask_db_operate.findIfInTable('foodInfo', 'foodName', i[3])
         if canfind:
-            foodenergy = flask_db_operate.findInTable('foodInfo', 'foodName', i[4])
-            totalenergy += foodenergy
+            foodenergy = flask_db_operate.findInTable('foodInfo', 'foodName', i[3])
+            totalenergy = totalenergy + foodenergy[0][6]
         else:
-            ans = get_food_nutrient.call_API(i[4], API_KEY)
-            foodenergy = ans['foods'][0]['foodNutrients'][3]['value']
+            ans = get_food_nutrient.call_API(i[3], API_KEY)
+            foodenergy = get_food_nutrient.obtain_energy(ans['foods'][0]['foodNutrients'])
             totalenergy += foodenergy
     
     remaind = total - totalenergy
@@ -221,16 +221,6 @@ def searchFood():
 @app.route('/foodNutrient/<foodname>')
 def foodNutrient(foodname):
     ans = get_food_nutrient.call_API(foodname, API_KEY)
-    # fdcId = ans['foods'][0]['fdcId']
-    # foodCategory = ans['foods'][0]['foodCategory']
-    # # foodWeight = response['foods'][0]['packageWeight']
-    # protein = ans['foods'][0]['foodNutrients'][0]['value']
-    # fat = ans['foods'][0]['foodNutrients'][1]['value']
-    # carbohydrate = ans['foods'][0]['foodNutrients'][2]['value']
-    # energy = ans['foods'][0]['foodNutrients'][3]['value']
-    # sugre = ans['foods'][0]['foodNutrients'][4]['value']
-    # vitamin_A = ans['foods'][0]['foodNutrients'][9]['value']
-    # vitamin_C = ans['foods'][0]['foodNutrients'][10]['value']
 
     data = list()
 
@@ -240,24 +230,11 @@ def foodNutrient(foodname):
         foodDetailInfo = ans['foods'][i]['foodNutrients']
         fooddata = get_food_nutrient.format_food(fdcId, foodname, foodCategory, foodDetailInfo)
         data.append(fooddata)
-        # break
+        # break after 10 result
         if i >= 10:
             break
-
-    # data = {
-    #     'foodId': fdcId,
-    #     'foodName': foodName,
-    #     'foodType': foodCategory,
-    #     'protein': protein,
-    #     'fat':fat,
-    #     'carbohydrate':carbohydrate,
-    #     'energy':energy,
-    #     'sugar':sugre,
-    #     'va':vitamin_A,
-    #     'vc':vitamin_C,
-    # }
-    # return data.json()
     
+    # insert first one
     insert = flask_db_operate.insertFood(data[0])
     if insert:
         print("insert successful")
