@@ -7,6 +7,13 @@ def call_API(foodName, apiKey):
     print(res.status_code)
     return res.json()
 
+def obtain_energy(foodNutrientlist):
+    energy = 0
+    for i in foodNutrientlist:
+        if i['nutrientName'] == 'Energy':
+            energy = i['value']
+    return energy
+
 def format_food(fdcId,foodname,foodCategory,foodNutrientList):
     protein = 0
     fat = 0
