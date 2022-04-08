@@ -107,25 +107,30 @@ def register():
 def inddex():
     return redirect('/login')
 
-@app.route('/login',methods=['GET','POST'])
+# @app.route('/login',methods=['GET','POST'])
+@app.route('/verifyLogin', methods = ['GET','POST'])
 def login():
-    username=request.form.get('username')
-    password=request.form.get('password')
-    Login = request.form.get('Login')
-    Register=request.form.get('Register')
+    # username=request.form.get('username')
+    # password=request.form.get('password')
+    # Login = request.form.get('Login')
+    # Register=request.form.get('Register')
     
-    userInfo = {
-        'userId': username,
-        'userPassword': password,
-    }
-    cannotlogin = flask_db_operate.findIfInTable('login', 'userId', userInfo['userId'])
+    # userInfo = {
+    #     'userId': username,
+    #     'userPassword': password,
+    # }
+    # cannotlogin = flask_db_operate.findIfInTable('login', 'userId', userInfo['userId'])
 
-    if Login == 'Login':
-        if(cannotlogin):
-            return redirect('/home/'+username)
-    if Register=="Register":
-        return redirect('/register')
-    return render_template('login.html',result=False)
+    json = {
+        "isSuccess": True,
+    }
+    # if Login == 'Login':
+    #     if(cannotlogin):
+    #         return redirect('/home/'+username)
+    # if Register=="Register":
+    #     return redirect('/register')
+    # return render_template('login.html',result=False)
+    return json
     
 
 @app.route('/home/<username>',methods=['GET','POST'])
