@@ -100,6 +100,7 @@ export default function FoodDetailPage() {
           label="Manually Input"
           name="manuallyInput"
           valuePropName="checked"
+          initialValue={false}
         >
           <Switch style={{ float: "left" }} onChange={switchManuallyInput} />
         </Form.Item>

@@ -10,9 +10,9 @@ import get_food_nutrient
 
 import flask_db_operate
 
-with open('back_end\\apikey.txt', mode='r') as api:
-    API_KEY = api.read()
-
+# with open('back_end/apikey.txt', mode='r') as api:
+#     API_KEY = api.read()
+API_KEY = 'aa'
 todaytime = '2022-4-1'
 
 

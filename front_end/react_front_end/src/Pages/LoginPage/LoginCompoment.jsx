@@ -12,10 +12,14 @@ export default function LoginCompoment() {
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    // axios.post('/login', values).then((response)=>{
-
-    // })
-    navigate("/userInfoPage");
+    axios.post("/verifyLogin", values).then((response) => {
+      let isSuccess = response.data["isSuccess"];
+      if (isSuccess === true) {
+        navigate("/userInfoPage");
+      } else {
+        alert("Your Credential is not correct!");
+      }
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
