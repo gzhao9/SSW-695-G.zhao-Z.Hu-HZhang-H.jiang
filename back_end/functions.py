@@ -24,3 +24,6 @@ def verify_register(username,password):
     }
     canreg = flask_db_operate.insertLogin(userInfo)
     return canreg
+
+def today_food_record(username):
+    pass

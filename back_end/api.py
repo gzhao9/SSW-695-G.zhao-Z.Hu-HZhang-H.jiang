@@ -60,7 +60,8 @@ data=
 
 
 @app.route('/today_food_record/<username>', methods = ['GET','POST'])
-def updateUserInfo(username):
+def food_record(username):
+    pass
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
