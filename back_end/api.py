@@ -26,7 +26,7 @@ username: "aa
 
 
 @app.route('/verifyRegister', methods = ['GET','POST'])
-def login():
+def Register():
     """
 data=
 {
@@ -43,7 +43,7 @@ data=
 
 
 @app.route('/updateUserInfo/<username>', methods = ['GET','POST'])
-def login():
+def updateUserInfo(username):
     """
 data=
 {
@@ -57,6 +57,10 @@ data=
 }
     """
     data = json.loads(request.get_data())   
+
+
+@app.route('/today_food_record/<username>', methods = ['GET','POST'])
+def updateUserInfo(username):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
