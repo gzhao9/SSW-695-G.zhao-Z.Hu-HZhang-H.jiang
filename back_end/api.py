@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # -------------------Login and Register page---------------------------
 @app.route('/verifyLogin', methods = ['GET','POST'])
-def login():
+def verifyLogin():
     data = json.loads(request.get_data())   
     result= {
         "isSuccess":verify_login(data['userId'],data['password']),
@@ -18,7 +18,7 @@ def login():
 
 # Register page
 @app.route('/verifyRegister', methods = ['GET','POST'])
-def Register():
+def verifyRegister():
     data = json.loads(request.get_data())   
     result= {
         "isSuccess":verify_register(data['confirm'],data['password']),
@@ -47,7 +47,7 @@ def getUserInfo(userId):
 
 #Get a list of all the history information records for a certain user
 @app.route('/getUserInfo_logs/<userId>', methods = ['GET','POST'])
-def getUserInfo(userId):    
+def getUserInfo_logs(userId):    
     result=get_user_logs(userId)
     return result
 
@@ -55,7 +55,7 @@ def getUserInfo(userId):
 #---------------------------diet info----------------------------------------
 
 @app.route('/updateDietInfo/<userId>', methods = ['GET','POST'])
-def updateUserInfo(userId):
+def updateDietInfo(userId):
     data = json.loads(request.get_data())
     isSuccess=update_food_info(userId,data)
     result= {
@@ -64,25 +64,29 @@ def updateUserInfo(userId):
     return result
 
 @app.route('/getDietInfo/<userId>', methods = ['GET','POST'])
-def updateUserInfo(userId):    
+def getDietInfo(userId):    
     data = json.loads(request.get_data())
     result=get_food_info(userId,data['foodID'])
     return result
 
 @app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
-def updateUserInfo(userId):    
+def getDietLogs(userId):    
     data = json.loads(request.get_data())
     result=get_deit_logs(userId,data['date'])
     return result
 
-@app.route('/delete_food', methods = ['GET','POST'])
-def del_foodInfo():
+@app.route('/delete_food/<userId>', methods = ['GET','POST'])
+def delete_food(userId):
     data = json.loads(request.get_data())
-    pass
+    isSuccess=delete_meal_info(userId,data['mealId'])
+    result= {
+        "isSuccess":isSuccess,
+    }
+    return result
 #---------------------------Exercise info----------------------------------------
 
 @app.route('/updateExerciseInfo/<userId>', methods = ['GET','POST'])
-def updateUserInfo(userId):
+def updateExerciseInfo(userId):
     data = json.loads(request.get_data())
     isSuccess=update_exercise_info(userId,data)
     result= {
@@ -91,15 +95,23 @@ def updateUserInfo(userId):
     return result
 
 @app.route('/getExerciseInfo/<userId>', methods = ['GET','POST'])
-def updateUserInfo(userId):    
+def getExerciseInfo(userId):    
     data = json.loads(request.get_data())
     result=get_exercise_info(userId,data['foodID'])
     return result
 
 @app.route('/getExerciseLogs/<userId>', methods = ['GET','POST'])
-def updateUserInfo(userId):    
+def getExerciseLogs(userId):    
     data = json.loads(request.get_data())
     result=get_exercise_info(userId,data['date'])
+    return result
+@app.route('/delete_Exercise/<userId>', methods = ['GET','POST'])
+def delete_Exercise(userId):
+    data = json.loads(request.get_data())
+    isSuccess=delete_sport_info(userId,data['sportRecordId'])
+    result= {
+        "isSuccess":isSuccess,
+    }
     return result
 
 if __name__ == "__main__":
