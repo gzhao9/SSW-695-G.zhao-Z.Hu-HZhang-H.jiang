@@ -52,13 +52,39 @@ def getUserInfo(userId):
     return result
 
 
+#---------------------------diet info----------------------------------------
+
+@app.route('/updateDietInfo/<userId>', methods = ['GET','POST'])
+def updateUserInfo(userId):
+    data = json.loads(request.get_data())
+    isSuccess=update_food_info(userId,data)
+    result= {
+        "isSuccess":isSuccess,
+    }
+    return result
+
+@app.route('/getDietInfo/<userId>', methods = ['GET','POST'])
+def updateUserInfo(userId):    
+    data = json.loads(request.get_data())
+    result=get_food_info(userId,data['foodID'])
+    return result
+
+@app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
+def updateUserInfo(userId):    
+    data = json.loads(request.get_data())
+    result=get_deit_logs(userId,data['date'])
+    return result
+
+@app.route('/delete_food', methods = ['GET','POST'])
+def del_foodInfo():
+    data = json.loads(request.get_data())
+    pass
 #---------------------------Exercise info----------------------------------------
 
-# view and Update userInfo page
 @app.route('/updateExerciseInfo/<userId>', methods = ['GET','POST'])
 def updateUserInfo(userId):
     data = json.loads(request.get_data())
-    isSuccess=update_user_info(userId,data)
+    isSuccess=update_exercise_info(userId,data)
     result= {
         "isSuccess":isSuccess,
     }
@@ -67,7 +93,13 @@ def updateUserInfo(userId):
 @app.route('/getExerciseInfo/<userId>', methods = ['GET','POST'])
 def updateUserInfo(userId):    
     data = json.loads(request.get_data())
-    result=get_food_info(userId,data['foodID'])
+    result=get_exercise_info(userId,data['foodID'])
+    return result
+
+@app.route('/getExerciseLogs/<userId>', methods = ['GET','POST'])
+def updateUserInfo(userId):    
+    data = json.loads(request.get_data())
+    result=get_exercise_info(userId,data['date'])
     return result
 
 if __name__ == "__main__":
