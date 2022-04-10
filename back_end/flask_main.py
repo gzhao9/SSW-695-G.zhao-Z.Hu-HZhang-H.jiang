@@ -36,7 +36,7 @@ def input_food():
     carbohydrate=request.form.get('carbohydrate')
     protein=request.form.get('protein')
     fat=request.form.get('fat')
-    
+
     try:
         calorie_cost=float(calorie_rate)*float(weight)/100
         calorie_cost=str(calorie_cost)
