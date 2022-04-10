@@ -37,14 +37,18 @@ def get_food_info(userId,foodID):
 def get_exercise_info(userId,exercise_name):
     pass
 
+def get_user_info(userId,date):
+    pass
+
 def get_deit_logs(userId,date):
     pass
 
 def get_exercise_logs(userId,date):
     pass
 
-def get_user_logs(userId,date):
+def get_user_logs(userId):
     pass
+
 
 def update_user_info(userId,info):
     age=int(info['date'][:4])-int(info['birthday'][:4])
@@ -53,10 +57,10 @@ def update_user_info(userId,info):
     
     #save info to database @hengyuan
 
-def save_exercise_info(userId,info):
+def update_exercise_info(userId,info):
     pass
 
-def save_food_info(userId,info):
+def update_food_info(userId,info):
     pass
 
 def cal_BMR(gender,weight,height,age):

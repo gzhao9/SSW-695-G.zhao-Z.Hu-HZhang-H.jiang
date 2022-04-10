@@ -7,7 +7,7 @@ from functions import *
 
 app = Flask(__name__)
 
-# Login page
+# -------------------Login and Register page---------------------------
 @app.route('/verifyLogin', methods = ['GET','POST'])
 def login():
     data = json.loads(request.get_data())   
@@ -25,6 +25,9 @@ def Register():
     }
     return result
 
+
+#--------------------user info --------------------------
+
 # view and Update userInfo page
 @app.route('/updateUserInfo/<userId>', methods = ['GET','POST'])
 def updateUserInfo(userId):
@@ -35,11 +38,21 @@ def updateUserInfo(userId):
     }
     return result
 
+#Get the basic information of a user on a certain day
 @app.route('/getUserInfo/<userId>', methods = ['GET','POST'])
-def updateUserInfo(userId):    
+def getUserInfo(userId):    
     data = json.loads(request.get_data())
-    result=get_food_info(userId,data['foodID'])
+    result=get_user_info(userId,data['date'])
     return result
+
+#Get a list of all the history information records for a certain user
+@app.route('/getUserInfo_logs/<userId>', methods = ['GET','POST'])
+def getUserInfo(userId):    
+    result=get_user_logs(userId)
+    return result
+
+
+#---------------------------Exercise info----------------------------------------
 
 # view and Update userInfo page
 @app.route('/updateExerciseInfo/<userId>', methods = ['GET','POST'])
