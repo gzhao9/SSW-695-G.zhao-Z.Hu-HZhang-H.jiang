@@ -53,6 +53,9 @@ def get_BMR(userId):
 def get_user_info(userId,date):
     return flask_db_operate.findInTableWithTwoLimit(tableuserInfo, 'userId', userId, 'infoDate', date)
 
+def get_user_logs(userId):
+    return flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
+
 def get_food_info(userId,foodId):
     return flask_db_operate.findInTableWithTwoLimit(tablefoodInfo, 'userId', userId, 'foodId', foodId)
 
