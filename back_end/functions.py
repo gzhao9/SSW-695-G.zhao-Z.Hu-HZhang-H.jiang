@@ -43,6 +43,9 @@ def get_deit_logs(userId,date):
 def get_exercise_logs(userId,date):
     pass
 
+def get_user_logs(userId,date):
+    pass
+
 def update_user_info(userId,info):
     age=int(info['date'][:4])-int(info['birthday'][:4])
     info['userId']=userId
