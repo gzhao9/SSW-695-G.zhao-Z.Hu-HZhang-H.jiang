@@ -38,8 +38,24 @@ def updateUserInfo(userId):
 @app.route('/getUserInfo/<userId>', methods = ['GET','POST'])
 def updateUserInfo(userId):    
     data = json.loads(request.get_data())
-    
+    result=get_food_info(userId,data['foodID'])
+    return result
 
+# view and Update userInfo page
+@app.route('/updateExerciseInfo/<userId>', methods = ['GET','POST'])
+def updateUserInfo(userId):
+    data = json.loads(request.get_data())
+    isSuccess=update_user_info(userId,data)
+    result= {
+        "isSuccess":isSuccess,
+    }
+    return result
+
+@app.route('/getExerciseInfo/<userId>', methods = ['GET','POST'])
+def updateUserInfo(userId):    
+    data = json.loads(request.get_data())
+    result=get_food_info(userId,data['foodID'])
+    return result
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000)

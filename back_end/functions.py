@@ -31,7 +31,7 @@ def get_BMR(userId):
     BMR = flask_db_operate.findInTable('userInfo_logs', 'userId', userId)
     return BMR
 
-def get_food_info(userId,food_name):
+def get_food_info(userId,foodID):
     pass
 
 def get_exercise_info(userId,exercise_name):
