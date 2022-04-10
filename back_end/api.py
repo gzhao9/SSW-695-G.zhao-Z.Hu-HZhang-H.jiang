@@ -2,29 +2,28 @@ from math import remainder
 from unittest import result
 from flask import Flask,make_response,json,render_template,request,redirect,url_for
 import json
-from rsa import verify
 from functions import *
 
 
 app = Flask(__name__)
 
-
+# Login page
 @app.route('/verifyLogin', methods = ['GET','POST'])
 def login():
     """
 data={
 password: "aa"
 remember: true
-username: "aa
+userId: "aa
 }
     """
     data = json.loads(request.get_data())   
     result= {
-        "isSuccess":verify_login(data['username'],data['password']),
+        "isSuccess":verify_login(data['userId'],data['password']),
     }
     return result
 
-
+# Register page
 @app.route('/verifyRegister', methods = ['GET','POST'])
 def Register():
     """
@@ -41,9 +40,35 @@ data=
     }
     return result
 
+# Home page
+@app.route('/home/<userId>',methods=['GET','POST'])
+def homePage(userId):
+    data = json.loads(request.get_data())
+    datetime = data['time']
+    """ get user nick name"""
+    nickname = flask_db_operate.findEleInTable('userName','userInfo_logs', 'userId', userId)
+    """ get total calcorie """
+    BMR = get_BMR(userId,datetime)
+    """ get meal information in perticular day """
+    mealres = flask_db_operate.findInTable('mealRecord', 'mealDate', datetime)
 
-@app.route('/updateUserInfo/<username>', methods = ['GET','POST'])
-def updateUserInfo(username):
+    """ get sport information in perticular day """
+    sportres = flask_db_operate.findInTable('sportRecord', 'sportDate', datetime)
+    res_BMR = minus_calorie(mealres, BMR)
+
+    result = {
+        'nickName':nickname,
+        'BMR':res_BMR,
+        'mealres':mealres,
+        'sportres':sportres,
+    }
+    return result
+
+
+
+# view and Update userInfo page
+@app.route('/updateUserInfo/<userId>', methods = ['GET','POST'])
+def updateUserInfo(userId):
     """
 data=
 {
@@ -56,11 +81,22 @@ data=
     weight: 1
 }
     """
-    data = json.loads(request.get_data())   
+    data = json.loads(request.get_data())
 
 
-@app.route('/today_food_record/<username>', methods = ['GET','POST'])
-def food_record(username):
+# View meal page
+
+# Insert meal page
+
+# View sport page
+
+# insert sport page
+
+   
+
+
+@app.route('/today_food_record/<userId>', methods = ['GET','POST'])
+def food_record(userId):
     pass
 
 if __name__ == "__main__":

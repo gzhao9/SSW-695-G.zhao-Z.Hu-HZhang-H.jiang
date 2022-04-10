@@ -115,15 +115,15 @@ def login():
     # password=request.form.get('password')
     # Login = request.form.get('Login')
     # Register=request.form.get('Register')
-    
-    # userInfo = {
-    #     'userId': username,
-    #     'userPassword': password,
-    # }
-    # cannotlogin = flask_db_operate.findIfInTable('login', 'userId', userInfo['userId'])
+    data = json.loads(request.get_data()) 
+    userInfo = {
+        'userId': data['username'],
+        'userPassword': data['password'],
+    }
+    cannotlogin = flask_db_operate.findIfInTable('login', 'userId', userInfo['userId'])
 
-    json = {
-        "isSuccess": True,
+    res_json = {
+        "isSuccess": cannotlogin,
     }
     # if Login == 'Login':
     #     if(cannotlogin):
@@ -131,7 +131,7 @@ def login():
     # if Register=="Register":
     #     return redirect('/register')
     # return render_template('login.html',result=False)
-    return json
+    return res_json
     
 
 @app.route('/home/<username>',methods=['GET','POST'])

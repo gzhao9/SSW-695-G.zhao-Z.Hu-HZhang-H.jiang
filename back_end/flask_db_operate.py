@@ -29,6 +29,13 @@ def showTable(tableName):
     res_data = mycursor.fetchall()
     return res_data
 
+# find particular element in table
+def findEleInTable(elementName,tablename,colName,colValues):
+    if isinstance(colValues, str):
+        SQL = "select %s from %s where %s = '%s'"
+    if isinstance(colValues, int) or isinstance(colValues, float):
+        SQL = "select %s from %s where %s = %s"
+    RES_SQL = SQL% (elementName, tablename, colName, colValues)
 # find in table where key = colName, if exist, return True, else return false
 def findIfInTable(tableName,colName, colValues):
     if isinstance(colValues, str):
@@ -50,16 +57,24 @@ def findIfInTable(tableName,colName, colValues):
 def findInTable(tableName,colName, colValues):
     if isinstance(colValues, str):
         SQL = "select * from %s where %s = '%s'"
-    elif isinstance(colValues, int) or isinstance(colValues, float):
+    if isinstance(colValues, int) or isinstance(colValues, float):
         SQL = "select * from %s where %s = %s"
-    else:
-        SQL = "select * from %s where %s = '%s'"
     RES_SQL = SQL % (tableName, colName, colValues)
     print(RES_SQL)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
     return myresult
 
+# find in table where userId = userId AND time = datetime
+def findWithIdAndTime(tablename, colName1, colValues1, colName2, colValues2):
+    if isinstance(colValues, str):
+        SQL = "select * from %s where %s = '%s' and  %s = '%s'"
+    if isinstance(colValues, int) or isinstance(colValues, float):
+        SQL = "select * from %s where %s = %s and %s = %s"
+    RES_SQL = SQL % (tableName, colName1, colValues1,colName2,colName2)
+    mycursor.execute(RES_SQL)
+    myresult = mycursor.fetchall()
+    return myresult
 
 # insert into login table, if success, return true, else return false
 def insertLogin(loginDict):
@@ -109,3 +124,4 @@ def insertMealRecord(mealDict):
         return True
     else:
         return False
+
