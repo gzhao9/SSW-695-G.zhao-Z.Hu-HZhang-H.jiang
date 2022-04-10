@@ -45,44 +45,48 @@ def verify_register(userId,password):
     canreg = flask_db_operate.insertintoTable(tablelogin,userInfo)
     return canreg
 
-# #  -------------------operate user info function---------------------------
+# #  -------------------obtain info function---------------------------
 def get_BMR(userId):
     BMR = flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
     return BMR
 
 def get_user_info(userId,date):
-    return flask_db_operate.findWithIdAndTime(tableuserInfo, 'userId', userId, 'infoDate', date)
+    return flask_db_operate.findInTableWithTwoLimit(tableuserInfo, 'userId', userId, 'infoDate', date)
 
+def get_food_info(userId,foodId):
+    return flask_db_operate.findInTableWithTwoLimit(tablefoodInfo, 'userId', userId, 'foodId', foodId)
+
+def get_exercise_info(userId,sportId):
+    return flask_db_operate.findInTableWithTwoLimit(tablesportInfo, 'userId', userId, 'sportId', sportId)
+
+def get_deit_logs(userId,date):
+    return flask_db_operate.findInTableWithTwoLimit(tablemealRecord, 'userId', userId, 'mealDate', date)
+
+def get_exercise_logs(userId,date):
+    return flask_db_operate.findInTableWithTwoLimit(tablesportRecord, 'userId', userId, 'sportDate', date)
+
+
+#--------------------------update information-----------------------------
 def update_user_info(userId,info):
     age=int(info['date'][:4])-int(info['birthday'][:4])
     info['userId']=userId
     info['BMR']=cal_BMR(info['gender'],info['weight'],info['height'],age)
-    
-
-
-
-def get_food_info(userId,foodID):
-    pass
-
-def get_exercise_info(userId,exercise_name):
-    pass
-
-def get_deit_logs(userId,date):
-    pass
-
-def get_exercise_logs(userId,date):
-    pass
-
-def get_user_logs(userId):
-    pass
-
-def update_exercise_info(userId,info):
-    pass
+    info['fatRate'] # calculation
+    return flask_db_operate.updateinTable(tableuserInfo, info, 'userId', userId)
 
 def update_food_info(userId,info):
-    pass
+    return flask_db_operate.updateinTable(tablemealRecord, info, 'userId', userId)
+
+def update_exercise_info(userId,info):
+    return flask_db_operate.updateinTable(tablesportRecord, info, 'userId', userId)
 
 
+# --------------------------delete information----------------------------
+def delete_meal_info(userId,mealId):
+    return flask_db_operate.deleteinTable(tablemealRecord, 'userId', userId,'mealRecordId',mealId)
+
+def delete_sport_info(userId,sportRecordId):
+    return flask_db_operate.deleteinTable(tablesportRecord, 'userId', userId,'sportRecordId',sportRecordId)
 # -------------------------calculation function---------------------------
 def cal_BMR(gender,weight,height,age):
     if gender.lower().startswith('m'):

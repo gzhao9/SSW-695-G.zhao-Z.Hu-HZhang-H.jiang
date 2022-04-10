@@ -55,13 +55,13 @@ def findInTable(tableName,colName, colValues):
     myresult = mycursor.fetchall()
     return myresult
 
-# find in table where userId = userId AND time = datetime
-def findWithIdAndTime(tablename, colName1, colValues1, colName2, colValues2):
+# find in table with two limit
+def findInTableWithTwoLimit(tablename, colName1, colValues1, colName2, colValues2):
     if isinstance(colValues, str):
         SQL = "select * from %s where %s = '%s' and  %s = '%s'"
     if isinstance(colValues, int) or isinstance(colValues, float):
         SQL = "select * from %s where %s = %s and %s = %s"
-    RES_SQL = SQL % (tableName, colName1, colValues1,colName2,colName2)
+    RES_SQL = SQL % (tableName, colName1, colValues1,colName2, colValues2)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
     return myresult
@@ -91,6 +91,7 @@ def insertintoTable(tableName,dataDict):
 #
 #
 # -----------------------------delete information------------------------------
+# delete one row in table
 def deleteinTable(tableName,colName,colValues):
     if isinstance(colValues, str):
         SQL = "delete from %s where %s = '%s'"
@@ -104,6 +105,35 @@ def deleteinTable(tableName,colName,colValues):
         return False
     return True
 
+# delete one row in table with two limit
+def deleteInTableWithTwoLimit(tablename, colName1, colValues1, colName2, colValues2):
+    if isinstance(colValues, str):
+        SQL = "delete from %s where %s = '%s' and  %s = '%s'"
+    if isinstance(colValues, int) or isinstance(colValues, float):
+        SQL = "delete from %s where %s = %s and %s = %s"
+    RES_SQL = SQL % (tableName, colName1, colValues1, colName2, colValues2)
+    mycursor.execute(RES_SQL)
+    myresult = mycursor.fetchone()
+    if myresult is None:
+        return False
+    return True
+#
+#
+#
+#
+#
+#----------------------------update information---------------------------------
+# update perticular infomation in table
+def updateinTable(tableName,dataDict,colName,colValues):
+    placeholders = ','.join(['%s'] * len(dataDict))
+    cols = ','.join(dataDict.keys())
+    SQL = "update %s set %s = %s where %s = %s"
+    RES_SQL = SQL % (tableName,cols,placeholders,colName,colValues)
+    mycursor.execute(RES_SQL)
+    myresult = mycursor.fetchone()
+    if myresult is None:
+        return False
+    return True
 # # insert into foodInfo, if success, return true, else return false
 # def insertFood(foodDict):
 #     table = "foodInfo"
