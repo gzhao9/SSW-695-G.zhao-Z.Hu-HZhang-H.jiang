@@ -4,8 +4,14 @@ from flask import Flask,make_response,json,render_template,request,redirect,url_
 import json
 from functions import *
 from datetime import datetime
+from  planB import *
 
 app = Flask(__name__)
+#------------for test----------
+@app.route('/test/<username>', methods = ['GET','POST'])
+def test(username):
+    data=get_user_logs(username)
+    return data
 
 # -------------------Login and Register page---------------------------
 @app.route('/verifyLogin', methods = ['GET','POST'])
@@ -43,12 +49,7 @@ def updateUserInfo(userId):
 @app.route('/getUserInfo/<userId>', methods = ['GET','POST'])
 def getUserInfo(userId):    
     data = json.loads(request.get_data())
-    try:
-        result=get_user_info(userId,data['date'])
-    except :
-        #print("'/getUserInfo/<userId>' use plan B")
-        result=csv_get_user_info(userId,data['date'])
-        result['planB']=True
+    result=get_user_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return json.dumps(result)
 
 #Get a list of all the history information records for a certain user
@@ -58,9 +59,9 @@ def getUserInfo_logs(userId):
     return result
 
 @app.route('/delete_user_info', methods = ['GET','POST'])
-def delete_user_info():    
+def delete_user_infos():    
     data = json.loads(request.get_data())
-    isSuccess=delete_user_info(data['mealId'])
+    isSuccess=delete_user_info(data['infoId'])
     result= {
         "isSuccess":isSuccess,
     }
@@ -87,7 +88,7 @@ def getDietInfo(userId):
 @app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
 def getDietLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_deit_logs(userId,data['date'])
+    result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return result
 
 @app.route('/delete_food', methods = ['GET','POST'])
@@ -118,7 +119,7 @@ def getExerciseInfo(userId):
 @app.route('/getExerciseLogs/<userId>', methods = ['GET','POST'])
 def getExerciseLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_exercise_info(userId,data['date'])
+    result=get_exercise_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return result
 @app.route('/delete_Exercise', methods = ['GET','POST'])
 def delete_Exercise(userId):

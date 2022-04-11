@@ -71,7 +71,7 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(len(data)>0)
     
     def test_delete_user_info(self):
-        infoId = 28
+        infoId = 37
         self.assertFalse(delete_user_info(infoId))
 
 
