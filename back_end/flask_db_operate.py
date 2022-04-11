@@ -22,8 +22,6 @@ def build_single_search_SQL(tableName, colName,colValue):
 
 def build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues2):
     sql = "select * from %s where %s = '%s' and  %s = '%s'" % (tableName, colName1, colValues1,colName2, colValues2)
-    if type(colValues2) != str:
-        sql = "select * from %s where %s = '%s' and  %s = %s" % (tableName, colName1, colValues1,colName2, colValues2)
     return sql
 
 
