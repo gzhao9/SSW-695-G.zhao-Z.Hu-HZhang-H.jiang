@@ -63,6 +63,13 @@ def get_infoId(userId):
     data = flask_db_operate.findEleInTable('infoId', tableuserInfo, 'userId', userId)
     return data
 
+def get_infoIdandfrom():
+    colname1 = 'foodId'
+    colname2 = 'comefrom'
+    data = flask_db_operate.showTwoCol(tableName, colName1, colName2)
+    return data
+
+
 
 def get_user_info(userId,date):
     return flask_db_operate.findInTableWithTwoLimit(tableuserInfo, 'userId', userId, 'infoDate', date)

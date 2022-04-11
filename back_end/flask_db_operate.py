@@ -59,6 +59,14 @@ def showTable(tableName):
     res_data = mycursor.fetchall()
     return res_data
 
+def showTwoCol(tableName, colName1, colName2):
+    SQL = "select %s, %s from %s"
+    RES_SQL = SQL % (colName1,colName2,tableName)
+    mycursor.execute(RES_SQL)
+    res_data = mycursor.fetchall()
+    return res_data
+
+
 # find particular element in table
 def findEleInTable(elementName,tableName,colName,colValue):
     RES_SQL = build_perticular_search_SQL(elementName, tableName, colName, colValue)
