@@ -5,43 +5,58 @@ import unittest
 
 
 class test_list_copy(unittest.TestCase):
+    info={
+            
+        'date': datetime.now(),
+        'userId':'GW',
+        'fullName': "a",
+        'gender':'M',
+        'allergySource': 'fish, soy',
+        'birthday':  datetime.strptime("1995-07-07", '%Y-%m-%d'),
+        'height': 182,
+        'weight': 103,
+        'fatRate': 29,
+        'isVegan': False,	
+        'mealPlan': "keepHealth",
+        }
 
-    # def test_login(self):
-    #     self.assertTrue(verify_login("GW","ggww"))
 
-    # def test_register(self):
-    #     self.assertFalse(verify_register("GW","ggww"))
+    def test_login(self):
+        self.assertTrue(verify_login("GW","ggww"))
+
+    def test_register(self):
+        self.assertFalse(verify_register("GW","ggww"))
 
 
     # def test_update_user_info(self):
-    #     info={
-            
-    #     'date': date.today(),
-    #     'userId':'GW1234',
-    #     'fullName': "a",
-    #     'gender':'M',
-    #     'allergySource': 'fish, soy',
-    #     'birthday':  datetime.strptime("1995-07-07", '%Y-%m-%d'),
-    #     'height': 182,
-    #     'weight': 103,
-    #     'fatRate': 29,
-    #     'isVegan': False,	
-    #     'mealPlan': "keepHealth",
-    #     }
-
-    #     self.assertTrue(update_user_info(info['userId'],info))
+    #     self.assertTrue(update_user_info(self.info['userId'],self.info))
 
     def test_get_user_info(self):
-        # data=get_user_info("GW",datetime.strptime("2022-04-11", '%Y-%m-%d'))
-        data=get_user_info("hu@jiang.com","2022-04-04")
+        data=get_user_info("GW",datetime.strptime("2022-04-12", '%Y-%m-%d'))
+        # data=get_user_info("GW","2022-04-12")
         self.assertTrue(len(data)>0)
+    
+    def test_get_user_logs(self):
+        data=get_user_logs("GW")
+        self.assertTrue(len(data)>0)
+
+    def test_get_food_info(self):
+        comefrom = 'webapi'
+        foodId = 1886337
+        data = get_food_info(comefrom, foodId)
+        self.assertTrue(len(data)>0)
+
+    def test_get_exercise_info(self):
+        sportId = 1
+        data = get_exercise_info(sportId)
+        self.assertTrue(len(data)>0)
+
+    def test_get_deit_logs
+
 """
     ----------------unpassd test cases-------------------
 
 
-    def test_get_user_logs(self):
-        data=get_user_logs("GW")
-        self.assertTrue(len(data)>0)
 
 
 """
