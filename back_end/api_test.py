@@ -1,6 +1,7 @@
 from api import app
 from flask import json
 import unittest
+from datetime import datetime
 class test_list_copy(unittest.TestCase):
 # -------------------Login and Register page---------------------------
     
@@ -89,7 +90,7 @@ class test_list_copy(unittest.TestCase):
             data=json.dumps({
                 'allergySource':[],
                 'birthday':"2022-04-10",
-                'date':"2022-04-10",
+                'date':datetime.now(),
                 'fatRate':18,
                 'fullName':"xxx",
                 'gender':"male",

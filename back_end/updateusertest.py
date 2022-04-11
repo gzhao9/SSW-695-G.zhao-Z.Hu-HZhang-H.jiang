@@ -2,6 +2,7 @@ from api import app
 from flask import json
 import unittest
 from functions import update_user_info
+from datetime import datetime
 class test_list_copy(unittest.TestCase):
 
     def test_updateUserInfo(self):        
@@ -10,7 +11,7 @@ class test_list_copy(unittest.TestCase):
             data=json.dumps({
                 'allergySource':[],
                 'birthday':"2022-04-10",
-                'date':"2022-04-10",
+                'date':"2022-04-10 07:12:11",
                 'fatRate':18,
                 'fullName':"xxx",
                 'gender':"male",
@@ -26,11 +27,11 @@ class test_list_copy(unittest.TestCase):
 
         self.assertTrue(response.status_code == 200)
         self.assertTrue(data['isSuccess'] == True)
-    def test_update_user_info(self):
+    def test_uppppp(self):
         info = {
                 'allergySource':[],
                 'birthday':"2022-04-10",
-                'date':"2022-04-10",
+                'date':datetime.now(),
                 'fatRate':18,
                 'fullName':"xxx",
                 'gender':"male",
