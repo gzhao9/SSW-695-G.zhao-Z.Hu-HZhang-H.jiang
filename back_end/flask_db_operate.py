@@ -140,7 +140,7 @@ def updateinTable(tableName,dataDict,colName,colValues):
             val.append(value)
     strs=RES_SQL % tuple(val)
     mycursor.execute(RES_SQL, tuple(val))
-    mycursor.fetchone()
+    #mycursor.fetchone()
     myresult = mycursor.fetchone()
     if myresult is None:
         return False
