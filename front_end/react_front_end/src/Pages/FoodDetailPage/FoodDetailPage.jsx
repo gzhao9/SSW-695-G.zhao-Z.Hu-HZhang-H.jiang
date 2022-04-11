@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button, Form, Input, InputNumber, Switch, AutoComplete } from "antd";
 import { useLocation } from "react-router-dom";
 import Header from "../../Components/Header/Header";
@@ -40,6 +40,8 @@ export default function FoodDetailPage() {
   function switchManuallyInput(checked) {
     setManuallyInput(!checked);
   }
+
+  useEffect(() => console.log(state.date), []);
 
   return (
     <div>
@@ -214,6 +216,26 @@ export default function FoodDetailPage() {
             {state.isAdd ? "Add Food" : "Change Food Info"}
           </Button>
         </Form.Item>
+        {!state.isAdd ? (
+          <Form.Item
+            wrapperCol={{
+              offset: 0,
+              span: 16,
+            }}
+          >
+            <Button
+              type="primary"
+              style={{
+                width: "80%",
+                height: "50px",
+                borderRadius: "25px",
+                bottom: "20px",
+              }}
+            >
+              Delete Food
+            </Button>
+          </Form.Item>
+        ) : null}
       </Form>
     </div>
   );

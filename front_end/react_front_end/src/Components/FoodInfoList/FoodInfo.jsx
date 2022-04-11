@@ -25,7 +25,11 @@ export default function FoodInfo(props) {
           <RightOutlined
             onClick={() => {
               navigate("/foodDetailPage", {
-                state: { isAdd: false, foodInfo: props.foodInfo },
+                state: {
+                  isAdd: false,
+                  foodInfo: props.foodInfo,
+                  date: props.date,
+                },
               });
             }}
           />

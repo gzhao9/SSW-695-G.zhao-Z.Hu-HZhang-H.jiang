@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Divider, Button, Affix } from "antd";
 import axios from "axios";
 import Header from "../../Components/Header/Header";
@@ -15,6 +15,7 @@ export default function FoodPage() {
   let totalProtein = 0;
   let totalFat = 0;
   let navigate = useNavigate();
+  const { state } = useLocation();
 
   const [foodData, setFoodData] = useState([]);
 
@@ -22,6 +23,7 @@ export default function FoodPage() {
     axios.get("/readUserDate").then(function (response) {
       setFoodData(response.data.mealInfo);
     });
+    console.log(state);
   }, []);
 
   foodData.map((item) => {
@@ -35,7 +37,7 @@ export default function FoodPage() {
   return (
     <div className="FoodInfoPg">
       <Header headerText="Food Information" />
-      <FoodInfoList foodInfo={foodData} />
+      <FoodInfoList foodInfo={foodData} date={state.date} />
       <Divider> Calorie Data </Divider>
       <CalorieInfoBlock totalCalorie={totalCalorie} />
       <Divider> Nutrition Data </Divider>

@@ -15,7 +15,7 @@ export default function LoginCompoment() {
     axios.post("/verifyLogin", values).then((response) => {
       let isSuccess = response.data["isSuccess"];
       if (isSuccess === true) {
-        navigate("/userInfoPage");
+        navigate("/userInfoPage", { state: { userId: values.userId } });
       } else {
         alert("Your Credential is not correct!");
       }
@@ -47,7 +47,7 @@ export default function LoginCompoment() {
       >
         <Form.Item
           label="Username"
-          name="username"
+          name="userId"
           rules={[
             {
               required: true,
