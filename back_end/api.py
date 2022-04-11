@@ -52,6 +52,15 @@ def getUserInfo_logs(userId):
     result=get_user_logs(userId)
     return result
 
+@app.route('/delete_user_info', methods = ['GET','POST'])
+def delete_user_info():    
+    data = json.loads(request.get_data())
+    isSuccess=delete_user_info(data['mealId'])
+    result= {
+        "isSuccess":isSuccess,
+    }
+    return result
+
 
 #---------------------------diet info----------------------------------------
 
@@ -76,10 +85,10 @@ def getDietLogs(userId):
     result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return result
 
-@app.route('/delete_food/<userId>', methods = ['GET','POST'])
-def delete_food(userId):
+@app.route('/delete_food', methods = ['GET','POST'])
+def delete_food():
     data = json.loads(request.get_data())
-    isSuccess=delete_meal_info(userId,data['mealId'])
+    isSuccess=delete_meal_info(data['mealId'])
     result= {
         "isSuccess":isSuccess,
     }
@@ -106,10 +115,10 @@ def getExerciseLogs(userId):
     data = json.loads(request.get_data())
     result=get_exercise_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return result
-@app.route('/delete_Exercise/<userId>', methods = ['GET','POST'])
+@app.route('/delete_Exercise', methods = ['GET','POST'])
 def delete_Exercise(userId):
     data = json.loads(request.get_data())
-    isSuccess=delete_sport_info(userId,data['sportRecordId'])
+    isSuccess=delete_sport_info(data['sportRecordId'])
     result= {
         "isSuccess":isSuccess,
     }
