@@ -120,12 +120,13 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
 # -----------------------------insert information------------------------------
 # insert into login table, if success, return true, else return false
 def insertintoTable(tableName,dataDict):
-    if not findIfInTable(tableName, 'userId', dataDict['userId']):
-        RES_SQL = build_insert_SQL(tableName, dataDict)
+    RES_SQL = build_insert_SQL(tableName, dataDict)
+    try:
         mycursor.execute(RES_SQL)
         mydb.commit()
         return True
-    else:
+    except:
+        mydb.rollback()
         return False
 
 #
