@@ -4,7 +4,7 @@ from flask import Flask,make_response,json,render_template,request,redirect,url_
 import json
 from functions import *
 from datetime import datetime
-
+from  planB import *
 
 app = Flask(__name__)
 
@@ -33,7 +33,7 @@ def verifyRegister():
 @app.route('/updateUserInfo/<userId>', methods = ['GET','POST'])
 def updateUserInfo(userId):
     data = json.loads(request.get_data())
-    data['date']=datetime.strptime(data['date'], '%Y-%m-%d')
+    #data['date']=datetime.strptime(data['date'], '%Y-%m-%d')
     isSuccess=update_user_info(userId,data)
     result= {
         "isSuccess":isSuccess,
@@ -44,7 +44,10 @@ def updateUserInfo(userId):
 @app.route('/getUserInfo/<userId>', methods = ['GET','POST'])
 def getUserInfo(userId):    
     data = json.loads(request.get_data())
-    result=get_user_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    try:
+        result=get_user_info(userId,data['date'])
+    except :
+        result=csv_planB.get_user_info(userId,data['date'])
     return result
 
 #Get a list of all the history information records for a certain user
@@ -83,7 +86,7 @@ def getDietInfo(userId):
 @app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
 def getDietLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    result=get_deit_logs(userId,data['date'])
     return result
 
 @app.route('/delete_food', methods = ['GET','POST'])
@@ -114,7 +117,7 @@ def getExerciseInfo(userId):
 @app.route('/getExerciseLogs/<userId>', methods = ['GET','POST'])
 def getExerciseLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_exercise_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    result=get_exercise_info(userId,data['date'])
     return result
 @app.route('/delete_Exercise', methods = ['GET','POST'])
 def delete_Exercise(userId):

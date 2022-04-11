@@ -52,6 +52,19 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(data['isSuccess'] == True)
 
+    def test_getUserInfo_logs(self):        
+        response = app.test_client().post(
+            '/getUserInfo_logs/GW',
+            data=json.dumps({
+                'date':"2022-04-10",
+            }),
+            content_type='application/json',
+        )
+
+        data = json.loads(response.get_data(as_text=True))
+
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(data) >0)
     def test_update_food(self):
         pass
     """def test_getUserInfo(self):        
@@ -68,19 +81,7 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(data['isSuccess'] == True)
 
-    def test_getUserInfo_logs(self):        
-        response = app.test_client().post(
-            '/getUserInfo_logs/GW',
-            data=json.dumps({
-                'date':"2022-04-10",
-            }),
-            content_type='application/json',
-        )
 
-        data = json.loads(response.get_data(as_text=True))
-
-        self.assertTrue(response.status_code == 200)
-        self.assertTrue(len(data) >0)"""
-
+"""
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)

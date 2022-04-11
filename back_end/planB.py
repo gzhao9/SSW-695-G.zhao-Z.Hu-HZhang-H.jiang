@@ -1,7 +1,17 @@
+import csv
+from email.contentmanager import raw_data_manager
 
-def get_user_info(userId,date):
-    return flask_db_operate.findInTableWithTwoLimit(tableuserInfo, 'userId', userId, 'infoDate', date)
+def get_data(path):
+    with open(path, mode='r') as inp:
+        reader = csv.reader(inp)
+        user_info = {rows[0]:rows[1] for rows in reader}
+    return user_info
 
+def csv_get_user_info(userId,date):
+    raw=get_data("back_end\\database\\userInfo_logs.csv")
+    result = [rows for rows in raw.values() if rows['userId']==userId and rows['infoDate']==date]
+    return result
+"""
 def get_user_logs(userId):
     return flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
 
@@ -68,3 +78,4 @@ def cal_BMR(gender,weight,height,age):
         return 66.5 + (13.75 * weight) + (5 * height) - (6.755 * age)
     else:
         return 655.1 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
+"""
