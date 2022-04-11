@@ -45,7 +45,7 @@ def verify_register(userId,password):
     canreg = flask_db_operate.insertintoTable(tablelogin,userInfo)
     return canreg
 
-# #  -------------------obtain info function---------------------------
+# -------------------obtain info function---------------------------
 def get_BMR(userId):
     BMR = flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
     return BMR
