@@ -75,6 +75,12 @@ def update_user_info(userId,info):
     info['userId']=userId
     info['BMR']=cal_BMR(info['gender'],info['weight'],info['height'],age)
     info['fatRate'] # calculation
+
+    info['infoDate']=info.pop('date')
+    info['userName']=info.pop('fullName')
+
+    info['isVegan']=True if info['isVegan']=='true' else False
+
     return flask_db_operate.insertintoTable(tableuserInfo, info)
 
 def update_food_info(userId,info):
