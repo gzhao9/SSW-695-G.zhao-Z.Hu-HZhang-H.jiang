@@ -68,7 +68,7 @@ def delete_user_info():
 @app.route('/updateDietInfo/<userId>', methods = ['GET','POST'])
 def updateDietInfo(userId):
     data = json.loads(request.get_data())
-    isSuccess=update_food_info(userId,data)
+    isSuccess=update_meal_info(userId,data)
     result= {
         "isSuccess":isSuccess,
     }

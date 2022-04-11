@@ -29,7 +29,6 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(data['isSuccess'] == False)
 
     #--------------------user info --------------------------
-    """"""
     def test_updateUserInfo(self):        
         response = app.test_client().post(
             '/updateUserInfo/GW',
@@ -53,6 +52,8 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(data['isSuccess'] == True)
 
+    def test_update_food(self):
+        pass
     """def test_getUserInfo(self):        
         response = app.test_client().post(
             '/getUserInfo/GW',
