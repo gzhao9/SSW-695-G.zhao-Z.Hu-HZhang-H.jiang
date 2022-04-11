@@ -51,7 +51,19 @@ class test_list_copy(unittest.TestCase):
         data = get_exercise_info(sportId)
         self.assertTrue(len(data)>0)
 
-    def test_get_deit_logs
+    def test_get_deit_logs(self):
+        # userId = self.info['userId']
+        userId = 'hy@zhang.com'
+        mealdate = datetime.strptime("2022-04-1", '%Y-%m-%d')
+        data = get_deit_logs(userId, mealdate)
+        self.assertTrue(len(data)>0)
+
+    def test_get_exercise_logs(self):
+        userId = self.info['userId']
+        sportdate = datetime.strptime("2022-04-1", '%Y-%m-%d')
+        data = get_exercise_logs(userId, date)
+        self.assertTrue(len(data)>0)
+
 
 """
     ----------------unpassd test cases-------------------
