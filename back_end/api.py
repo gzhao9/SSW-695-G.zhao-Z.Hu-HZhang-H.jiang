@@ -47,8 +47,10 @@ def getUserInfo(userId):
     try:
         result=get_user_info(userId,data['date'])
     except :
-        result=csv_planB.get_user_info(userId,data['date'])
-    return result
+        #print("'/getUserInfo/<userId>' use plan B")
+        result=csv_get_user_info(userId,data['date'])
+        result['planB']=True
+    return json.dumps(result)
 
 #Get a list of all the history information records for a certain user
 @app.route('/getUserInfo_logs/<userId>', methods = ['GET','POST'])
