@@ -82,13 +82,13 @@ def findInTable(tableName,colName, colValue):
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
     field_names = [i[0] for i in mycursor.description]
-    if len(myresult)>1:
+    if len(myresult)>=1:
         result=list()
         for i in myresult:
             result.append(dict(zip(field_names,i)))
         #result=json.dumps(result)
     else:
-        result=[dict(zip(field_names,myresult[0]))]
+        result=[{'isNone':True}]
     
     return to_json(result)
     
@@ -104,13 +104,13 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
     field_names = [i[0] for i in mycursor.description]
-    if len(myresult)>1:
+    if len(myresult)>=1:
         result=list()
         for i in myresult:
             result.append(dict(zip(field_names,i)))
         #result=json.dumps(result)
     else:
-        result=[dict(zip(field_names,myresult[0]))]
+        result=[{'isNone':True}]
     return to_json(result)
 #
 #

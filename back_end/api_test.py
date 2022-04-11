@@ -29,9 +29,9 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(data['isSuccess'] == False)
 
     #--------------------user info --------------------------
-    def test_api_test(self):
+    def test_getUserInfo_logs(self):
         response = app.test_client().post(
-            '/test/GW', content_type='application/json',
+            '/getUserInfo_logs/GW', content_type='application/json',
         )
         data = response.get_data(as_text=True)
         data=json.loads(data)
@@ -39,7 +39,7 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(data))
 
-    """def test_getUserInfo(self):        
+    def test_getUserInfo(self):        
         response = app.test_client().post(
             '/getUserInfo/GW',
             data=json.dumps({
@@ -53,19 +53,36 @@ class test_list_copy(unittest.TestCase):
 
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(data) >0)
-    def test_getUserInfo(self):        
+
+    def test_del_user_logs(self):
         response = app.test_client().post(
-            '/getUserInfo/GW',
+            '/delete_user_info', 
             data=json.dumps({
-                'date':"2022-04-10",
+                'infoId':'37',
             }),
             content_type='application/json',
         )
-
-        data = json.loads(response.get_data(as_text=True))
+        data = response.get_data(as_text=True)
+        data=json.loads(data)
 
         self.assertTrue(response.status_code == 200)
-        self.assertTrue(data['isSuccess'] == True)
+        self.assertFalse(data["isSuccess"])
+
+    #----diet-------
+    def test_getDietlogs(self):
+        response = app.test_client().post(
+            '/getDietLogs/hy@zhang.com', 
+            data=json.dumps({
+                'date':'2022-04-01',
+            }),
+            content_type='application/json',
+        )
+        data = response.get_data(as_text=True)
+        data=json.loads(data)
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(data)==3)
+
+    """
     def test_updateUserInfo(self):        
         response = app.test_client().post(
             '/updateUserInfo/GW',
@@ -88,7 +105,7 @@ class test_list_copy(unittest.TestCase):
 
         self.assertTrue(response.status_code == 200)
         self.assertTrue(data['isSuccess'] == True)
-
 """
+
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
