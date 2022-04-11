@@ -12,20 +12,28 @@ import {
 } from "antd";
 import Header from "../../Components/Header/Header";
 import "./GetUserInfoPage.css";
+import axios from "axios";
+import moment from "moment";
 import "../../Components/ButtonWide/ButtonWide.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function GetUserInfoPage() {
   const { Option } = Select;
   const navigate = useNavigate();
-
+  const { state } = useLocation();
+  const { userId } = state;
   const onFinish = (values) => {
     const processedValues = {
       ...values,
       birthday: values["birthday"].format("YYYY-MM-DD"),
+      date: moment().format("YYYY-MM-DD"),
     };
     console.log("Success:", processedValues);
-    navigate("/userInfoPage");
+    axios
+      .post("/updateUserInfo/" + userId, processedValues)
+      .then((response) => {
+        navigate("/userInfoPage", { state: { userId: userId } });
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -54,6 +62,25 @@ export default function GetUserInfoPage() {
           ]}
         >
           <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Gender"
+          name="gender"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your gender!",
+            },
+          ]}
+        >
+          <Radio.Group size="small" style={{ float: "left" }}>
+            <Space direction="vertical" size="small" align="start">
+              <Radio value="male">Male</Radio>
+              <Radio value="female">Female</Radio>
+              <Radio value="other">Other</Radio>
+            </Space>
+          </Radio.Group>
         </Form.Item>
 
         <Form.Item
@@ -101,6 +128,24 @@ export default function GetUserInfoPage() {
             style={{ float: "left" }}
             min={0}
             max={1000}
+            precision={2}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Fat Rate (%)"
+          name="fatRate"
+          rules={[
+            {
+              required: true,
+              message: "Please input your fat rate!",
+            },
+          ]}
+        >
+          <InputNumber
+            style={{ float: "left" }}
+            min={0}
+            max={100}
             precision={2}
           />
         </Form.Item>

@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Row, Col, Card, List, Skeleton } from "antd";
+import {
+  Avatar,
+  Row,
+  Col,
+  Card,
+  List,
+  Skeleton,
+  Button,
+  DatePicker,
+} from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 import Header from "../../Components/Header/Header";
 import "../../UniversalStyle/UniversalStyle.css";
 
 export default function UserInfoPage() {
-  // const { state } = useLocation();
-  // const { userName } = state;
+  const { state } = useLocation();
+  const { userId } = state;
+  const [chosenDate, setChosenDate] = useState(moment().format("YYYY-MM-DD"));
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    axios.get("/readUserDate").then((value) => {
-      setUserData(value.data);
-      setIsLoading(false);
+    axios.post("/getUserInfo/" + userId, { date: chosenDate }).then((value) => {
+      // setUserData(value.data);
+      // setIsLoading(false);
+      console.log(value.data);
     });
-  }, []);
+  }, [chosenDate]);
   const { userName, avatar, mealInfo, remainedCalorie } = userData;
   let shownMealInfo = [];
   if (mealInfo) {
@@ -30,6 +42,9 @@ export default function UserInfoPage() {
       }
       shownMealInfo.push("...");
     }
+  }
+  function onDateChange(date, dateString) {
+    setChosenDate(dateString);
   }
 
   return (
@@ -55,10 +70,22 @@ export default function UserInfoPage() {
               style={{ marginTop: "20px", marginBottom: "20px" }}
             />
           </Col>
-          <Col span={16} className="shownText" style={{ textAlign: "left" }}>
+          <Col span={8} className="shownText" style={{ textAlign: "left" }}>
             Hello, <br /> {userName}
           </Col>
+          <Col span={8} style={{ textAlign: "left" }}>
+            <Link style={{ color: "royalblue" }} to="/getUserInfoPage">
+              View My Info
+            </Link>
+          </Col>
         </Row>
+        <DatePicker
+          placeholder="Please Input the Date"
+          size="large"
+          defaultValue={moment()}
+          style={{ width: "80%", marginTop: "30px", marginBottom: "30px" }}
+          onChange={onDateChange}
+        ></DatePicker>
         <Card
           title="Remaining Calorie"
           type="inner"
@@ -90,7 +117,11 @@ export default function UserInfoPage() {
           }}
           headStyle={{ textAlign: "left" }}
           extra={
-            <Link style={{ color: "royalblue" }} to="/foodPage">
+            <Link
+              style={{ color: "royalblue" }}
+              to="/foodPage"
+              state={{ date: chosenDate }}
+            >
               View All
             </Link>
           }

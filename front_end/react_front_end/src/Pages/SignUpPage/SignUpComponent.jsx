@@ -11,7 +11,14 @@ export default function SignUpComponent() {
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    navigate("/getUserInfoPage");
+    axios.post("/verifyRegister", values).then((response) => {
+      let isSuccess = response.data["isSuccess"];
+      if (isSuccess === true) {
+        navigate("/getUserInfoPage", { state: { userId: values.email } });
+      } else {
+        alert("You email address already exists!");
+      }
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
