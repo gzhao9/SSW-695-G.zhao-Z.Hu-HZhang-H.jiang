@@ -71,7 +71,7 @@ def get_exercise_logs(userId,date):
 
 #--------------------------update information-----------------------------
 def update_user_info(userId,info):
-    age=int(info['date'][:4])-int(info['birthday'][:4])
+    age=int(info['infoDate'][:4])-int(info['birthday'][:4])
     info['userId']=userId
     info['BMR']=cal_BMR(info['gender'],info['weight'],info['height'],age)
     info['fatRate'] # calculation

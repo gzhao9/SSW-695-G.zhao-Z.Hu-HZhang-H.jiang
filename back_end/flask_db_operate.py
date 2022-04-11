@@ -56,10 +56,10 @@ def findInTable(tableName,colName, colValues):
     return myresult
 
 # find in table with two limit
-def findInTableWithTwoLimit(tablename, colName1, colValues1, colName2, colValues2):
+def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues2):
     if isinstance(colValues1, str) and isinstance(colValues2, str):
         SQL = "select * from %s where %s = '%s' and  %s = '%s'"
-    if isinstance(colValues, int) or isinstance(colValues, float):
+    if (isinstance(colValues1, int) or isinstance(colValues1, float))and(isinstance(colValues2, int) or isinstance(colValues2, float)):
         SQL = "select * from %s where %s = %s and %s = %s"
     RES_SQL = SQL % (tableName, colName1, colValues1,colName2, colValues2)
     mycursor.execute(RES_SQL)
@@ -125,11 +125,12 @@ def deleteInTableWithTwoLimit(tablename, colName1, colValues1, colName2, colValu
 #----------------------------update information---------------------------------
 # update perticular infomation in table
 def updateinTable(tableName,dataDict,colName,colValues):
-    placeholders = ','.join(['%s'] * len(dataDict))
-    cols = ','.join(dataDict.keys())
-    SQL = "update %s set %s = %s where %s = %s"
-    RES_SQL = SQL % (tableName,cols,placeholders,colName,colValues)
-    mycursor.execute(RES_SQL)
+    placeholders = ','.join('{}=%s'.format(k) for k in dataDict)
+    operate = "update %s " % tableName
+    SQL ="set{}".format(placeholders)
+    limit = " where %s = %s " % (colName, colValues)
+    RES_SQL = operate + SQL + limit
+    mycursor.execute(RES_SQL, dataDict.values())
     myresult = mycursor.fetchone()
     if myresult is None:
         return False
