@@ -24,9 +24,9 @@ def build_insert_SQL(tableName,datadict):
 
 def build_single_search_SQL(tableName, colName,colValue):
     if isinstance(colValue, str):
-        sql = "select * from %s where %s = '%s'" % (tableName, colName, colValue)
+        sql = "select * from %s where %s = '%s' " % (tableName, colName, colValue)
     elif isinstance(colValue, int) or isinstance(colValue, float):
-        sql = "select * from %s where %s = %s" % (tableName, colName, colValue)
+        sql = "select * from %s where %s = %s " % (tableName, colName, colValue)
     return sql
 
 def build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues2):
