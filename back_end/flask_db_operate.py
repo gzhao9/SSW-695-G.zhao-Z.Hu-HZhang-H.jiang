@@ -57,7 +57,7 @@ def findInTable(tableName,colName, colValues):
 
 # find in table with two limit
 def findInTableWithTwoLimit(tablename, colName1, colValues1, colName2, colValues2):
-    if isinstance(colValues, str):
+    if isinstance(colValues1, str) and isinstance(colValues2, str):
         SQL = "select * from %s where %s = '%s' and  %s = '%s'"
     if isinstance(colValues, int) or isinstance(colValues, float):
         SQL = "select * from %s where %s = %s and %s = %s"
