@@ -13,7 +13,7 @@ app = Flask(__name__)
 def verifyLogin():
     data = json.loads(request.get_data())   
     result= {
-        "isSuccess":verify_login(data['userId'],data['password']),
+        "isSuccess":verify_login(data['userID'],data['password']),
     }
     return result
 
@@ -22,7 +22,7 @@ def verifyLogin():
 def verifyRegister():
     data = json.loads(request.get_data())   
     result= {
-        "isSuccess":verify_register(data['email'],data['password']),
+        "isSuccess":verify_register(data['userID'],data['password']),
     }
     return result
 
@@ -131,4 +131,4 @@ def delete_Exercise(userId):
     return result
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=5000)
+    app.run()
