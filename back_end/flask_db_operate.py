@@ -136,6 +136,9 @@ def insertintoTable(tableName,dataDict):
 # -----------------------------delete information------------------------------
 # delete one row in table
 def deleteinTable(tableName,colName,colValues):
+    still = findIfInTable(tableName, colName, colValues)
+    if (not still):
+        return False
     RES_SQL = build_delete_SQL(tableName, colName, colValues)
     try:
         mycursor.execute(RES_SQL)
@@ -143,9 +146,6 @@ def deleteinTable(tableName,colName,colValues):
     except:
         mydb.rollback()
         return False   
-    still = findIfInTable(tableName, colName, colValues)
-    if (still):
-        return False
     return True
 
 #
