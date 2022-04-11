@@ -28,11 +28,18 @@ def build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues
 
 def build_perticular_search_SQL(elementName, tableName, colName,colValue):
     if isinstance(colValue, str):
-        sql = "select %s from %s where %s = '%s'" % (elementName, tablename, colName, colValue)
+        sql = "select %s from %s where %s = '%s'" % (elementName, tableName, colName, colValue)
     elif isinstance(colValue, int) or isinstance(colValue, float):
-        sql = "select %s from %s where %s = %s" % (elementName, tablename, colName, colValue)
+        sql = "select %s from %s where %s = %s" % (elementName, tableName, colName, colValue)
     return sql
-    
+
+def build_delete_SQL(tableName, colName,colValue):
+    if isinstance(colValue, str):
+        sql = "delete from %s where %s = '%s'" % (tableName, colName, colValue)
+    elif isinstance(colValue, int) or isinstance(colValue, float):
+        sql = "delete from %s where %s = %s" % (tableName, colName, colValue)
+    return sql
+
 
 # ------------------------------find information----------------------
 # find all data in table
@@ -44,7 +51,7 @@ def showTable(tableName):
     return res_data
 
 # find particular element in table
-def findEleInTable(elementName,tablename,colName,colValue):
+def findEleInTable(elementName,tableName,colName,colValue):
     RES_SQL = build_perticular_search_SQL(elementName, tableName, colName, colValue)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
@@ -103,17 +110,12 @@ def insertintoTable(tableName,dataDict):
 # -----------------------------delete information------------------------------
 # delete one row in table
 def deleteinTable(tableName,colName,colValues):
-    if isinstance(colValues, str):
-        SQL = "delete from %s where %s = '%s'"
-    if isinstance(colValues, int) or isinstance(colValues, float):
-        SQL = "delete from %s where %s = %s"
-    RES_SQL = SQL % (tableName, colName, colValues)
-    print(RES_SQL)
+    RES_SQL = build_delete_SQL(tableName, colName, colValues)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchone()
-    mydb.commit()
     if myresult is None:
-        return False
+        return False   
+    mydb.commit()
     return True
 
 #

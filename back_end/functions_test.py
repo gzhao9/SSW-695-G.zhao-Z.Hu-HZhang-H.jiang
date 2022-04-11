@@ -64,7 +64,22 @@ class test_list_copy(unittest.TestCase):
         data = get_exercise_logs(userId, sportdate)
         self.assertTrue(len(data)>0)
 
+
+    def test_get_infoId(self):
+        userId = 'GW'
+        data = get_infoId(userId)
+        self.assertTrue(len(data)>0)
     
+    def test_delete_user_info(self):
+        infoId = 28
+        self.assertTrue(delete_user_info(infoId))
+
+
+    def test_delete_meal_info(self):
+        mealRecordId = 5
+        self.assertFlase(delete_meal_info(mealRecordId))
+        
+        
 
 
 """

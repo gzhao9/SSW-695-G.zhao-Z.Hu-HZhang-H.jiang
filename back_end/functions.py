@@ -59,6 +59,11 @@ def get_BMR(userId):
     BMR = flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
     return BMR
 
+def get_infoId(userId):
+    data = flask_db_operate.findEleInTable('infoId', tableuserInfo, 'userId', userId)
+    return data
+
+
 def get_user_info(userId,date):
     return flask_db_operate.findInTableWithTwoLimit(tableuserInfo, 'userId', userId, 'infoDate', date)
 
