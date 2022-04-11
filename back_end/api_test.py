@@ -84,7 +84,7 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(len(data)==1)
 
 
-    def test_updateUserInfo(self):        
+    """def test_updateUserInfo(self):        
         response = app.test_client().post(
             '/updateUserInfo/GW',
             data=json.dumps({
@@ -107,7 +107,7 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(data['isSuccess'] == True)
 
-    """
+    
     
 """
 
