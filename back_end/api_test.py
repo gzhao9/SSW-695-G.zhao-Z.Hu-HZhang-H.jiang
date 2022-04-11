@@ -3,7 +3,7 @@ from flask import json
 import unittest
 class test_list_copy(unittest.TestCase):
 # -------------------Login and Register page---------------------------
-
+    
     def test_verifyLogin(self):        
         response = app.test_client().post(
             '/verifyLogin',
@@ -29,6 +29,35 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(data['isSuccess'] == False)
 
     #--------------------user info --------------------------
+
+
+    def test_getUserInfo(self):        
+        response = app.test_client().post(
+            '/getUserInfo/GW',
+            data=json.dumps({
+                'date':"2022-04-12",
+            }),
+            content_type='application/json',
+        )
+
+        data = response.get_data(as_text=True)
+        data=json.loads(data)
+
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(data) >0)
+    """def test_getUserInfo(self):        
+        response = app.test_client().post(
+            '/getUserInfo/GW',
+            data=json.dumps({
+                'date':"2022-04-10",
+            }),
+            content_type='application/json',
+        )
+
+        data = json.loads(response.get_data(as_text=True))
+
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(data['isSuccess'] == True)
     def test_updateUserInfo(self):        
         response = app.test_client().post(
             '/updateUserInfo/GW',
@@ -51,36 +80,6 @@ class test_list_copy(unittest.TestCase):
 
         self.assertTrue(response.status_code == 200)
         self.assertTrue(data['isSuccess'] == True)
-
-    def test_getUserInfo_logs(self):        
-        response = app.test_client().post(
-            '/getUserInfo_logs/GW',
-            data=json.dumps({
-                'date':"2022-04-10",
-            }),
-            content_type='application/json',
-        )
-
-        data = json.loads(response.get_data(as_text=True))
-
-        self.assertTrue(response.status_code == 200)
-        self.assertTrue(len(data) >0)
-    def test_update_food(self):
-        pass
-    """def test_getUserInfo(self):        
-        response = app.test_client().post(
-            '/getUserInfo/GW',
-            data=json.dumps({
-                'date':"2022-04-10",
-            }),
-            content_type='application/json',
-        )
-
-        data = json.loads(response.get_data(as_text=True))
-
-        self.assertTrue(response.status_code == 200)
-        self.assertTrue(data['isSuccess'] == True)
-
 
 """
 if __name__ == '__main__':
