@@ -81,9 +81,9 @@ class test_list_copy(unittest.TestCase):
         res=delete_meal_info(mealRecordId)
         self.assertTrue(res)
         
-    # def test_get_infoIdandfrom(self):
-    #     data = get_infoIdandfrom()
-    #     self.assertTrue(len(data))
+    def test_get_infoIdandfrom(self):
+        data = get_infoIdandfrom()
+        self.assertTrue(len(data))
         
 
 

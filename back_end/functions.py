@@ -63,11 +63,21 @@ def get_infoId(userId):
     data = flask_db_operate.findEleInTable('infoId', tableuserInfo, 'userId', userId)
     return data
 
+
 def get_infoIdandfrom():
     colname1 = 'foodId'
     colname2 = 'comefrom'
-    data = flask_db_operate.showTwoCol(tableName, colName1, colName2)
-    return data
+    data = flask_db_operate.showTwoCol(tablefoodInfo, colname1, colname2)
+    list1 = list()
+    list2 = list()
+    for i in data:
+        list1.append(i[0])
+        list2.append(i[1])
+    res = {
+        colname1 : list1,
+        colname2 : list2,
+    }
+    return res
 
 
 
