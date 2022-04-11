@@ -88,7 +88,7 @@ def findInTable(tableName,colName, colValue):
             result.append(dict(zip(field_names,i)))
         #result=json.dumps(result)
     else:
-        return None
+        result=[{'isNone':True}]
     
     return to_json(result)
     
@@ -110,7 +110,7 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
             result.append(dict(zip(field_names,i)))
         #result=json.dumps(result)
     else:
-        return None
+        result=[{'isNone':True}]
     return to_json(result)
 #
 #

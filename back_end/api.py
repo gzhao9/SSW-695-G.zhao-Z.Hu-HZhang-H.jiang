@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route('/test/<username>', methods = ['GET','POST'])
 def test(username):
     data=get_user_logs(username)
-    return data
+    return json.dumps(data)
 
 # -------------------Login and Register page---------------------------
 @app.route('/verifyLogin', methods = ['GET','POST'])
