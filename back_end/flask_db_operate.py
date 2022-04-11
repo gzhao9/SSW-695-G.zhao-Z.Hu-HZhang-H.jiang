@@ -35,7 +35,7 @@ def findIfInTable(tableName,colName, colValues):
     else:
         SQL = "select * from %s where %s = '%s'"
     RES_SQL = SQL % (tableName, colName, colValues)
-    print(RES_SQL)
+    #print(RES_SQL)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchone()
     if myresult is None:

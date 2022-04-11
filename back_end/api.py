@@ -22,7 +22,7 @@ def verifyLogin():
 def verifyRegister():
     data = json.loads(request.get_data())   
     result= {
-        "isSuccess":verify_register(data['confirm'],data['password']),
+        "isSuccess":verify_register(data['email'],data['password']),
     }
     return result
 
@@ -33,6 +33,7 @@ def verifyRegister():
 @app.route('/updateUserInfo/<userId>', methods = ['GET','POST'])
 def updateUserInfo(userId):
     data = json.loads(request.get_data())
+    data['date']=datetime.strptime(data['date'], '%Y-%m-%d')
     isSuccess=update_user_info(userId,data)
     result= {
         "isSuccess":isSuccess,
