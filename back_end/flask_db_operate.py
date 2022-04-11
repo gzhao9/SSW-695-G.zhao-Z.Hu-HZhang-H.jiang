@@ -12,7 +12,7 @@ def to_json(data):
     for i in range(len(data)):
         for k,v in data[i].items():
             if type(v)==type(date.today())or type(v)==type(datetime.now()):
-                data[i][k]=v.strftime("%m/%d/%Y, %H:%M:%S")
+                data[i][k]=v.strftime("%m-%d-%Y, %H:%M:%S")
     return json.dumps(data)
 # -----------------------------------build sql statement--------------------------------
 def build_insert_SQL(tableName,datadict):
