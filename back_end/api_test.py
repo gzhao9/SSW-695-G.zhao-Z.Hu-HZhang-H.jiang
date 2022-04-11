@@ -71,15 +71,16 @@ class test_list_copy(unittest.TestCase):
     #----diet-------
     def test_getDietlogs(self):
         response = app.test_client().post(
-            '/getDietLogs/GW', 
+            '/getDietLogs/hy@zhang.com', 
             data=json.dumps({
-                'date':'2022-04-10',
+                'date':'2022-04-01',
             }),
             content_type='application/json',
         )
         data = response.get_data(as_text=True)
         data=json.loads(data)
-        pass
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(data)==3)
 
     """
     def test_updateUserInfo(self):        
