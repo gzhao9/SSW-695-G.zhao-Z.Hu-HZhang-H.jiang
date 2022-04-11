@@ -71,14 +71,15 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(len(data)>0)
     
     def test_delete_user_info(self):
-        infoId = 37
-        self.assertFalse(delete_user_info(infoId))
+        infoId = 35
+        res = delete_user_info(infoId)
+        self.assertTrue(res)
 
 
     def test_delete_meal_info(self):
         mealRecordId = 5
         res=delete_meal_info(mealRecordId)
-        self.assertFalse(res)
+        self.assertTrue(res)
         
         
 
