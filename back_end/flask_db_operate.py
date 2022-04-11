@@ -72,7 +72,14 @@ def findInTable(tableName,colName, colValue):
     RES_SQL = build_single_search_SQL(tableName, colName, colValue)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
-    return myresult
+    field_names = [i[0] for i in mycursor.description]
+    if len(myresult)>1:
+        result=list()
+        for i in myresult:
+            result.append(dict(zip(field_names,i)))
+    else:
+        result=dict(zip(field_names,myresult[0]))
+    return result
     
 
 # find in table with two limit
@@ -85,7 +92,14 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
     RES_SQL = build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues2)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
-    return myresult
+    field_names = [i[0] for i in mycursor.description]
+    if len(myresult)>1:
+        result=list()
+        for i in myresult:
+            result.append(dict(zip(field_names,i)))
+    else:
+        result=dict(zip(field_names,myresult[0]))
+    return result
 #
 #
 #

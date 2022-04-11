@@ -72,12 +72,13 @@ class test_list_copy(unittest.TestCase):
     
     def test_delete_user_info(self):
         infoId = 28
-        self.assertTrue(delete_user_info(infoId))
+        self.assertFalse(delete_user_info(infoId))
 
 
     def test_delete_meal_info(self):
         mealRecordId = 5
-        self.assertFlase(delete_meal_info(mealRecordId))
+        res=delete_meal_info(mealRecordId)
+        self.assertFalse(res)
         
         
 
