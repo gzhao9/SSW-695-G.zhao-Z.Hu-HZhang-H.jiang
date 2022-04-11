@@ -127,10 +127,20 @@ def deleteInTableWithTwoLimit(tablename, colName1, colValues1, colName2, colValu
 def updateinTable(tableName,dataDict,colName,colValues):
     placeholders = ','.join('{}=%s'.format(k) for k in dataDict)
     operate = "update %s " % tableName
-    SQL ="set{}".format(placeholders)
-    limit = " where %s = %s " % (colName, colValues)
+    SQL ="set {}".format(placeholders)
+    limit = " where %s = '%s' " % (colName, colValues)
     RES_SQL = operate + SQL + limit
-    mycursor.execute(RES_SQL, dataDict.values())
+    val = list()
+    for value in dataDict.values():
+        if type(value) == str:
+            val.append(f"'{value}'")
+        elif type(value) == list:
+            val.append(f"'{','.join(value)}'")
+        else:
+            val.append(value)
+    strs=RES_SQL % tuple(val)
+    mycursor.execute(RES_SQL, tuple(val))
+    mycursor.fetchone()
     myresult = mycursor.fetchone()
     if myresult is None:
         return False
