@@ -80,7 +80,8 @@ def insertintoTable(tableName,dataDict):
         RES_SQL = SQL % (tableName, cols, placeholders)
         print(RES_SQL)
         # print('RES_SQL:'+RES_SQL)
-        mycursor.execute(RES_SQL, list(dataDict.values()))
+        val = formatSQL(dataDict)
+        mycursor.execute(RES_SQL, tuple(val))
         mydb.commit()
         return True
     else:
@@ -101,6 +102,7 @@ def deleteinTable(tableName,colName,colValues):
     print(RES_SQL)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchone()
+    mydb.commit()
     if myresult is None:
         return False
     return True
@@ -130,6 +132,17 @@ def updateinTable(tableName,dataDict,colName,colValues):
     SQL ="set {}".format(placeholders)
     limit = " where %s = '%s' " % (colName, colValues)
     RES_SQL = operate + SQL + limit
+    val = formatSQL(dataDict)
+    strs=RES_SQL % tuple(val)
+    mycursor.execute(RES_SQL, tuple(val))
+    #mycursor.fetchone()
+    myresult = mycursor.fetchall()
+    if myresult == []:
+        return False
+    return myresult
+
+
+def formatSQL(dataDict):
     val = list()
     for value in dataDict.values():
         if type(value) == str:
@@ -138,13 +151,11 @@ def updateinTable(tableName,dataDict,colName,colValues):
             val.append(f"'{','.join(value)}'")
         else:
             val.append(value)
-    strs=RES_SQL % tuple(val)
-    mycursor.execute(RES_SQL, tuple(val))
-    #mycursor.fetchone()
-    myresult = mycursor.fetchone()
-    if myresult is None:
-        return False
-    return True
+    return val
+
+
+
+
 # # insert into foodInfo, if success, return true, else return false
 # def insertFood(foodDict):
 #     table = "foodInfo"
@@ -191,4 +202,3 @@ def updateinTable(tableName,dataDict,colName,colValues):
 #         return True
 #     else:
 #         return False
-
