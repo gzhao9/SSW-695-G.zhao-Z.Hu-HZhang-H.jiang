@@ -68,7 +68,19 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertFalse(data["isSuccess"])
 
-    
+    #----diet-------
+    def test_getDietlogs(self):
+        response = app.test_client().post(
+            '/getDietLogs/GW', 
+            data=json.dumps({
+                'date':'2022-04-10',
+            }),
+            content_type='application/json',
+        )
+        data = response.get_data(as_text=True)
+        data=json.loads(data)
+        pass
+
     """
     def test_updateUserInfo(self):        
         response = app.test_client().post(
