@@ -45,6 +45,15 @@ def verify_register(userId,password):
     canreg = flask_db_operate.insertintoTable(tablelogin,userInfo)
     return canreg
 
+# -----------------------Insert info into table--------------------
+def add_sport():
+    sportInfo = {
+
+    }
+    flask_db_operate.insertintoTable(tablesportInfo, sportInfo)
+
+
+
 # -------------------obtain info function---------------------------
 def get_BMR(userId):
     BMR = flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
@@ -56,11 +65,14 @@ def get_user_info(userId,date):
 def get_user_logs(userId):
     return flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
 
-def get_food_info(userId,foodId):
-    return flask_db_operate.findInTableWithTwoLimit(tablefoodInfo, 'userId', userId, 'foodId', foodId)
+def get_food_info(comefrom,foodId):
+    if comefrom == 'webapi':
+        return flask_db_operate.findInTable(tablefoodInfo, 'foodId', foodId)
+    else:
+        return flask_db_operate.findInTableWithTwoLimit(tablefoodInfo, 'comefrom', comefrom, 'foodId', foodId)
 
-def get_exercise_info(userId,sportId):
-    return flask_db_operate.findInTableWithTwoLimit(tablesportInfo, 'userId', userId, 'sportId', sportId)
+def get_exercise_info(sportId):
+    return flask_db_operate.findInTable(tablesportInfo, 'sportId', sportId)
 
 def get_deit_logs(userId,date):
     return flask_db_operate.findInTableWithTwoLimit(tablemealRecord, 'userId', userId, 'mealDate', date)

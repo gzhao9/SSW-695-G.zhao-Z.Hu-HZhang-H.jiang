@@ -11,6 +11,7 @@ def build_insert_SQL(tableName,datadict):
     values = ', '.join("'" + str(x).replace('/', '_') + "'" for x in datadict.values())
     sql = "INSERT INTO %s (%s) VALUES (%s);" % (tableName,columns,values)
     return sql
+   
 
 def build_single_search_SQL(tableName, colName,colValue):
     if isinstance(colValue, str):
@@ -18,6 +19,14 @@ def build_single_search_SQL(tableName, colName,colValue):
     elif isinstance(colValue, int) or isinstance(colValue, float):
         sql = "select * from %s where %s = %s" % (tableName, colName, colValue)
     return sql
+
+def build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues2):
+    sql = "select * from %s where %s = '%s' and  %s = '%s'" % (tableName, colName1, colValues1,colName2, colValues2)
+    if type(colValues2) != str:
+        sql = "select * from %s where %s = '%s' and  %s = %s" % (tableName, colName1, colValues1,colName2, colValues2)
+    return sql
+
+
 
 def build_perticular_search_SQL(elementName, tableName, colName,colValue):
     if isinstance(colValue, str):
@@ -63,12 +72,12 @@ def findInTable(tableName,colName, colValue):
 
 # find in table with two limit
 def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues2):
-    if isinstance(colValues1, str) and isinstance(colValues2, str):
-        SQL = "select * from %s where %s = '%s' and  %s = '%s'"
-    if (isinstance(colValues1, int) or isinstance(colValues1, float))and(isinstance(colValues2, int) or isinstance(colValues2, float)):
-        SQL = "select * from %s where %s = %s and %s = %s"
+    # if isinstance(colValues1, str) and isinstance(colValues2, str):
+    #     SQL = "select * from %s where %s = '%s' and  %s = '%s'"
+    # if (isinstance(colValues1, int) or isinstance(colValues1, float))and(isinstance(colValues2, int) or isinstance(colValues2, float)):
+    #     SQL = "select * from %s where %s = %s and %s = %s"
     # SQL = "select * from %s where %s = %s and %s = %s"
-    RES_SQL = SQL % (tableName, colName1, colValues1,colName2, colValues2)
+    RES_SQL = build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues2)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
     return myresult
