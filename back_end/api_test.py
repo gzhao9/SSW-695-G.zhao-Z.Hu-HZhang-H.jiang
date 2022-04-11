@@ -7,7 +7,7 @@ class test_list_copy(unittest.TestCase):
     def test_verifyLogin(self):        
         response = app.test_client().post(
             '/verifyLogin',
-            data=json.dumps({'userId': 'GW', 'password': "ggww"}),
+            data=json.dumps({'userID': 'GW', 'password': "ggww"}),
             content_type='application/json',
         )
 
@@ -19,7 +19,7 @@ class test_list_copy(unittest.TestCase):
     def test_verifyRegister(self):        
         response = app.test_client().post(
             '/verifyRegister',
-            data=json.dumps({'email': 'GW', 'password': "ggww"}),
+            data=json.dumps({'userID': 'GW', 'password': "ggww"}),
             content_type='application/json',
         )
 
@@ -29,9 +29,17 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(data['isSuccess'] == False)
 
     #--------------------user info --------------------------
+    def test_api_test(self):
+        response = app.test_client().post(
+            '/test/GW', content_type='application/json',
+        )
+        data = response.get_data(as_text=True)
+        data=json.loads(data)
 
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(data))
 
-    def test_getUserInfo(self):        
+    """def test_getUserInfo(self):        
         response = app.test_client().post(
             '/getUserInfo/GW',
             data=json.dumps({
@@ -45,7 +53,7 @@ class test_list_copy(unittest.TestCase):
 
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(data) >0)
-    """def test_getUserInfo(self):        
+    def test_getUserInfo(self):        
         response = app.test_client().post(
             '/getUserInfo/GW',
             data=json.dumps({

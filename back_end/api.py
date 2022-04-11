@@ -7,6 +7,11 @@ from datetime import datetime
 from  planB import *
 
 app = Flask(__name__)
+#------------for test----------
+@app.route('/test/<username>', methods = ['GET','POST'])
+def test(username):
+    data=get_user_logs(username)
+    return data
 
 # -------------------Login and Register page---------------------------
 @app.route('/verifyLogin', methods = ['GET','POST'])

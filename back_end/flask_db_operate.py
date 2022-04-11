@@ -1,10 +1,19 @@
 from datetime import datetime
 from connect_mydb import config
 import mysql.connector
+import json
+from datetime import date
+from datetime import datetime
 
 mydb = mysql.connector.connect(**config)
 mycursor = mydb.cursor()
 
+def to_json(data):
+    for i in range(len(data)):
+        for k,v in data[i].items():
+            if type(v)==type(date.today())or type(v)==type(datetime.now()):
+                data[i][k]=v.strftime("%m/%d/%Y, %H:%M:%S")
+    return json.dumps(data)
 # -----------------------------------build sql statement--------------------------------
 def build_insert_SQL(tableName,datadict):
     columns = ', '.join("" + str(x).replace('/', '_') + "" for x in datadict.keys())
@@ -77,9 +86,11 @@ def findInTable(tableName,colName, colValue):
         result=list()
         for i in myresult:
             result.append(dict(zip(field_names,i)))
+        #result=json.dumps(result)
     else:
-        result=dict(zip(field_names,myresult[0]))
-    return result
+        result=[dict(zip(field_names,myresult[0]))]
+    
+    return to_json(result)
     
 
 # find in table with two limit
@@ -97,9 +108,10 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
         result=list()
         for i in myresult:
             result.append(dict(zip(field_names,i)))
+        #result=json.dumps(result)
     else:
-        result=dict(zip(field_names,myresult[0]))
-    return result
+        result=[dict(zip(field_names,myresult[0]))]
+    return to_json(result)
 #
 #
 #
