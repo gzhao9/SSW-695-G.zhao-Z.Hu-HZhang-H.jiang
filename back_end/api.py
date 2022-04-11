@@ -3,6 +3,7 @@ from unittest import result
 from flask import Flask,make_response,json,render_template,request,redirect,url_for
 import json
 from functions import *
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -42,7 +43,7 @@ def updateUserInfo(userId):
 @app.route('/getUserInfo/<userId>', methods = ['GET','POST'])
 def getUserInfo(userId):    
     data = json.loads(request.get_data())
-    result=get_user_info(userId,data['date'])
+    result=get_user_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return result
 
 #Get a list of all the history information records for a certain user
@@ -72,7 +73,7 @@ def getDietInfo(userId):
 @app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
 def getDietLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_deit_logs(userId,data['date'])
+    result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return result
 
 @app.route('/delete_food/<userId>', methods = ['GET','POST'])
@@ -103,7 +104,7 @@ def getExerciseInfo(userId):
 @app.route('/getExerciseLogs/<userId>', methods = ['GET','POST'])
 def getExerciseLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_exercise_info(userId,data['date'])
+    result=get_exercise_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return result
 @app.route('/delete_Exercise/<userId>', methods = ['GET','POST'])
 def delete_Exercise(userId):

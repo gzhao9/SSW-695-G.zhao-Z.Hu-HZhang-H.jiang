@@ -7,7 +7,7 @@ info={
 'userName': "a",
 'gender':'M',
 'allergySource': ['fish', 'soy'],
-'birthday':  datetime.strptime("1997-07-07", '%Y-%m-%d'),
+'birthday':  datetime.strptime("1995-07-07", '%Y-%m-%d'),
 'height': 182,
 'weight': 103,
 'fatRate': 29,
