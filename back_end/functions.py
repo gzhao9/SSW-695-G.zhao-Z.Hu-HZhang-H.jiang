@@ -79,7 +79,7 @@ def update_user_info(userId,info):
     info['infoDate']=info.pop('date')
     info['userName']=info.pop('fullName')
 
-    info['isVegan']=True if info['isVegan']=='true' else False
+    info['isVegan']=1 if info['isVegan']=='true' else 0
 
     return flask_db_operate.insertintoTable(tableuserInfo, info)
 

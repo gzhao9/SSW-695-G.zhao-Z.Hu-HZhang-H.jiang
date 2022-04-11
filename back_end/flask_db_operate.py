@@ -1,10 +1,31 @@
 from datetime import datetime
+from connect_mydb import config
+import mysql.connector
 
-import connect_mydb
- 
-mydb = connect_mydb.mydb
+mydb = mysql.connector.connect(**config)
 mycursor = mydb.cursor()
 
+# -----------------------------------build sql statement--------------------------------
+def build_insert_SQL(tableName,datadict):
+    columns = ', '.join("" + str(x).replace('/', '_') + "" for x in datadict.keys())
+    values = ', '.join("'" + str(x).replace('/', '_') + "'" for x in datadict.values())
+    sql = "INSERT INTO %s (%s) VALUES (%s);" % (tableName,columns,values)
+    return sql
+
+def build_single_search_SQL(tableName, colName,colValue):
+    if isinstance(colValue, str):
+        sql = "select * from %s where %s = '%s'" % (tableName, colName, colValue)
+    elif isinstance(colValue, int) or isinstance(colValue, float):
+        sql = "select * from %s where %s = %s" % (tableName, colName, colValue)
+    return sql
+
+def build_perticular_search_SQL(elementName, tableName, colName,colValue):
+    if isinstance(colValue, str):
+        sql = "select %s from %s where %s = '%s'" % (elementName, tablename, colName, colValue)
+    elif isinstance(colValue, int) or isinstance(colValue, float):
+        sql = "select %s from %s where %s = %s" % (elementName, tablename, colName, colValue)
+    return sql
+    
 
 # ------------------------------find information----------------------
 # find all data in table
@@ -16,26 +37,15 @@ def showTable(tableName):
     return res_data
 
 # find particular element in table
-def findEleInTable(elementName,tablename,colName,colValues):
-    if isinstance(colValues, str):
-        SQL = "select %s from %s where %s = '%s'"
-    if isinstance(colValues, int) or isinstance(colValues, float):
-        SQL = "select %s from %s where %s = %s"
-    RES_SQL = SQL% (elementName, tablename, colName, colValues)
+def findEleInTable(elementName,tablename,colName,colValue):
+    RES_SQL = build_perticular_search_SQL(elementName, tableName, colName, colValue)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
     return myresult
 
 # find in table where key = colName, if exist, return True, else return false
-def findIfInTable(tableName,colName, colValues):
-    if isinstance(colValues, str):
-        SQL = "select * from %s where %s = '%s'"
-    elif isinstance(colValues, int) or isinstance(colValues, float):
-        SQL = "select * from %s where %s = %s"
-    else:
-        SQL = "select * from %s where %s = '%s'"
-    RES_SQL = SQL % (tableName, colName, colValues)
-    #print(RES_SQL)
+def findIfInTable(tableName,colName, colValue):
+    RES_SQL = build_single_search_SQL(tableName, colName, colValue)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchone()
     if myresult is None:
@@ -44,16 +54,12 @@ def findIfInTable(tableName,colName, colValues):
 
 
 # find in table where key = colName, return the result
-def findInTable(tableName,colName, colValues):
-    if isinstance(colValues, str):
-        SQL = "select * from %s where %s = '%s'"
-    if isinstance(colValues, int) or isinstance(colValues, float):
-        SQL = "select * from %s where %s = %s"
-    RES_SQL = SQL % (tableName, colName, colValues)
-    print(RES_SQL)
+def findInTable(tableName,colName, colValue):
+    RES_SQL = build_single_search_SQL(tableName, colName, colValue)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
     return myresult
+    
 
 # find in table with two limit
 def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues2):
@@ -61,6 +67,7 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
         SQL = "select * from %s where %s = '%s' and  %s = '%s'"
     if (isinstance(colValues1, int) or isinstance(colValues1, float))and(isinstance(colValues2, int) or isinstance(colValues2, float)):
         SQL = "select * from %s where %s = %s and %s = %s"
+    # SQL = "select * from %s where %s = %s and %s = %s"
     RES_SQL = SQL % (tableName, colName1, colValues1,colName2, colValues2)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
@@ -73,19 +80,14 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
 # -----------------------------insert information------------------------------
 # insert into login table, if success, return true, else return false
 def insertintoTable(tableName,dataDict):
-    placeholders = ','.join(['%s'] * len(dataDict))
-    cols = ','.join(dataDict.keys())
     if not findIfInTable(tableName, 'userId', dataDict['userId']):
-        SQL = "insert into %s (%s) values (%s);"
-        RES_SQL = SQL % (tableName, cols, placeholders)
-        print(RES_SQL)
-        # print('RES_SQL:'+RES_SQL)
-        val = formatSQL(dataDict)
-        mycursor.execute(RES_SQL, tuple(val))
+        RES_SQL = build_insert_SQL(tableName, dataDict)
+        mycursor.execute(RES_SQL)
         mydb.commit()
         return True
     else:
         return False
+
 #
 #
 #
@@ -107,18 +109,6 @@ def deleteinTable(tableName,colName,colValues):
         return False
     return True
 
-# delete one row in table with two limit
-def deleteInTableWithTwoLimit(tablename, colName1, colValues1, colName2, colValues2):
-    if isinstance(colValues, str):
-        SQL = "delete from %s where %s = '%s' and  %s = '%s'"
-    if isinstance(colValues, int) or isinstance(colValues, float):
-        SQL = "delete from %s where %s = %s and %s = %s"
-    RES_SQL = SQL % (tableName, colName1, colValues1, colName2, colValues2)
-    mycursor.execute(RES_SQL)
-    myresult = mycursor.fetchone()
-    if myresult is None:
-        return False
-    return True
 #
 #
 #
