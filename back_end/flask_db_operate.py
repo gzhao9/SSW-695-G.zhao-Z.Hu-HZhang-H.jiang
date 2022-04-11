@@ -44,9 +44,9 @@ def build_perticular_search_SQL(elementName, tableName, colName,colValue):
 
 def build_delete_SQL(tableName, colName,colValue):
     if isinstance(colValue, str):
-        sql = "delete from %s where %s = '%s'" % (tableName, colName, colValue)
+        sql = "delete from %s where %s = '%s';" % (tableName, colName, colValue)
     elif isinstance(colValue, int) or isinstance(colValue, float):
-        sql = "delete from %s where %s = %s" % (tableName, colName, colValue)
+        sql = "delete from %s where %s = %s;" % (tableName, colName, colValue)
     return sql
 
 
@@ -137,11 +137,15 @@ def insertintoTable(tableName,dataDict):
 # delete one row in table
 def deleteinTable(tableName,colName,colValues):
     RES_SQL = build_delete_SQL(tableName, colName, colValues)
-    mycursor.execute(RES_SQL)
-    myresult = mycursor.fetchone()
-    if myresult is None:
+    try:
+        mycursor.execute(RES_SQL)
+        mydb.commit()
+    except:
+        mydb.rollback()
         return False   
-    mydb.commit()
+    still = findIfInTable(tableName, colName, colValues)
+    if (still):
+        return False
     return True
 
 #
