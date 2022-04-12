@@ -20,6 +20,18 @@ class test_list_copy(unittest.TestCase):
         'mealPlan': "keepHealth",
         }
 
+    foodInfo = {
+        'foodName': 'pinapple',
+        'foodType': 'fruit',
+        'totalWeight': 20,
+        'protein': 0,
+        'fat':0,
+        'carbohydrate':6,
+        'energy':80,
+        'sugar':1.8,
+        'va':0,
+        'vc':200,
+    }
 
     def test_login(self):
         self.assertTrue(verify_login("GW","ggww"))
@@ -70,21 +82,25 @@ class test_list_copy(unittest.TestCase):
         data = get_infoId(userId)
         self.assertTrue(len(data)>0)
     
-    def test_delete_user_info(self):
-        infoId = 35
-        res = delete_user_info(infoId)
-        self.assertTrue(res)
+    # def test_delete_user_info(self):
+    #     infoId = 35
+    #     res = delete_user_info(infoId)
+    #     self.assertTrue(res)
 
 
-    def test_delete_meal_info(self):
-        mealRecordId = 5
-        res=delete_meal_info(mealRecordId)
-        self.assertTrue(res)
+    # def test_delete_meal_info(self):
+    #     mealRecordId = 5
+    #     res=delete_meal_info(mealRecordId)
+    #     self.assertTrue(res)
         
     def test_get_infoIdandfrom(self):
         data = get_infoIdandfrom()
-        self.assertTrue(len(data))
+        self.assertTrue(len(data)>0)
         
+    def test_update_food_info(self):
+        userId = 'GW'
+        data = update_food_info(userId,self.foodInfo)
+        self.assertTrue(len(data)>0)
 
 
 """

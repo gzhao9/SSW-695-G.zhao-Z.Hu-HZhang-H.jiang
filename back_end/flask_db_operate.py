@@ -60,6 +60,12 @@ def showTable(tableName):
     return res_data
 
 
+def findId():
+    SQL = "SELECT LAST_INSERT_ID();"
+    mycursor.execute(SQL)
+    res = mycursor.fetchone()
+    return res
+
 def showTwoCol(tableName, colName1, colName2):
     SQL = "select distinct %s, %s from %s"
     RES_SQL = SQL % (colName1,colName2,tableName)

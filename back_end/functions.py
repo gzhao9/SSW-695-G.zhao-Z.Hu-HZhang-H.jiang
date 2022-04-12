@@ -117,18 +117,23 @@ def update_user_info(userId,info):
 
     return flask_db_operate.insertintoTable(tableuserInfo, info)
 
-def update_food_info(userId,info):
+def update_food_info(userId,foodInfo):
     #store single food info
     #if '@' not in list(userID):#it from api or admin.
     #   set the comefrom as system
     #else: #from user, 
     #   set the comefrom as user
     #return foodID
-    pass
+    if userId == None:
+        userId = 'webapi'
+    foodInfo['comefrom'] = userId
+    flask_db_operate.insertintoTable(tablefoodInfo, foodInfo)
+    foodId = flask_db_operate.findId()
+    return foodId
 
-def update_meal_info(userId,info):
-    if info['manuallyInput']=='true':
-        info['foodID']=update_food_info(userId,info['foodInfo'])
+def update_meal_info(userId,mealdata):
+    if mealdata['manuallyInput']=='true':
+        mealdata['foodID']=update_food_info(userId,mealdata['foodInfo'])
     #because when manuallyInput by user, the food info not in database, so it dose not have foodID. update_food_info(userId,info) will return the new foodID store in database.
     #del info['foodInfo']
     
