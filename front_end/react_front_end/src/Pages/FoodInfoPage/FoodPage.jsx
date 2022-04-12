@@ -16,14 +16,20 @@ export default function FoodPage() {
   let totalFat = 0;
   let navigate = useNavigate();
   const { state } = useLocation();
+  const { userID, date } = state;
 
   const [foodData, setFoodData] = useState([]);
 
   useEffect(() => {
-    axios.get("/readUserDate").then(function (response) {
-      setFoodData(response.data.mealInfo);
-    });
-    console.log(state);
+    axios
+      .post("/getDietLogs/" + userID, { date: date })
+      .then(function (response) {
+        if (response.data[0].isNone) {
+          setFoodData([]);
+        } else {
+          setFoodData(response.data);
+        }
+      });
   }, []);
 
   foodData.map((item) => {
@@ -52,7 +58,7 @@ export default function FoodPage() {
           style={{ width: "100%", height: "50px" }}
           onClick={() => {
             navigate("/foodDetailPage", {
-              state: { isAdd: true, foodInfo: {} },
+              state: { isAdd: true, foodInfo: {}, date: date, userID: userID },
             });
           }}
         >

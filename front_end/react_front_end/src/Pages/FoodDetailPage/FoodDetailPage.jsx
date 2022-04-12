@@ -1,15 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Button, Form, Input, InputNumber, Switch, AutoComplete } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Switch,
+  AutoComplete,
+  Select,
+} from "antd";
 import { useLocation } from "react-router-dom";
 import Header from "../../Components/Header/Header";
+import axios from "axios";
 
 export default function FoodDetailPage() {
   const { state } = useLocation();
+  const { date, userID, isAdd, foodInfo } = state;
   const calorieRef = useRef();
   const carboRef = useRef();
   const proteinRef = useRef();
   const fatRef = useRef();
-
+  const { Option } = Select;
   const [options, setOptions] = useState([]);
   const [manuallyInput, setManuallyInput] = useState(true);
 
@@ -31,6 +41,20 @@ export default function FoodDetailPage() {
 
   function onFinish(values) {
     console.log("Success:", values);
+    axios.post("/updateDietInfo/" + userID, {
+      isAdd: isAdd,
+      userID: userID,
+      Date: date,
+      foodID: 0,
+      manuallyInput: values.manuallyInput,
+      foodInfo: {
+        calorie_rate: values.calorie_rate,
+        carbohydrate: values.carbohydrate,
+        fat: values.fat,
+        protein: values.protein,
+        foodName: values.foodName,
+      },
+    });
   }
 
   function onFinishFailed(errorInfo) {
@@ -95,6 +119,28 @@ export default function FoodDetailPage() {
             max={10000}
             precision={2}
           />
+        </Form.Item>
+
+        <Form.Item
+          style={{ marginLeft: "10%", marginRight: "10%" }}
+          label="Type"
+          name="type"
+          initialValue={state.foodInfo.type}
+          rules={[
+            {
+              required: true,
+              message: "Please input the food type!",
+            },
+          ]}
+        >
+          <Select style={{ float: "left" }}>
+            <Option value="B">Breakfast</Option>
+            <Option value="L">Lunch</Option>
+            <Option value="D">Dinner</Option>
+            <Option value="BA">Additional Breakfast</Option>
+            <Option value="LA">Additional Lunch</Option>
+            <Option value="DA">Additional Dinner</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item

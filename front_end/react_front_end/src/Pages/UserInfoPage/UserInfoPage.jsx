@@ -18,31 +18,41 @@ import "../../UniversalStyle/UniversalStyle.css";
 
 export default function UserInfoPage() {
   const { state } = useLocation();
-  const { userId } = state;
+  const { userID } = state;
   const [chosenDate, setChosenDate] = useState(moment().format("YYYY-MM-DD"));
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState([]);
+  const [mealInfo, setMealInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    axios.post("/getUserInfo/" + userId, { date: chosenDate }).then((value) => {
-      // setUserData(value.data);
-      // setIsLoading(false);
-      console.log(value.data);
-    });
-  }, [chosenDate]);
-  const { userName, avatar, mealInfo, remainedCalorie } = userData;
   let shownMealInfo = [];
-  if (mealInfo) {
-    if (mealInfo.length <= 3) {
-      for (let i = 0; i < mealInfo.length; i++) {
-        shownMealInfo.push(mealInfo[i].food_name);
+  useEffect(() => {
+    axios.post("/getUserInfo/" + userID, { date: chosenDate }).then((value) => {
+      let data = JSON.parse(value.data);
+      setUserData(data[data.length - 1]);
+      console.log(data[data.length - 1]);
+      axios
+        .post("/getDietLogs/" + userID, { date: chosenDate })
+        .then((value) => {
+          console.log(value.data);
+          setMealInfo(value.data);
+          setIsLoading(false);
+        });
+    });
+
+    if (mealInfo) {
+      if (mealInfo.length <= 3) {
+        for (let i = 0; i < mealInfo.length; i++) {
+          shownMealInfo.push(mealInfo[i].food_name);
+        }
+      } else {
+        for (let i = 0; i < 3; i++) {
+          shownMealInfo.push(mealInfo[i].food_name);
+        }
+        shownMealInfo.push("...");
       }
-    } else {
-      for (let i = 0; i < 3; i++) {
-        shownMealInfo.push(mealInfo[i].food_name);
-      }
-      shownMealInfo.push("...");
     }
-  }
+  }, [chosenDate]);
+  const { userName, BMR } = userData;
+
   function onDateChange(date, dateString) {
     setChosenDate(dateString);
   }
@@ -65,7 +75,7 @@ export default function UserInfoPage() {
           <Col span={8}>
             <Avatar
               icon={<UserOutlined />}
-              src={avatar}
+              src="https://joeschmoe.io/api/v1/random"
               size={64}
               style={{ marginTop: "20px", marginBottom: "20px" }}
             />
@@ -74,7 +84,11 @@ export default function UserInfoPage() {
             Hello, <br /> {userName}
           </Col>
           <Col span={8} style={{ textAlign: "left" }}>
-            <Link style={{ color: "royalblue" }} to="/getUserInfoPage">
+            <Link
+              style={{ color: "royalblue" }}
+              to="/getUserInfoPage"
+              state={{ userID: userID, userData: userData }}
+            >
               View My Info
             </Link>
           </Col>
@@ -102,7 +116,7 @@ export default function UserInfoPage() {
           }}
           headStyle={{ textAlign: "left" }}
         >
-          {remainedCalorie} kcal
+          xxx kcal
         </Card>
         <Card
           title="My Meal"
@@ -120,7 +134,7 @@ export default function UserInfoPage() {
             <Link
               style={{ color: "royalblue" }}
               to="/foodPage"
-              state={{ date: chosenDate }}
+              state={{ date: chosenDate, userID: userID }}
             >
               View All
             </Link>

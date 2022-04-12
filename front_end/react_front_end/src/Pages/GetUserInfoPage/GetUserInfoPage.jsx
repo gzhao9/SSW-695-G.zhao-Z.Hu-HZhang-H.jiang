@@ -18,10 +18,10 @@ import "../../Components/ButtonWide/ButtonWide.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function GetUserInfoPage() {
-  const { Option } = Select;
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { userId } = state;
+  const { userID, userData } = state;
+  const { Option } = Select;
   const onFinish = (values) => {
     const processedValues = {
       ...values,
@@ -30,9 +30,9 @@ export default function GetUserInfoPage() {
     };
     console.log("Success:", processedValues);
     axios
-      .post("/updateUserInfo/" + userId, processedValues)
+      .post("/updateUserInfo/" + userID, processedValues)
       .then((response) => {
-        navigate("/userInfoPage", { state: { userId: userId } });
+        navigate("/userInfoPage", { state: { userID: userID } });
       });
   };
 
@@ -54,6 +54,7 @@ export default function GetUserInfoPage() {
         <Form.Item
           label="Full Name"
           name="fullName"
+          initialValue={userData.userName}
           rules={[
             {
               required: true,
@@ -67,6 +68,7 @@ export default function GetUserInfoPage() {
         <Form.Item
           label="Gender"
           name="gender"
+          initialValue={userData.gender}
           rules={[
             {
               required: true,
@@ -86,6 +88,7 @@ export default function GetUserInfoPage() {
         <Form.Item
           label="Birthday"
           name="birthday"
+          initialValue={moment(userData.birthday, "MM-DD-YYYY")}
           rules={[
             {
               required: true,
@@ -99,6 +102,7 @@ export default function GetUserInfoPage() {
         <Form.Item
           label="Height (cm)"
           name="height"
+          initialValue={userData.height}
           rules={[
             {
               required: true,
@@ -117,6 +121,7 @@ export default function GetUserInfoPage() {
         <Form.Item
           label="Weight (kg)"
           name="weight"
+          initialValue={userData.weight}
           rules={[
             {
               required: true,
@@ -135,6 +140,7 @@ export default function GetUserInfoPage() {
         <Form.Item
           label="Fat Rate (%)"
           name="fatRate"
+          initialValue={userData.fatRate}
           rules={[
             {
               required: true,
@@ -153,6 +159,7 @@ export default function GetUserInfoPage() {
         <Form.Item
           label="Please choose your meal plan"
           name="mealPlan"
+          initialValue={userData.mealPlan}
           rules={[
             {
               required: true,

@@ -11,11 +11,10 @@ export default function LoginCompoment() {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
     axios.post("/verifyLogin", values).then((response) => {
       let isSuccess = response.data["isSuccess"];
       if (isSuccess === true) {
-        navigate("/userInfoPage", { state: { userId: values.userId } });
+        navigate("/userInfoPage", { state: { userID: values.userID } });
       } else {
         alert("Your Credential is not correct!");
       }
@@ -47,7 +46,7 @@ export default function LoginCompoment() {
       >
         <Form.Item
           label="Username"
-          name="userId"
+          name="userID"
           rules={[
             {
               required: true,

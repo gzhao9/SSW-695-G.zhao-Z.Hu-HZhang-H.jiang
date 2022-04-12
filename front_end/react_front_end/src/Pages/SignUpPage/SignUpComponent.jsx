@@ -10,11 +10,10 @@ export default function SignUpComponent() {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
     axios.post("/verifyRegister", values).then((response) => {
       let isSuccess = response.data["isSuccess"];
       if (isSuccess === true) {
-        navigate("/getUserInfoPage", { state: { userId: values.email } });
+        navigate("/getUserInfoPage", { state: { userID: values.userID } });
       } else {
         alert("You email address already exists!");
       }
@@ -40,7 +39,7 @@ export default function SignUpComponent() {
         style={{ marginLeft: "10%", marginRight: "10%" }}
       >
         <Form.Item
-          name="email"
+          name="userID"
           label="E-mail"
           rules={[
             {
