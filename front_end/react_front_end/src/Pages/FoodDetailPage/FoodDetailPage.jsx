@@ -41,7 +41,7 @@ export default function FoodDetailPage() {
 
   function onFinish(values) {
     console.log("Success:", values);
-    axios.post("/updateDietInfo/" + userID, {
+    let processedData = {
       isAdd: isAdd,
       userID: userID,
       Date: date,
@@ -54,7 +54,9 @@ export default function FoodDetailPage() {
         protein: values.protein,
         foodName: values.foodName,
       },
-    });
+    };
+    console.log(processedData);
+    axios.post("/updateDietInfo/" + userID, processedData);
   }
 
   function onFinishFailed(errorInfo) {

@@ -88,7 +88,11 @@ export default function GetUserInfoPage() {
         <Form.Item
           label="Birthday"
           name="birthday"
-          initialValue={moment(userData.birthday, "MM-DD-YYYY")}
+          initialValue={
+            userData.birthday
+              ? moment(userData.birthday, "MM-DD-YYYY")
+              : moment()
+          }
           rules={[
             {
               required: true,
