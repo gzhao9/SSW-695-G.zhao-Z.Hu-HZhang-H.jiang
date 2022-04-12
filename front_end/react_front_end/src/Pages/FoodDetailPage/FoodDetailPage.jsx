@@ -47,6 +47,7 @@ export default function FoodDetailPage() {
       Date: date,
       foodID: 0,
       manuallyInput: values.manuallyInput,
+      Type: values.type,
       foodInfo: {
         calorie_rate: values.calorie_rate,
         carbohydrate: values.carbohydrate,
