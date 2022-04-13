@@ -21,27 +21,26 @@ class test_list_copy(unittest.TestCase):
         }
 
     foodInfo = {
-        'foodName': 'pinapple',
-        'foodType': 'fruit',
-        'totalWeight': 20,
-        'protein': 0,
-        'fat':0,
-        'carbohydrate':6,
-        'energy':80,
-        'sugar':1.8,
-        'va':0,
-        'vc':200,
+    'foodName': 'bilibili',
+    'foodType': 'fruit',
+    'totalWeight': 20,
+    'protein': 1,
+    'fat':23,
+    'carbohydrate':6,
+    'energy':80,
+    'sugar':1.8,
+    'va':0,
+    'vc':200,
     }
-
     mealdata = {
-        'mealDate':datetime.now(),
+        'Date':datetime.now(),
         'foodId':11,
-        'userId':'GW',
-        'manuallyInput':'false',
+        'userId':'h1@123.com', 
+        'manuallyInput':'true',
         'mealType':'L',
-        'unit':110,
+        'unit':251,
         'foodInfo':foodInfo,
-    }
+        }
 
     def test_login(self):
         self.assertTrue(verify_login("GW","ggww"))
