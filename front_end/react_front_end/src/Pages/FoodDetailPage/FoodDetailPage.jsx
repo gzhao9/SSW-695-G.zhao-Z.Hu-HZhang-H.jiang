@@ -8,7 +8,7 @@ import {
   AutoComplete,
   Select,
 } from "antd";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import axios from "axios";
 
@@ -22,6 +22,7 @@ export default function FoodDetailPage() {
   const { Option } = Select;
   const [options, setOptions] = useState([]);
   const [manuallyInput, setManuallyInput] = useState(true);
+  const navigate = useNavigate();
 
   const mockVal = (str, repeat = 1) => ({
     value: str.repeat(repeat),
@@ -58,6 +59,7 @@ export default function FoodDetailPage() {
     };
     console.log(processedData);
     axios.post("/updateDietInfo/" + userID, processedData);
+    navigate("/userInfoPage", { state: { userID: userID, date: date } });
   }
 
   function onFinishFailed(errorInfo) {

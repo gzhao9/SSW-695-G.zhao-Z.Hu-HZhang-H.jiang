@@ -20,80 +20,112 @@ export default function UserInfoPage() {
   const { state } = useLocation();
   const { userID } = state;
   const [chosenDate, setChosenDate] = useState(moment().format("YYYY-MM-DD"));
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({});
   const [mealInfo, setMealInfo] = useState([]);
   const [exerciseInfo, setExerciseInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userName, setUserName] = useState("");
   const [remainedCalorie, setRemainedCalorie] = useState(0);
-  const { BMR } = userData;
-  useEffect(() => {
-    axios.post("/getUserInfo/" + userID, { date: chosenDate }).then((value) => {
-      let data = JSON.parse(value.data);
-      setUserData(data[data.length - 1]);
-      // console.log(data[data.length - 1]);
-      axios
-        .post("/getDietLogs/" + userID, { date: chosenDate })
-        .then((response) => {
-          if (response.data[0].isNone) {
-            setMealInfo([]);
-          } else {
-            setMealInfo(response.data);
-          }
+  const [BMR, setBMR] = useState(0);
 
-          // setMealInfo([
-          //   {
-          //     food_name: "cookie",
-          //     type: "B",
-          //     weight: 254,
-          //     carbohydrate: 25,
-          //     protein: 45,
-          //     fat: 15,
-          //     calorie_cost: 635,
-          //   },
-          //   {
-          //     food_name: "apple",
-          //     type: "LA",
-          //     weight: 122,
-          //     carbohydrate: 11,
-          //     protein: 22,
-          //     fat: 33,
-          //     calorie_cost: 444,
-          //   },
-          //   {
-          //     food_name: "pizza",
-          //     type: "D",
-          //     weight: 1,
-          //     carbohydrate: 2,
-          //     protein: 3,
-          //     fat: 4,
-          //     calorie_cost: 666,
-          //   },
-          // ]);
-          setIsLoading(false);
-          axios
-            .post("/getExerciseLogs/" + userID, { date: chosenDate })
-            .then((response) => {
-              console.log(response.data);
-              // setExerciseInfo([
-              //   { exercise_name: "Run", minute: 30, calorie: 100 },
-              //   { exercise_name: "Walk", minute: 30, calorie: 100 },
-              //   { exercise_name: "Baseball", minute: 30, calorie: 100 },
-              //   { exercise_name: "Basketball", minute: 30, calorie: 100 },
-              // ]);
-              if (response.data[0].isNone) {
-                setExerciseInfo([]);
-              } else {
-                setExerciseInfo(response.data);
-              }
-            });
-        });
+  async function getInfo() {
+    const userInfo = await axios.post("/getUserInfo/" + userID, {
+      date: chosenDate,
     });
+    const lastInfo = await axios.get("/get_last_UserInfo/" + userID);
+    const dietInfo = await axios.post("/getDietLogs/" + userID, {
+      date: chosenDate,
+    });
+    const sportInfo = await axios.post("/getExerciseLogs/" + userID, {
+      date: chosenDate,
+    });
+    const realUserInfo = JSON.parse(userInfo.data);
+    if (realUserInfo[0].isNone) {
+      setUserData(lastInfo.data);
+    } else {
+      setUserData(realUserInfo[realUserInfo.length - 1]);
+    }
+    if (dietInfo.data[0].isNone) {
+      setMealInfo([]);
+    } else {
+      setMealInfo(dietInfo.data);
+    }
+    if (sportInfo.data[0].isNone) {
+      setExerciseInfo([]);
+    } else {
+      setExerciseInfo(sportInfo.data);
+    }
+  }
+
+  useEffect(() => {
+    getInfo();
+    setIsLoading(false);
+    // axios.post("/getUserInfo/" + userID, { date: chosenDate }).then((value) => {
+    //   let data = JSON.parse(value.data);
+    //   setUserData(data[data.length - 1]);
+    //   // console.log(data[data.length - 1]);
+    //   axios
+    //     .post("/getDietLogs/" + userID, { date: chosenDate })
+    //     .then((response) => {
+    //       if (response.data[0].isNone) {
+    //         setMealInfo([]);
+    //       } else {
+    //         setMealInfo(response.data);
+    //       }
+    //       console.log(response.data);
+    //       // setMealInfo([
+    //       //   {
+    //       //     food_name: "cookie",
+    //       //     type: "B",
+    //       //     weight: 254,
+    //       //     carbohydrate: 25,
+    //       //     protein: 45,
+    //       //     fat: 15,
+    //       //     calorie_cost: 635,
+    //       //   },
+    //       //   {
+    //       //     food_name: "apple",
+    //       //     type: "LA",
+    //       //     weight: 122,
+    //       //     carbohydrate: 11,
+    //       //     protein: 22,
+    //       //     fat: 33,
+    //       //     calorie_cost: 444,
+    //       //   },
+    //       //   {
+    //       //     food_name: "pizza",
+    //       //     type: "D",
+    //       //     weight: 1,
+    //       //     carbohydrate: 2,
+    //       //     protein: 3,
+    //       //     fat: 4,
+    //       //     calorie_cost: 666,
+    //       //   },
+    //       // ]);
+    //       setIsLoading(false);
+    //       axios
+    //         .post("/getExerciseLogs/" + userID, { date: chosenDate })
+    //         .then((response) => {
+    //           // setExerciseInfo([
+    //           //   { exercise_name: "Run", minute: 30, calorie: 100 },
+    //           //   { exercise_name: "Walk", minute: 30, calorie: 100 },
+    //           //   { exercise_name: "Baseball", minute: 30, calorie: 100 },
+    //           //   { exercise_name: "Basketball", minute: 30, calorie: 100 },
+    //           // ]);
+    //           if (response.data[0].isNone) {
+    //             setExerciseInfo([]);
+    //           } else {
+    //             setExerciseInfo(response.data);
+    //           }
+    //         });
+    //     });
+    // });
   }, [chosenDate]);
 
   useEffect(() => {
-    if (userData.userName) {
+    if (userData) {
       setUserName(userData.userName);
+      setBMR(userData.BMR);
     }
   }, [userData]);
 
