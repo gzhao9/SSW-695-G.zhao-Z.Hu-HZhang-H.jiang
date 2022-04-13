@@ -145,11 +145,10 @@ def update_meal_info(userId,mealdata):
         foodDataList = format_food_detail(foodInfolist)
         
         mealdata['foodID']=update_food_info(None,foodDataList[0])
-        
+    
     #because when manuallyInput by user, the food info not in database, so it dose not have foodID. update_food_info(userId,info) will return the new foodID store in database.
     #del info['foodInfo']
-    
-    return flask_db_operate.updateinTable(tablemealRecord, info, 'userId', userId)
+    return flask_db_operate.insertintoTable(tablemealRecord, mealdata)
 
 def update_exercise_info(userId,info):
     return flask_db_operate.updateinTable(tablesportRecord, info, 'userId', userId)
