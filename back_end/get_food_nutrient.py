@@ -14,7 +14,7 @@ def obtain_energy(foodNutrientlist):
             energy = i['value']
     return energy
 
-def format_food(fdcId,foodname,foodCategory,foodNutrientList):
+def format_food(foodname,foodCategory,foodNutrientList):
     protein = 0
     fat = 0
     carbohydrate = 0
@@ -45,7 +45,6 @@ def format_food(fdcId,foodname,foodCategory,foodNutrientList):
             vc = i['value']
 
     data = {
-        'foodId':fdcId,
         'foodName': foodname,
         'foodType': foodCategory,
         'protein': protein,

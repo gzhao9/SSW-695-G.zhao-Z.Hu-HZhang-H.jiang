@@ -141,8 +141,11 @@ def update_meal_info(userId,mealdata):
         mealdata['foodID']=update_food_info(userId,mealdata['foodInfo'])
     else:
         foodname = mealdata['foonInfo']['foodName']
-        foodInfo = get_food_nutrient.call_API(foodName, API_KEY)
-        mealdata['foodID']=update_food_info(None,foodInfo)
+        foodInfolist = get_food_nutrient.call_API(foodName, API_KEY)
+        foodDataList = format_food_detail(foodInfolist)
+        
+        mealdata['foodID']=update_food_info(None,foodDataList[0])
+        
     #because when manuallyInput by user, the food info not in database, so it dose not have foodID. update_food_info(userId,info) will return the new foodID store in database.
     #del info['foodInfo']
     
@@ -167,3 +170,18 @@ def cal_BMR(gender,weight,height,age):
         return 66.5 + (13.75 * weight) + (5 * height) - (6.755 * age)
     else:
         return 655.1 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
+
+# ------------------------format food info with detail----------------------
+def format_food_detail(foodInfoList):
+    fooddatalist = list()
+    for i in range(len(foodInfoList['foods'])):
+        # fdcId = foodInfoList['foods'][i]['fdcId']
+        foodCategory = foodInfoList['foods'][i]['foodCategory']
+        foodDetailInfo = foodInfoList['foods'][i]['foodNutrients']
+        fooddata = get_food_nutrient.format_food(foodname, foodCategory, foodDetailInfo)
+        fooddatalist.append(fooddata)
+        # break after 10 result
+        if i >= 10:
+            break
+    
+    return fooddatalist
