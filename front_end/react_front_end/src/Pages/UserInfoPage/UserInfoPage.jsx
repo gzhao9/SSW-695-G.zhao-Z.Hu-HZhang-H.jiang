@@ -24,8 +24,9 @@ export default function UserInfoPage() {
   const [mealInfo, setMealInfo] = useState([]);
   const [exerciseInfo, setExerciseInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [userName, setUserName] = useState("");
   const [remainedCalorie, setRemainedCalorie] = useState(0);
-  const { userName, BMR } = userData;
+  const { BMR } = userData;
   useEffect(() => {
     axios.post("/getUserInfo/" + userID, { date: chosenDate }).then((value) => {
       let data = JSON.parse(value.data);
@@ -33,48 +34,68 @@ export default function UserInfoPage() {
       // console.log(data[data.length - 1]);
       axios
         .post("/getDietLogs/" + userID, { date: chosenDate })
-        .then((value) => {
-          // console.log(value.data);
-          setMealInfo(value.data);
-          setExerciseInfo([
-            { exercise_name: "Run", minute: 30, calorie: 100 },
-            { exercise_name: "Walk", minute: 30, calorie: 100 },
-            { exercise_name: "Baseball", minute: 30, calorie: 100 },
-            { exercise_name: "Basketball", minute: 30, calorie: 100 },
-          ]);
-          setMealInfo([
-            {
-              food_name: "cookie",
-              type: "B",
-              weight: 254,
-              carbohydrate: 25,
-              protein: 45,
-              fat: 15,
-              calorie_cost: 635,
-            },
-            {
-              food_name: "shit",
-              type: "LA",
-              weight: 122,
-              carbohydrate: 11,
-              protein: 22,
-              fat: 33,
-              calorie_cost: 444,
-            },
-            {
-              food_name: "pee",
-              type: "D",
-              weight: 1,
-              carbohydrate: 2,
-              protein: 3,
-              fat: 4,
-              calorie_cost: 666,
-            },
-          ]);
+        .then((response) => {
+          if (response.data[0].isNone) {
+            setMealInfo([]);
+          } else {
+            setMealInfo(response.data);
+          }
+
+          // setMealInfo([
+          //   {
+          //     food_name: "cookie",
+          //     type: "B",
+          //     weight: 254,
+          //     carbohydrate: 25,
+          //     protein: 45,
+          //     fat: 15,
+          //     calorie_cost: 635,
+          //   },
+          //   {
+          //     food_name: "apple",
+          //     type: "LA",
+          //     weight: 122,
+          //     carbohydrate: 11,
+          //     protein: 22,
+          //     fat: 33,
+          //     calorie_cost: 444,
+          //   },
+          //   {
+          //     food_name: "pizza",
+          //     type: "D",
+          //     weight: 1,
+          //     carbohydrate: 2,
+          //     protein: 3,
+          //     fat: 4,
+          //     calorie_cost: 666,
+          //   },
+          // ]);
           setIsLoading(false);
+          axios
+            .post("/getExerciseLogs/" + userID, { date: chosenDate })
+            .then((response) => {
+              console.log(response.data);
+              // setExerciseInfo([
+              //   { exercise_name: "Run", minute: 30, calorie: 100 },
+              //   { exercise_name: "Walk", minute: 30, calorie: 100 },
+              //   { exercise_name: "Baseball", minute: 30, calorie: 100 },
+              //   { exercise_name: "Basketball", minute: 30, calorie: 100 },
+              // ]);
+              if (response.data[0].isNone) {
+                setExerciseInfo([]);
+              } else {
+                setExerciseInfo(response.data);
+              }
+            });
         });
     });
   }, [chosenDate]);
+
+  useEffect(() => {
+    if (userData.userName) {
+      setUserName(userData.userName);
+    }
+  }, [userData]);
 
   useEffect(() => {
     let tmp = BMR;
@@ -177,7 +198,7 @@ export default function UserInfoPage() {
           <List
             size="small"
             dataSource={
-              mealInfo.length == 1 && mealInfo[0].isNone ? [] : mealInfo
+              mealInfo.length === 1 && mealInfo[0].isNone ? [] : mealInfo
             }
             renderItem={(item) => {
               return <List.Item>{item.food_name}</List.Item>;
@@ -209,7 +230,7 @@ export default function UserInfoPage() {
           <List
             size="small"
             dataSource={
-              exerciseInfo.length == 1 && exerciseInfo[0].isNone
+              exerciseInfo.length === 1 && exerciseInfo[0].isNone
                 ? []
                 : exerciseInfo
             }
