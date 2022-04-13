@@ -58,6 +58,12 @@ def getUserInfo_logs(userId):
     result=get_user_logs(userId)
     return result
 
+#Get a list of all last information records for a certain user
+@app.route('/get_last_UserInfo/<userId>', methods = ['GET','POST'])
+def get_last_UserInfo(userId):    
+    result= json.loads(get_user_logs(userId))
+    return result[-1]
+
 @app.route('/delete_user_info', methods = ['GET','POST'])
 def delete_user_infos():    
     data = json.loads(request.get_data())

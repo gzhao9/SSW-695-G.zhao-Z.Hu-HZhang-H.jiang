@@ -40,6 +40,15 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(data))
 
+    def test_get_last_UserInfo(self):
+        response = app.test_client().post(
+            '/get_last_UserInfo/GW', content_type='application/json',
+        )
+        data = response.get_data(as_text=True)
+        data=json.loads(data)
+
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(data))
     def test_getUserInfo(self):        
         response = app.test_client().post(
             '/getUserInfo/GW',
@@ -72,9 +81,9 @@ class test_list_copy(unittest.TestCase):
     #----diet-------
     def test_getDietlogs(self):
         response = app.test_client().post(
-            '/getDietLogs/hy@zhang.com', 
+            '/getDietLogs/h1@123.com', 
             data=json.dumps({
-                'date':'2022-04-01',
+                'date':'2022-04-02',
             }),
             content_type='application/json',
         )
