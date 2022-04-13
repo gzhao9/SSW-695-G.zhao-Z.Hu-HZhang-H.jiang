@@ -35,7 +35,6 @@ class test_list_copy(unittest.TestCase):
 
     mealdata = {
         'mealDate':datetime.now(),
-        'foodName':'apple',
         'userId':'GW',
         'manuallyInput':'true',
         'mealType':'L',
@@ -112,7 +111,7 @@ class test_list_copy(unittest.TestCase):
     #     self.assertTrue(data == 9)
 
     def test_update_meal_info(self):
-        userId = mealdata['userId']
+        userId = self.mealdata['userId']
         data = update_meal_info(userId,self.mealdata)
         self.assertTrue(data)
 
