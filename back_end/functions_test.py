@@ -74,8 +74,8 @@ class test_list_copy(unittest.TestCase):
 
     def test_get_deit_logs(self):
         # userId = self.info['userId']
-        userId = 'hy@zhang.com'
-        mealdate = datetime.strptime("2022-04-1", '%Y-%m-%d')
+        userId = 'h1@123.com'
+        mealdate = datetime.strptime("2022-04-12", '%Y-%m-%d')
         data = get_deit_logs(userId, mealdate)
         self.assertTrue(len(data)>0)
 
