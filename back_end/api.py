@@ -119,7 +119,7 @@ def getExerciseInfo(userId):
 @app.route('/getExerciseLogs/<userId>', methods = ['GET','POST'])
 def getExerciseLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_exercise_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     return result
 @app.route('/delete_Exercise', methods = ['GET','POST'])
 def delete_Exercise(userId):
