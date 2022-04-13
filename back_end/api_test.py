@@ -74,7 +74,7 @@ class test_list_copy(unittest.TestCase):
         response = app.test_client().post(
             '/getDietLogs/hy@zhang.com', 
             data=json.dumps({
-                'date':'2022-04-02',
+                'date':'2022-04-01',
             }),
             content_type='application/json',
         )
@@ -112,7 +112,7 @@ class test_list_copy(unittest.TestCase):
         mealdata = {
             'Date':datetime.now(),
             'foodId':11,
-            'userId':'GW',
+            'userId':'h1@123.com', 
             'manuallyInput':'true',
             'mealType':'L',
             'unit':251,
@@ -120,7 +120,7 @@ class test_list_copy(unittest.TestCase):
             }
 
         response = app.test_client().post(
-            '/updateDietInfo/hy@zhang.com', 
+            '/updateDietInfo/h1@123.com', 
             data=json.dumps(mealdata),
             content_type='application/json',
         )

@@ -144,8 +144,15 @@ def update_meal_info(userId,mealdata):
     #because when manuallyInput by user, the food info not in database, so it dose not have foodID. update_food_info(userId,info) will return the new foodID store in database.
     del mealdata['foodInfo']
     del mealdata['manuallyInput']
+    mealdata['userId']=userId
     mealdata['mealDate']=mealdata.pop("Date")
     return flask_db_operate.insertintoTable(tablemealRecord, mealdata)
+
+def aaa(userId,info):
+    info['comefrom'] = userId
+    flask_db_operate.insertintoTable(tablefoodInfo, info)
+    foodId = flask_db_operate.findId()[0]
+    return foodId
 
 def update_exercise_info(userId,info):
     return flask_db_operate.updateinTable(tablesportRecord, info, 'userId', userId)
