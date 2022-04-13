@@ -29,6 +29,7 @@ export default function FoodPage() {
         } else {
           setFoodData(response.data);
         }
+        console.log(response.data);
       });
     // setFoodData([
     //   {
