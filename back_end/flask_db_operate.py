@@ -82,8 +82,18 @@ def findEleInTable(elementName,tableName,colName,colValue):
     myresult = mycursor.fetchall()
     return myresult
 
+def findIfInTable(tableName,colName1, colValues1):
+    RES_SQL = build_single_search_SQL(tableName, colName1, colValues1)
+    mycursor.execute(RES_SQL)
+    myresult = mycursor.fetchone()
+    if myresult is None:
+        return False
+    return True
+
+
+
 # find in table where key = colName, if exist, return True, else return false
-def findIfInTable(tableName,colName1, colValues1, colName2, colValues2):
+def findIfInTableTwoEle(tableName,colName1, colValues1, colName2, colValues2):
     RES_SQL = build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues2)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchone()

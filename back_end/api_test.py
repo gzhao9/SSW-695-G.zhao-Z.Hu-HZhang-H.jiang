@@ -83,7 +83,7 @@ class test_list_copy(unittest.TestCase):
         response = app.test_client().post(
             '/getDietLogs/h1@123.com', 
             data=json.dumps({
-                'date':'2022-04-02',
+                'date':'2022-04-12',
             }),
             content_type='application/json',
         )

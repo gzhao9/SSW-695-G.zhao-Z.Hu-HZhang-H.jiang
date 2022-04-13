@@ -38,7 +38,7 @@ def verify_login(userId,password):
     'userId': userId,
     'userPassword': password,
     }
-    return flask_db_operate.findIfInTable(tablelogin, 'userId', userInfo['userId'], 'userPassword', userInfo['userPassword'])
+    return flask_db_operate.findIfInTableTwoEle(tablelogin, 'userId', userInfo['userId'], 'userPassword', userInfo['userPassword'])
 
 
 #  -------------------Register function---------------------------
