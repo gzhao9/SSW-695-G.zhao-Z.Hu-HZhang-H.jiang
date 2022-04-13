@@ -13,12 +13,22 @@ export default function ExerciseInfoPage() {
   const [totalCalorie, setTotalCalorie] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
-    setExerciseInfo([
-      { exercise_name: "Run", minute: 30, calorie: 100 },
-      { exercise_name: "Walk", minute: 30, calorie: 100 },
-      { exercise_name: "Baseball", minute: 30, calorie: 100 },
-      { exercise_name: "Basketball", minute: 30, calorie: 100 },
-    ]);
+    axios
+      .post("/getExerciseLogs/" + userID, { date: date })
+      .then((response) => {
+        console.log(response.data);
+        setExerciseInfo([
+          { exercise_name: "Run", minute: 30, calorie: 100 },
+          { exercise_name: "Walk", minute: 30, calorie: 100 },
+          { exercise_name: "Baseball", minute: 30, calorie: 100 },
+          { exercise_name: "Basketball", minute: 30, calorie: 100 },
+        ]);
+        // if (response.data[0].isNone) {
+        //   setExerciseInfo([]);
+        // } else {
+        //   setExerciseInfo(response.data);
+        // }
+      });
   }, []);
 
   useEffect(() => {

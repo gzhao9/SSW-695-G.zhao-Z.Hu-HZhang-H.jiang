@@ -83,6 +83,18 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(data)==1)
 
+    def test_getExerciseLogs(self):
+        response = app.test_client().post(
+            '/getExerciseLogs/hy@zhang.com', 
+            data=json.dumps({
+                'date':'2022-04-02',
+            }),
+            content_type='application/json',
+        )
+        data = response.get_data(as_text=True)
+        data=json.loads(data)
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(len(data)==1)
 
     """def test_updateUserInfo(self):        
         response = app.test_client().post(
