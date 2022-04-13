@@ -97,10 +97,10 @@ class test_list_copy(unittest.TestCase):
         data = get_infoIdandfrom()
         self.assertTrue(len(data)>0)
         
-    def test_update_food_info(self):
-        userId = 'GW'
-        data = update_food_info(userId,self.foodInfo)
-        self.assertTrue(len(data)>0)
+    # def test_update_food_info(self):
+    #     userId = 'GW'
+    #     data = update_food_info(userId,self.foodInfo)
+    #     self.assertTrue(data == 9)
 
 
 """
