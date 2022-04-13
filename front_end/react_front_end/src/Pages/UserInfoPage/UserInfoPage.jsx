@@ -22,36 +22,70 @@ export default function UserInfoPage() {
   const [chosenDate, setChosenDate] = useState(moment().format("YYYY-MM-DD"));
   const [userData, setUserData] = useState([]);
   const [mealInfo, setMealInfo] = useState([]);
+  const [exerciseInfo, setExerciseInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  let shownMealInfo = [];
+  const [remainedCalorie, setRemainedCalorie] = useState(0);
+  const { userName, BMR } = userData;
   useEffect(() => {
     axios.post("/getUserInfo/" + userID, { date: chosenDate }).then((value) => {
       let data = JSON.parse(value.data);
       setUserData(data[data.length - 1]);
-      console.log(data[data.length - 1]);
+      // console.log(data[data.length - 1]);
       axios
         .post("/getDietLogs/" + userID, { date: chosenDate })
         .then((value) => {
-          console.log(value.data);
+          // console.log(value.data);
           setMealInfo(value.data);
+          setExerciseInfo([
+            { exercise_name: "Run", minute: 30, calorie: 100 },
+            { exercise_name: "Walk", minute: 30, calorie: 100 },
+            { exercise_name: "Baseball", minute: 30, calorie: 100 },
+            { exercise_name: "Basketball", minute: 30, calorie: 100 },
+          ]);
+          setMealInfo([
+            {
+              food_name: "cookie",
+              type: "B",
+              weight: 254,
+              carbohydrate: 25,
+              protein: 45,
+              fat: 15,
+              calorie_cost: 635,
+            },
+            {
+              food_name: "shit",
+              type: "LA",
+              weight: 122,
+              carbohydrate: 11,
+              protein: 22,
+              fat: 33,
+              calorie_cost: 444,
+            },
+            {
+              food_name: "pee",
+              type: "D",
+              weight: 1,
+              carbohydrate: 2,
+              protein: 3,
+              fat: 4,
+              calorie_cost: 666,
+            },
+          ]);
           setIsLoading(false);
         });
     });
-
-    if (mealInfo) {
-      if (mealInfo.length <= 3) {
-        for (let i = 0; i < mealInfo.length; i++) {
-          shownMealInfo.push(mealInfo[i].food_name);
-        }
-      } else {
-        for (let i = 0; i < 3; i++) {
-          shownMealInfo.push(mealInfo[i].food_name);
-        }
-        shownMealInfo.push("...");
-      }
-    }
   }, [chosenDate]);
-  const { userName, BMR } = userData;
+
+  useEffect(() => {
+    let tmp = BMR;
+    mealInfo.map((item) => {
+      tmp -= item.calorie_cost;
+    });
+    exerciseInfo.map((item) => {
+      tmp += item.calorie;
+    });
+    setRemainedCalorie(tmp);
+  }, [mealInfo, exerciseInfo]);
 
   function onDateChange(date, dateString) {
     setChosenDate(dateString);
@@ -116,7 +150,7 @@ export default function UserInfoPage() {
           }}
           headStyle={{ textAlign: "left" }}
         >
-          xxx kcal
+          {remainedCalorie} kcal
         </Card>
         <Card
           title="My Meal"
@@ -142,9 +176,11 @@ export default function UserInfoPage() {
         >
           <List
             size="small"
-            dataSource={shownMealInfo}
+            dataSource={
+              mealInfo.length == 1 && mealInfo[0].isNone ? [] : mealInfo
+            }
             renderItem={(item) => {
-              return <List.Item>{item}</List.Item>;
+              return <List.Item>{item.food_name}</List.Item>;
             }}
           />
         </Card>
@@ -161,15 +197,23 @@ export default function UserInfoPage() {
           }}
           headStyle={{ textAlign: "left" }}
           extra={
-            <Link style={{ color: "royalblue" }} to="/foodPage">
+            <Link
+              style={{ color: "royalblue" }}
+              to="/exerciseInfoPage"
+              state={{ date: chosenDate, userID: userID }}
+            >
               View All
             </Link>
           }
         >
           <List
             size="small"
-            dataSource={["111", "222", "333"]}
-            renderItem={(item) => <List.Item>{item}</List.Item>}
+            dataSource={
+              exerciseInfo.length == 1 && exerciseInfo[0].isNone
+                ? []
+                : exerciseInfo
+            }
+            renderItem={(item) => <List.Item>{item.exercise_name}</List.Item>}
           />
         </Card>
       </Skeleton>

@@ -5,6 +5,8 @@ import GetUserInfoPage from "../Pages/GetUserInfoPage/GetUserInfoPage";
 import FoodPage from "../Pages/FoodInfoPage/FoodPage";
 import FoodDetailPage from "../Pages/FoodDetailPage/FoodDetailPage";
 import UserInfoPage from "../Pages/UserInfoPage/UserInfoPage";
+import ExerciseInfoPage from "../Pages/ExerciseInfoPage/ExerciseInfoPage";
+import ExerciseDetailPage from "../Pages/ExerciseDetailPage/ExerciseDetailPage";
 
 export default [
   {
@@ -34,5 +36,13 @@ export default [
   {
     path: "/userInfoPage",
     element: <UserInfoPage />,
+  },
+  {
+    path: "/exerciseInfoPage",
+    element: <ExerciseInfoPage />,
+  },
+  {
+    path: "/exerciseDetailoPage",
+    element: <ExerciseDetailPage />,
   },
 ];

@@ -21,15 +21,44 @@ export default function FoodPage() {
   const [foodData, setFoodData] = useState([]);
 
   useEffect(() => {
-    axios
-      .post("/getDietLogs/" + userID, { date: date })
-      .then(function (response) {
-        if (response.data[0].isNone) {
-          setFoodData([]);
-        } else {
-          setFoodData(response.data);
-        }
-      });
+    // axios
+    //   .post("/getDietLogs/" + userID, { date: date })
+    //   .then(function (response) {
+    //     if (response.data[0].isNone) {
+    //       setFoodData([]);
+    //     } else {
+    //       setFoodData(response.data);
+    //     }
+    //   });
+    setFoodData([
+      {
+        food_name: "cookie",
+        type: "B",
+        weight: 254,
+        carbohydrate: 25,
+        protein: 45,
+        fat: 15,
+        calorie_cost: 635,
+      },
+      {
+        food_name: "shit",
+        type: "LA",
+        weight: 122,
+        carbohydrate: 11,
+        protein: 22,
+        fat: 33,
+        calorie_cost: 444,
+      },
+      {
+        food_name: "pee",
+        type: "D",
+        weight: 1,
+        carbohydrate: 2,
+        protein: 3,
+        fat: 4,
+        calorie_cost: 666,
+      },
+    ]);
   }, []);
 
   foodData.map((item) => {
@@ -43,7 +72,7 @@ export default function FoodPage() {
   return (
     <div className="FoodInfoPg">
       <Header headerText="Food Information" />
-      <FoodInfoList foodInfo={foodData} date={state.date} />
+      <FoodInfoList foodInfo={foodData} date={date} userID={userID} />
       <Divider> Calorie Data </Divider>
       <CalorieInfoBlock totalCalorie={totalCalorie} />
       <Divider> Nutrition Data </Divider>
