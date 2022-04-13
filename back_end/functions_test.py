@@ -33,6 +33,14 @@ class test_list_copy(unittest.TestCase):
         'vc':200,
     }
 
+    mealdata = {
+        'mealDate':datetime.now(),
+        'userId':'GW',
+        'manuallyInput':'true',
+        'mealType':'L',
+        'foodInfo':foodInfo,
+    }
+
     def test_login(self):
         self.assertTrue(verify_login("GW","ggww"))
 
@@ -101,6 +109,9 @@ class test_list_copy(unittest.TestCase):
     #     userId = 'GW'
     #     data = update_food_info(userId,self.foodInfo)
     #     self.assertTrue(data == 9)
+
+    def test_update_meal_info(self):
+        data = 
 
 
 """
