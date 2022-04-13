@@ -14,6 +14,7 @@ def to_json(data):
             if type(v)==type(date.today())or type(v)==type(datetime.now()):
                 data[i][k]=v.strftime("%m-%d-%Y, %H:%M:%S")
     return json.dumps(data)
+    # return data
 # -----------------------------------build sql statement--------------------------------
 def build_insert_SQL(tableName,datadict):
     columns = ', '.join("" + str(x).replace('/', '_') + "" for x in datadict.keys())
@@ -82,8 +83,8 @@ def findEleInTable(elementName,tableName,colName,colValue):
     return myresult
 
 # find in table where key = colName, if exist, return True, else return false
-def findIfInTable(tableName,colName, colValue):
-    RES_SQL = build_single_search_SQL(tableName, colName, colValue)
+def findIfInTable(tableName,colName1, colValues1, colName2, colValues2):
+    RES_SQL = build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues2)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchone()
     if myresult is None:

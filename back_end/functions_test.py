@@ -54,6 +54,7 @@ class test_list_copy(unittest.TestCase):
 
     def test_get_user_info(self):
         data=get_user_info("GW",datetime.strptime("2022-04-12", '%Y-%m-%d'))
+        print(type(data))
         # data=get_user_info("GW","2022-04-12")
         self.assertTrue(len(data)>0)
     
@@ -77,6 +78,7 @@ class test_list_copy(unittest.TestCase):
         userId = 'h1@123.com'
         mealdate = datetime.strptime("2022-04-12", '%Y-%m-%d')
         data = get_deit_logs(userId, mealdate)
+        print(type(data))
         self.assertTrue(len(data)>0)
 
     def test_get_exercise_logs(self):
@@ -108,13 +110,13 @@ class test_list_copy(unittest.TestCase):
         
     # def test_update_food_info(self):
     #     userId = 'GW'
-    #     data = update_food_info(userId,self.foodInfo)
+    #     data = update_food_info(us erId,self.foodInfo)
     #     self.assertTrue(data == 9)
 
-    def test_update_meal_info(self):
-        userId = self.mealdata['userId']
-        data = update_meal_info(userId,self.mealdata)
-        self.assertTrue(data)
+    # def test_update_meal_info(self):
+    #     userId = self.mealdata['userId']
+    #     data = update_meal_info(userId,self.mealdata)
+    #     self.assertTrue(data)
 
 
 """
