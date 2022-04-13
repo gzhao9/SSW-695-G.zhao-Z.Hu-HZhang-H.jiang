@@ -11,7 +11,7 @@ export default function FoodInfoList(props) {
         dataSource={props.foodInfo}
         renderItem={(item) => (
           <List.Item>
-            <FoodInfo foodInfo={item} date={props.date} />
+            <FoodInfo foodInfo={item} date={props.date} userID={props.userID} />
           </List.Item>
         )}
       />

@@ -160,7 +160,7 @@ export default function FoodDetailPage() {
           style={{ marginLeft: "10%", marginRight: "10%" }}
           label="Calorie (kcal)"
           name="calorie_rate"
-          initialValue={state.foodInfo.calorie_rate}
+          initialValue={state.foodInfo.calorie_cost}
           rules={[
             {
               required: true,
