@@ -96,32 +96,7 @@ class test_list_copy(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
         self.assertTrue(len(data)==1)
 
-    """def test_updateUserInfo(self):        
-        response = app.test_client().post(
-            '/updateUserInfo/GW',
-            data=json.dumps({
-                'allergySource':[],
-                'birthday':"2022-04-10",
-                'date':datetime.now(),
-                'fatRate':18,
-                'fullName':"xxx",
-                'gender':"male",
-                'height':123,
-                'isVegan':'false',
-                'mealPlan':"keepHealth",
-                'weight':1,
-            }),
-            content_type='application/json',
-        )
-
-        data = json.loads(response.get_data(as_text=True))
-
-        self.assertTrue(response.status_code == 200)
-        self.assertTrue(data['isSuccess'] == True)
-
     
-    
-"""
 
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
