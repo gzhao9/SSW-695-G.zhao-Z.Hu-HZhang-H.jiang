@@ -35,9 +35,11 @@ class test_list_copy(unittest.TestCase):
 
     mealdata = {
         'mealDate':datetime.now(),
+        'foodId':11,
         'userId':'GW',
-        'manuallyInput':'true',
+        'manuallyInput':'false',
         'mealType':'L',
+        'unit':110,
         'foodInfo':foodInfo,
     }
 
