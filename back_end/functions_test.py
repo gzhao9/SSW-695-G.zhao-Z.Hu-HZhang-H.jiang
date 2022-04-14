@@ -120,6 +120,13 @@ class test_list_copy(unittest.TestCase):
 
     def test_get_fooodIdandName(self):
         data = get_fooodIdandName()
+        print(data[0])
+        print(data[0][0])
+        self.assertTrue(len(data)>0)
+
+    def test_format_food_detail(self):
+        data = call_food_API('apple')
+        print(data)
         self.assertTrue(len(data)>0)
 
 """
