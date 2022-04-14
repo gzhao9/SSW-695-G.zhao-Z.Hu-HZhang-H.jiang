@@ -93,8 +93,8 @@ def getDietInfo(userId):
 
 @app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
 def getDietLogs(userId):    
-    #data = json.loads(request.get_data())
-    #result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    data = json.loads(request.get_data())
+    result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     exmaple=[
         {
 		'food_name': "cookie",
@@ -128,7 +128,7 @@ def getDietLogs(userId):
         }
     ]
     exmaple=json.dumps(exmaple)
-    return exmaple
+    return result
 
 @app.route('/delete_food', methods = ['GET','POST'])
 def delete_food():

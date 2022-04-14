@@ -1,0 +1,26 @@
+[
+    {
+        "mealRecordId": 14,
+        "userId": "GW",
+        "mealDate": "04-13-2022, 00:00:00",
+        "foodId": 11,
+        "foodName": null,
+        "mealType": "L",
+        "unit": 251.0
+    },
+    {
+        "foodId": 11,
+        "foodName": "pinapple",
+        "comefrom": "GW",
+        "foodType": "fruit",
+        "protein": 0.0,
+        "fat": 0.0,
+        "carbohydrate": 6.0,
+        "energy": 80.0,
+        "sugar": 1.8,
+        "va": 0.0,
+        "vc": 200.0,
+        "unitWeight": null,
+        "totalWeight": 20.0
+    }
+]

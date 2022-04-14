@@ -107,16 +107,37 @@ def get_user_logs(userId):
     return flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
 
 def get_food_info(comefrom,foodId):
+    try:
+        foodId=int(foodId)
+    except:
+        pass
     if comefrom == 'webapi':
-        return flask_db_operate.findInTable(tablefoodInfo, 'foodId', foodId)
+        return json.loads(flask_db_operate.findInTable(tablefoodInfo, 'foodId', foodId))[0]
     else:
-        return flask_db_operate.findInTableWithTwoLimit(tablefoodInfo, 'comefrom', comefrom, 'foodId', foodId)
+        return json.loads(flask_db_operate.findInTableWithTwoLimit(tablefoodInfo, 'comefrom', comefrom, 'foodId', foodId))[0]
 
 def get_exercise_info(sportId):
     return flask_db_operate.findInTable(tablesportInfo, 'sportId', sportId)
 
+
 def get_deit_logs(userId,date):
-    return flask_db_operate.findInTableWithTwoLimit(tablemealRecord, 'userId', userId, 'mealDate', date)
+    data=json.loads(flask_db_operate.findInTableWithTwoLimit(tablemealRecord, 'userId', userId, 'mealDate', date))
+    result=list()
+    for i in data:
+        foodinfo=get_food_info('webapi',i['foodId'])
+        tem={
+		'food_name': foodinfo['foodName'],
+		'type': i['mealType'],
+		'weight': i['unit'],
+		'carbohydrate': foodinfo['carbohydrate']*i['unit'],
+		'protein': foodinfo['protein']*i['unit'],
+		'fat': foodinfo['fat']*i['unit'],
+		'calorie_cost': foodinfo['energy']*i['unit'],
+		'mealRecordID': i['mealRecordId']
+        },
+        result.append(tem)
+    return result
+
 
 def get_exercise_logs(userId,date):
     return flask_db_operate.findInTableWithTwoLimit(tablesportRecord, 'userId', userId, 'sportDate', date)
