@@ -141,9 +141,7 @@ def delete_Exercise(userId):
 def seraching_food_result(userId):
     data = json.loads(request.get_data())
     isSuccess=delete_sport_info(data['sportRecordId'])
-    result= {
-        "isSuccess":isSuccess,
-    }
+    result=[1,2,12,13]
     return result
 
 if __name__ == "__main__":
