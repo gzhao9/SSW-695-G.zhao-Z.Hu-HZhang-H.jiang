@@ -89,14 +89,7 @@ def get_fooodIdandName():
     colName1 = 'foodId'
     colName2 = 'foodName'
     res = flask_db_operate.showTwoCol(tablefoodInfo, colName1, colName2)
-    print(res)
-    list1 = list()
-    list2 = list()
-    for i in res:
-        list1.append(i[0])
-        list2.append(i[1])
-    resdict = dict(zip(list2,list1))
-    return resdict
+    return res
     
 
 
