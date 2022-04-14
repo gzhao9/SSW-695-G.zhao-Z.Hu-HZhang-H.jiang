@@ -208,11 +208,31 @@ def cal_BMR(gender,weight,height,age):
 def call_food_API(foodName):
     foodInfoList = get_food_nutrient.call_API(foodName, API_KEY)
     foodFormatList = format_food_detail(foodInfoList,foodName)
-    return foodFormatList[0]
+    if len(foodFormatList)>0:
+        return foodFormatList[0]
+    else:
+        return None
 
+def food_search(userId,keyword):
+    namelist=get_fooodIdandName()
+    namelist.reverse()
+    result=list()
+    for info in namelist:
+        if info[0].lower().startswith(keyword.lower()):
+            foodinfo=get_food_info("webapi",info[1])
+            if foodinfo['comefrom']==userId or foodinfo['comefrom']=='webapi':
+                result.append(foodinfo)
+    if len(result)>0:
+        return result
 
-
-
+    else:
+        apifind=call_food_API(keyword)
+        if apifind is not None:
+            newID=update_food_info("webapi",apifind)
+            return [get_food_info(newID)]
+        else:
+            return [{"isNone":True}]
+        
 
 # ------------------------format food info with detail----------------------
 def format_food_detail(foodInfoList,foodName):
