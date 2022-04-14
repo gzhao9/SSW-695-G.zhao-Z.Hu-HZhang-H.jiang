@@ -43,14 +43,15 @@ export default function FoodDetailPage() {
   function onFinish(values) {
     console.log("Success:", values);
     let processedData = {
-      isAdd: isAdd,
-      userID: userID,
+      // isAdd: isAdd,
+      userId: userID,
       Date: date,
-      foodID: 0,
+      foodId: 0,
+      unit: values.unit,
       manuallyInput: values.manuallyInput,
-      Type: values.type,
+      mealType: values.type,
       foodInfo: {
-        calorie_rate: values.calorie_rate,
+        energy: values.calorie_rate,
         carbohydrate: values.carbohydrate,
         fat: values.fat,
         protein: values.protein,
@@ -58,8 +59,9 @@ export default function FoodDetailPage() {
       },
     };
     console.log(processedData);
-    axios.post("/updateDietInfo/" + userID, processedData);
-    navigate("/userInfoPage", { state: { userID: userID, date: date } });
+    axios.post("/updateDietInfo/" + userID, processedData).then((response) => {
+      navigate("/userInfoPage", { state: { userID: userID, date: date } });
+    });
   }
 
   function onFinishFailed(errorInfo) {

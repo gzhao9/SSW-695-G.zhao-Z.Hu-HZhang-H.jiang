@@ -45,6 +45,7 @@ export default function UserInfoPage() {
     } else {
       setUserData(realUserInfo[realUserInfo.length - 1]);
     }
+    console.log(dietInfo.data, sportInfo.data);
     if (dietInfo.data[0].isNone) {
       setMealInfo([]);
     } else {
@@ -55,11 +56,13 @@ export default function UserInfoPage() {
     } else {
       setExerciseInfo(sportInfo.data);
     }
+    setIsLoading(false);
   }
 
   useEffect(() => {
+    setIsLoading(true);
     getInfo();
-    setIsLoading(false);
+
     // axios.post("/getUserInfo/" + userID, { date: chosenDate }).then((value) => {
     //   let data = JSON.parse(value.data);
     //   setUserData(data[data.length - 1]);
@@ -150,6 +153,7 @@ export default function UserInfoPage() {
       <Skeleton
         avatar
         loading={isLoading}
+        paragraph={{ rows: 20 }}
         style={{
           marginLeft: "5%",
           marginRight: "5%",

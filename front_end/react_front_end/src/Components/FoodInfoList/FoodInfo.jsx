@@ -11,10 +11,10 @@ export default function FoodInfo(props) {
   return (
     <div style={{ width: "100%" }}>
       <Row justify="space-between">
-        <Col span={6}>
+        {/* <Col span={6}>
           <img src={foodPic} alt="Food Pic" className="foodPic" />
-        </Col>
-        <Col span={6}>
+        </Col> */}
+        <Col span={12}>
           <span className="foodNameText">
             {food_name} <br />
             {weight} gram

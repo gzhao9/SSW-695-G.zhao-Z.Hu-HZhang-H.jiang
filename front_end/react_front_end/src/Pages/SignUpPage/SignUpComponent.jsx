@@ -13,7 +13,9 @@ export default function SignUpComponent() {
     axios.post("/verifyRegister", values).then((response) => {
       let isSuccess = response.data["isSuccess"];
       if (isSuccess === true) {
-        navigate("/getUserInfoPage", { state: { userID: values.userID } });
+        navigate("/getUserInfoPage", {
+          state: { userID: values.userID, userData: {} },
+        });
       } else {
         alert("You email address already exists!");
       }
