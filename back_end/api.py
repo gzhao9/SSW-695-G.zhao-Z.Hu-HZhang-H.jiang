@@ -182,8 +182,34 @@ def delete_Exercise(userId):
 @app.route('/serach_food_result/<userId>', methods = ['GET','POST'])
 def seraching_food_result(userId):
     data = json.loads(request.get_data())
-    isSuccess=delete_sport_info(data['sportRecordId'])
-    result=[1,2,12,13]
+    result=[
+        {
+            'foodId':11,
+            'food_name': "pizza",
+            'carbohydrate': 2,
+            'protein': 3,
+            'fat': 4,
+            'energy':40
+            },
+            
+        {
+            'foodId':12,
+            'food_name': "zas",
+            'carbohydrate': 2,
+            'protein': 3,
+            'fat': 4,
+            'energy':54
+            },
+            
+        {
+            'foodId':13,
+            'food_name': "aaaa",
+            'carbohydrate': 2,
+            'protein': 3,
+            'fat': 4,
+            'energy':125
+            },            
+    ]
     return result
 
 if __name__ == "__main__":
