@@ -95,7 +95,39 @@ def getDietInfo(userId):
 def getDietLogs(userId):    
     data = json.loads(request.get_data())
     result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
-    return result
+    exmaple=[
+        {
+		'food_name': "cookie",
+		'type': "B",
+		'weight': 254,
+		'carbohydrate': 25,
+		'protein': 45,
+		'fat': 15,
+		'calorie_cost': 635,
+		'mealRecordID': 18
+        },
+        {
+		'food_name': "apple",
+		'type': "LA",
+		'weight': 122,
+		'carbohydrate': 11,
+		'protein': 22,
+		'fat': 33,
+		'calorie_cost': 444,
+		'mealRecordID': 19
+        },
+        {
+		'food_name': "pizza",
+		'type': "D",
+		'weight': 1,
+		'carbohydrate': 2,
+		'protein': 3,
+		'fat': 4,
+		'calorie_cost': 666,
+		'mealRecordID': 20
+        }
+    ]
+    return exmaple
 
 @app.route('/delete_food', methods = ['GET','POST'])
 def delete_food():
@@ -126,7 +158,17 @@ def getExerciseInfo(userId):
 def getExerciseLogs(userId):    
     data = json.loads(request.get_data())
     result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
-    return result
+    exmaple=[
+        { 'exercise_name': "Run", 'minute': 30, 'calorie': 100
+        },
+        { 'exercise_name': "Walk", 'minute': 30, 'calorie': 100
+        },
+        { 'exercise_name': "Baseball", 'minute': 30, 'calorie': 100
+        },
+        { 'exercise_name': "Basketball", 'minute': 30, 'calorie': 100
+        }
+    ]
+    return exmaple
 
 @app.route('/delete_Exercise', methods = ['GET','POST'])
 def delete_Exercise(userId):
