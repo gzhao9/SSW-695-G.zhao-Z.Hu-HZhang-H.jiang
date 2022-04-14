@@ -70,20 +70,34 @@ def get_infoId(userId):
 
 
 def get_infoIdandfrom():
-    colname1 = 'foodId'
-    colname2 = 'comefrom'
-    data = flask_db_operate.showTwoCol(tablefoodInfo, colname1, colname2)
+    colName1 = 'foodId'
+    colName2 = 'comefrom'
+    data = flask_db_operate.showTwoCol(tablefoodInfo, colName1, colName2)
     list1 = list()
     list2 = list()
     for i in data:
         list1.append(i[0])
         list2.append(i[1])
     res = {
-        colname1 : list1,
-        colname2 : list2,
+        colName1 : list1,
+        colName2 : list2,
     }
     return res
 
+
+def get_fooodIdandName():
+    colName1 = 'foodId'
+    colName2 = 'foodName'
+    res = flask_db_operate.showTwoCol(tablefoodInfo, colName1, colName2)
+    print(res)
+    list1 = list()
+    list2 = list()
+    for i in res:
+        list1.append(i[0])
+        list2.append(i[1])
+    resdict = dict(zip(list2,list1))
+    return resdict
+    
 
 
 def get_user_info(userId,date):
