@@ -117,17 +117,19 @@ def get_deit_logs(userId,date):
     data=json.loads(flask_db_operate.findInTableWithTwoLimit(tablemealRecord, 'userId', userId, 'mealDate', date))
     result=list()
     for i in data:
+        if i=={"isNone":True}:
+            return i
         foodinfo=get_food_info('webapi',i['foodId'])
         tem={
 		'food_name': foodinfo['foodName'],
 		'type': i['mealType'],
 		'weight': i['unit'],
-		'carbohydrate': foodinfo['carbohydrate']*i['unit'],
-		'protein': foodinfo['protein']*i['unit'],
-		'fat': foodinfo['fat']*i['unit'],
-		'calorie_cost': foodinfo['energy']*i['unit'],
+		'carbohydrate': int(foodinfo['carbohydrate']*i['unit']/100),
+		'protein': int(foodinfo['protein']*i['unit']/100),
+		'fat': int(foodinfo['fat']*i['unit']/100),
+		'calorie_cost': int(foodinfo['energy']*i['unit']/100),
 		'mealRecordID': i['mealRecordId']
-        },
+        }
         result.append(tem)
     return result
 
