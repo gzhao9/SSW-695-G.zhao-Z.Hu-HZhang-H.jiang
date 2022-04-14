@@ -113,11 +113,14 @@ class test_list_copy(unittest.TestCase):
     #     data = update_food_info(us erId,self.foodInfo)
     #     self.assertTrue(data == 9)
 
-    def test_update_meal_info(self):
-        userId = self.mealdata['userId']
-        data = update_meal_info(userId,self.mealdata)
-        self.assertTrue(data)
+    # def test_update_meal_info(self):
+    #     userId = self.mealdata['userId']
+    #     data = update_meal_info(userId,self.mealdata)
+    #     self.assertTrue(data)
 
+    def test_get_fooodIdandName(self):
+        data = get_fooodIdandName()
+        self.assertTrue(len(data)>0)
 
 """
     ----------------unpassd test cases-------------------
