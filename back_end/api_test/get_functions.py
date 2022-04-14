@@ -1,4 +1,4 @@
-from api import app
+from . import api
 from flask import json
 import unittest
 from datetime import datetime

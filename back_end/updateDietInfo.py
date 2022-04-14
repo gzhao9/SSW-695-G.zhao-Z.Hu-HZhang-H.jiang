@@ -22,7 +22,7 @@ class test_list_copy(unittest.TestCase):
         mealdata = {
             'Date':datetime.now(),
             'foodId':11,
-            'userId':'a@a.com', 
+            'userId':'a1@a.com', 
             'manuallyInput':'true',
             'mealType':'L',
             'unit':251,
@@ -30,7 +30,7 @@ class test_list_copy(unittest.TestCase):
             }
 
         response = app.test_client().post(
-            '/updateDietInfo/a@a.com', 
+            '/updateDietInfo/a2@a.com', 
             data=json.dumps(mealdata),
             content_type='application/json',
         )
