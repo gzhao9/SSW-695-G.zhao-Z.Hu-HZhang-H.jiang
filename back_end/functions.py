@@ -13,7 +13,8 @@ import get_food_nutrient
 import flask_db_operate
 
 # -------------------------API config----------------------
-with open('apikey.txt', mode='r') as api:
+# with open('apikey.txt', mode='r') as api:
+with open('./back_end/apikey.txt', mode='r') as api:
     API_KEY = api.read()
 
 
@@ -167,8 +168,8 @@ def update_food_info(userId,foodInfo):
     return foodId
 
 def update_meal_info(userId,mealdata):
-    if mealdata['manuallyInput']=='true':
-        mealdata['foodId']=update_food_info(userId,mealdata['foodInfo'])
+    # if mealdata['manuallyInput']=='true':
+    mealdata['foodId']=update_food_info(userId,mealdata['foodInfo'])
 
     
     #because when manuallyInput by user, the food info not in database, so it dose not have foodID. update_food_info(userId,info) will return the new foodID store in database.
