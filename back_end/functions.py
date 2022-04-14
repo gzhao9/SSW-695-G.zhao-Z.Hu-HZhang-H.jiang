@@ -241,6 +241,7 @@ def format_food_detail(foodInfoList,foodName):
         # fdcId = foodInfoList['foods'][i]['fdcId']
         foodCategory = foodInfoList['foods'][i]['foodCategory']
         foodDetailInfo = foodInfoList['foods'][i]['foodNutrients']
+        # foodName = foodInfoList['foods'][i]['lowercaseDescription']
         fooddata = get_food_nutrient.format_food(foodName, foodCategory, foodDetailInfo)
         fooddatalist.append(fooddata)
         # break after 10 result
