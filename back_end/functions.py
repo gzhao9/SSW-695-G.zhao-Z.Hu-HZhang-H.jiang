@@ -88,7 +88,7 @@ def get_infoIdandfrom():
 def get_fooodIdandName():
     colName1 = 'foodId'
     colName2 = 'foodName'
-    res = flask_db_operate.showTwoCol(tablefoodInfo, colName1, colName2)
+    res = flask_db_operate.showTwoCol(tablefoodInfo, colName2, colName1)
     return res
     
 
@@ -204,17 +204,28 @@ def cal_BMR(gender,weight,height,age):
     else:
         return 655.1 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
 
+# ------------------------get food nutrient-------------------------------
+def call_food_API(foodName):
+    foodInfoList = get_food_nutrient.call_API(foodName, API_KEY)
+    foodFormatList = format_food_detail(foodInfoList,foodName)
+    return foodFormatList[0]
+
+
+
+
+
 # ------------------------format food info with detail----------------------
-def format_food_detail(foodInfoList):
+def format_food_detail(foodInfoList,foodName):
     fooddatalist = list()
     for i in range(len(foodInfoList['foods'])):
         # fdcId = foodInfoList['foods'][i]['fdcId']
         foodCategory = foodInfoList['foods'][i]['foodCategory']
         foodDetailInfo = foodInfoList['foods'][i]['foodNutrients']
-        fooddata = get_food_nutrient.format_food(foodname, foodCategory, foodDetailInfo)
+        fooddata = get_food_nutrient.format_food(foodName, foodCategory, foodDetailInfo)
         fooddatalist.append(fooddata)
         # break after 10 result
-        if i >= 10:
+        if i <= 10:
             break
     
     return fooddatalist
+
