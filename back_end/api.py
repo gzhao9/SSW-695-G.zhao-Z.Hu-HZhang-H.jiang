@@ -138,7 +138,7 @@ def delete_Exercise(userId):
     return result
 
 @app.route('/serach_food_result/<userId>', methods = ['GET','POST'])
-def serach_food_result(userId):
+def seraching_food_result(userId):
     data = json.loads(request.get_data())
     isSuccess=delete_sport_info(data['sportRecordId'])
     result= {
