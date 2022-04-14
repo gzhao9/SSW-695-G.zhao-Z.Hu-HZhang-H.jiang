@@ -127,7 +127,7 @@ def getDietLogs(userId):
 		'mealRecordID': 20
         }
     ]
-    return exmaple
+    return json.dumps(exmaple)
 
 @app.route('/delete_food', methods = ['GET','POST'])
 def delete_food():
@@ -168,7 +168,7 @@ def getExerciseLogs(userId):
         { 'exercise_name': "Basketball", 'minute': 30, 'calorie': 100
         }
     ]
-    return exmaple
+    return json.dumps(exmaple)
 
 @app.route('/delete_Exercise', methods = ['GET','POST'])
 def delete_Exercise(userId):
@@ -210,7 +210,7 @@ def seraching_food_result(userId):
             'energy':125
             },            
     ]
-    return result
+    return json.dumps(result)
 
 if __name__ == "__main__":
     app.run()
