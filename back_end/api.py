@@ -93,40 +93,7 @@ def getDietInfo(userId):
 @app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
 def getDietLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
-    #result=get_deit_logs(userId,datetime.strptime("2022-04-13", '%Y-%m-%d'))
-    exmaple=[
-        {
-		'food_name': "cookie",
-		'type': "B",
-		'weight': 254,
-		'carbohydrate': 25,
-		'protein': 45,
-		'fat': 15,
-		'calorie_cost': 635,
-		'mealRecordID': 18
-        },
-        {
-		'food_name': "apple",
-		'type': "LA",
-		'weight': 122,
-		'carbohydrate': 11,
-		'protein': 22,
-		'fat': 33,
-		'calorie_cost': 444,
-		'mealRecordID': 19
-        },
-        {
-		'food_name': "pizza",
-		'type': "D",
-		'weight': 1,
-		'carbohydrate': 2,
-		'protein': 3,
-		'fat': 4,
-		'calorie_cost': 666,
-		'mealRecordID': 20
-        }
-    ]
+    result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))    
     result=json.dumps(result)
     return result
 
@@ -182,35 +149,8 @@ def delete_Exercise(userId):
 
 @app.route('/serach_food_result/<userId>', methods = ['GET','POST'])
 def seraching_food_result(userId):
-    #data = json.loads(request.get_data())
-    result=[
-        {
-            'foodId':11,
-            'food_name': "pizza",
-            'carbohydrate': 2,
-            'protein': 3,
-            'fat': 4,
-            'energy':40
-            },
-            
-        {
-            'foodId':12,
-            'food_name': "zas",
-            'carbohydrate': 2,
-            'protein': 3,
-            'fat': 4,
-            'energy':54
-            },
-            
-        {
-            'foodId':13,
-            'food_name': "aaaa",
-            'carbohydrate': 2,
-            'protein': 3,
-            'fat': 4,
-            'energy':125
-            },            
-    ]
+    data = json.loads(request.get_data())
+    result=food_search(userId,data['keywords'])
     return json.dumps(result)
 
 if __name__ == "__main__":
