@@ -7,30 +7,29 @@ from datetime import datetime
 class test_list_copy(unittest.TestCase):
 
     def test_updateDiet_logs(self):
-        foodInfo = {
-        'foodName': 'bilibili',
-        'foodType': 'fruit',
-        'totalWeight': 20,
-        'protein': 1,
-        'fat':23,
-        'carbohydrate':6,
-        'energy':80,
-        'sugar':1.8,
-        'va':0,
-        'vc':200,
-        }
         mealdata = {
-            'Date':datetime.now(),
+            'Date':"2022-04-13",
             'foodId':11,
-            'userId':'a1@a.com', 
+            'userId':'GW', 
             'manuallyInput':'true',
             'mealType':'L',
             'unit':251,
-            'foodInfo':foodInfo,
+            'foodInfo':{
+                    'foodName': 'bilibili',
+                    'foodType': 'fruit',
+                    'totalWeight': 20,
+                    'protein': 1,
+                    'fat':23,
+                    'carbohydrate':6,
+                    'energy':80,
+                    'sugar':1.8,
+                    'va':0,
+                    'vc':200,
+                    },
             }
 
         response = app.test_client().post(
-            '/updateDietInfo/a2@a.com', 
+            '/updateDietInfo/GW', 
             data=json.dumps(mealdata),
             content_type='application/json',
         )
