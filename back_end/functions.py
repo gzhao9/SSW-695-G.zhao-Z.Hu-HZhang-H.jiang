@@ -13,7 +13,7 @@ import get_food_nutrient
 import flask_db_operate
 
 # -------------------------API config----------------------
-with open('back_end/apikey.txt', mode='r') as api:
+with open('apikey.txt', mode='r') as api:
     API_KEY = api.read()
 
 
@@ -229,7 +229,7 @@ def food_search(userId,keyword):
         apifind=call_food_API(keyword)
         if apifind is not None:
             newID=update_food_info("webapi",apifind)
-            return [get_food_info(newID)]
+            return [get_food_info(userId,newID)]
         else:
             return [{"isNone":True}]
         

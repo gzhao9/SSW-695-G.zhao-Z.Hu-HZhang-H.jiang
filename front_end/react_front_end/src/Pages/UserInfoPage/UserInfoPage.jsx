@@ -46,7 +46,7 @@ export default function UserInfoPage() {
       setUserData(realUserInfo[realUserInfo.length - 1]);
     }
     console.log(dietInfo.data, sportInfo.data);
-    if (dietInfo.data[0].isNone) {
+    if (dietInfo.data.isNone) {
       setMealInfo([]);
     } else {
       setMealInfo(dietInfo.data);
@@ -109,12 +109,12 @@ export default function UserInfoPage() {
     //       axios
     //         .post("/getExerciseLogs/" + userID, { date: chosenDate })
     //         .then((response) => {
-    //           // setExerciseInfo([
-    //           //   { exercise_name: "Run", minute: 30, calorie: 100 },
-    //           //   { exercise_name: "Walk", minute: 30, calorie: 100 },
-    //           //   { exercise_name: "Baseball", minute: 30, calorie: 100 },
-    //           //   { exercise_name: "Basketball", minute: 30, calorie: 100 },
-    //           // ]);
+    // setExerciseInfo([
+    //   { exercise_name: "Run", minute: 30, calorie: 100 },
+    //   { exercise_name: "Walk", minute: 30, calorie: 100 },
+    //   { exercise_name: "Baseball", minute: 30, calorie: 100 },
+    //   { exercise_name: "Basketball", minute: 30, calorie: 100 },
+    // ]);
     //           if (response.data[0].isNone) {
     //             setExerciseInfo([]);
     //           } else {
@@ -187,7 +187,7 @@ export default function UserInfoPage() {
         <DatePicker
           placeholder="Please Input the Date"
           size="large"
-          defaultValue={moment()}
+          defaultValue={moment(chosenDate, "YYYY-MM-DD")}
           style={{ width: "80%", marginTop: "30px", marginBottom: "30px" }}
           onChange={onDateChange}
         ></DatePicker>

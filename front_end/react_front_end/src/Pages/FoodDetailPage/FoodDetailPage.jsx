@@ -19,34 +19,68 @@ export default function FoodDetailPage() {
   const carboRef = useRef();
   const proteinRef = useRef();
   const fatRef = useRef();
+  const unitRef = useRef();
   const { Option } = Select;
   const [options, setOptions] = useState([]);
+  const [fetchedData, setFetchedData] = useState([]);
+  const [foodData, setFoodData] = useState({});
   const [manuallyInput, setManuallyInput] = useState(true);
+  // const [calorieVal, setCalorieVal] = useState(0);
+  // const [proteinVal, setProteinVal] = useState(0);
+  // const [carboVal, setCarboVal] = useState(0);
+  // const [fatVal, setFatVal] = useState(0);
   const navigate = useNavigate();
 
-  const mockVal = (str, repeat = 1) => ({
-    value: str.repeat(repeat),
-  });
+  let t = null;
 
   const onSearch = (searchText) => {
-    setOptions(
-      !searchText
-        ? []
-        : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)]
-    );
+    if (t !== null) {
+      clearTimeout(t);
+    }
+    t = setTimeout(() => {
+      searchFood(searchText);
+    }, 500);
   };
 
   const onSelect = (data) => {
     console.log("onSelect", data);
+    fetchedData.map((item) => {
+      if (item.foodName === data) {
+        setFoodData(item);
+      }
+    });
   };
 
+  function searchFood(keywords) {
+    if (keywords === "") {
+      return;
+    }
+    axios
+      .post("/serach_food_result/" + userID, { keywords: keywords })
+      .then((response) => {
+        let data = response.data;
+
+        if (data === null) {
+          setOptions([]);
+          setFetchedData([]);
+        } else {
+          let tmp = new Array();
+
+          data.map((item) => {
+            tmp.push({ key: item.foodId, value: item.foodName });
+          });
+          setOptions(tmp);
+          setFetchedData(data);
+        }
+      });
+  }
+
   function onFinish(values) {
-    console.log("Success:", values);
     let processedData = {
       // isAdd: isAdd,
       userId: userID,
       Date: date,
-      foodId: 0,
+      foodId: foodData.foodId,
       unit: values.unit,
       manuallyInput: values.manuallyInput,
       mealType: values.type,
@@ -58,7 +92,6 @@ export default function FoodDetailPage() {
         foodName: values.foodName,
       },
     };
-    console.log(processedData);
     axios.post("/updateDietInfo/" + userID, processedData).then((response) => {
       navigate("/userInfoPage", { state: { userID: userID, date: date } });
     });
@@ -68,11 +101,28 @@ export default function FoodDetailPage() {
     console.log("Failed:", errorInfo);
   }
 
+  function onUnitChange(value) {
+    if (foodData === null) {
+      return;
+    }
+    const { energy, carbohydrate, protein, fat } = foodData;
+    // setCalorieVal(energy * value);
+    // setCarboVal(carbohydrate * value);
+    // setFatVal(fat * value);
+    // setProteinVal(protein * value);
+    calorieRef.current.value = energy * value;
+    proteinRef.current.value = protein * value;
+    fatRef.current.value = fat * value;
+    carboRef.current.value = carbohydrate * value;
+  }
+
   function switchManuallyInput(checked) {
     setManuallyInput(!checked);
   }
 
-  useEffect(() => console.log(state.date), []);
+  useEffect(() => {
+    console.log(foodData);
+  }, [foodData]);
 
   return (
     <div>
@@ -124,7 +174,9 @@ export default function FoodDetailPage() {
             style={{ float: "left" }}
             min={0}
             max={10000}
+            ref={unitRef}
             precision={2}
+            onChange={onUnitChange}
           />
         </Form.Item>
 
@@ -157,7 +209,11 @@ export default function FoodDetailPage() {
           valuePropName="checked"
           initialValue={false}
         >
-          <Switch style={{ float: "left" }} onChange={switchManuallyInput} />
+          <Switch
+            style={{ float: "left" }}
+            onChange={switchManuallyInput}
+            disabled
+          />
         </Form.Item>
 
         <Form.Item
@@ -165,16 +221,17 @@ export default function FoodDetailPage() {
           label="Calorie (kcal)"
           name="calorie_rate"
           initialValue={state.foodInfo.calorie_cost}
-          rules={[
-            {
-              required: true,
-              message: "Please input the calorie!",
-            },
-          ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "Please input the calorie!",
+          //   },
+          // ]}
         >
           <InputNumber
             style={{ float: "left" }}
             ref={calorieRef}
+            // value={calorieVal}
             disabled={manuallyInput}
             min={0}
             max={10000}
@@ -187,16 +244,17 @@ export default function FoodDetailPage() {
           label="Carbohydrate (g)"
           name="carbohydrate"
           initialValue={state.foodInfo.carbohydrate}
-          rules={[
-            {
-              required: true,
-              message: "Please input the carbohydrate!",
-            },
-          ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "Please input the carbohydrate!",
+          //   },
+          // ]}
         >
           <InputNumber
             style={{ float: "left" }}
             ref={carboRef}
+            // value={carboVal}
             disabled={manuallyInput}
             min={0}
             max={10000}
@@ -209,16 +267,17 @@ export default function FoodDetailPage() {
           label="Protein (kcal)"
           name="protein"
           initialValue={state.foodInfo.protein}
-          rules={[
-            {
-              required: true,
-              message: "Please input the protein!",
-            },
-          ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "Please input the protein!",
+          //   },
+          // ]}
         >
           <InputNumber
             style={{ float: "left" }}
             ref={proteinRef}
+            // value={proteinVal}
             disabled={manuallyInput}
             min={0}
             max={10000}
@@ -231,16 +290,17 @@ export default function FoodDetailPage() {
           label="Fat (kcal)"
           name="fat"
           initialValue={state.foodInfo.fat}
-          rules={[
-            {
-              required: true,
-              message: "Please input the fat!",
-            },
-          ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "Please input the fat!",
+          //   },
+          // ]}
         >
           <InputNumber
             style={{ float: "left" }}
             ref={fatRef}
+            // value={fatVal}
             disabled={manuallyInput}
             min={0}
             max={10000}

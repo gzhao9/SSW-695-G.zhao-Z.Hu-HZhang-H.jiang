@@ -24,7 +24,7 @@ export default function FoodPage() {
     axios
       .post("/getDietLogs/" + userID, { date: date })
       .then(function (response) {
-        if (response.data[0].isNone) {
+        if (response.data.isNone) {
           setFoodData([]);
         } else {
           setFoodData(response.data);
