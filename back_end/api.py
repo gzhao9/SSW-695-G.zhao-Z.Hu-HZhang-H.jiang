@@ -93,8 +93,8 @@ def getDietInfo(userId):
 
 @app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
 def getDietLogs(userId):    
-    data = json.loads(request.get_data())
-    result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    #data = json.loads(request.get_data())
+    #result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     exmaple=[
         {
 		'food_name': "cookie",
@@ -127,7 +127,8 @@ def getDietLogs(userId):
 		'mealRecordID': 20
         }
     ]
-    return json.dumps(exmaple)
+    exmaple=json.dumps(exmaple)
+    return exmaple
 
 @app.route('/delete_food', methods = ['GET','POST'])
 def delete_food():
@@ -156,8 +157,8 @@ def getExerciseInfo(userId):
 
 @app.route('/getExerciseLogs/<userId>', methods = ['GET','POST'])
 def getExerciseLogs(userId):    
-    data = json.loads(request.get_data())
-    result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    #data = json.loads(request.get_data())
+    #result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     exmaple=[
         { 'exercise_name': "Run", 'minute': 30, 'calorie': 100
         },
@@ -181,7 +182,7 @@ def delete_Exercise(userId):
 
 @app.route('/serach_food_result/<userId>', methods = ['GET','POST'])
 def seraching_food_result(userId):
-    data = json.loads(request.get_data())
+    #data = json.loads(request.get_data())
     result=[
         {
             'foodId':11,
