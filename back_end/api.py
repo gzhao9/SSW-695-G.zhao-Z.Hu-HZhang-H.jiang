@@ -93,7 +93,8 @@ def getDietInfo(userId):
 @app.route('/getDietLogs/<userId>', methods = ['GET','POST'])
 def getDietLogs(userId):    
     data = json.loads(request.get_data())
-    result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))    
+    #result=get_deit_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))    
+    result=get_deit_logs(userId,datetime.strptime("2022-04-13", '%Y-%m-%d'))    
     result=json.dumps(result)
     return result
 
