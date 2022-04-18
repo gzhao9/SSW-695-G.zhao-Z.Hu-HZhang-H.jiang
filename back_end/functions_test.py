@@ -129,6 +129,14 @@ class test_list_copy(unittest.TestCase):
         print(data)
         self.assertTrue(len(data)>0)
 
+    def test_get_exercise_logs(self):
+        userId = 'GW'
+        date = '2022-04-01'
+        data = get_exercise_logs(userId,date)
+        print(data)
+        self.assertTrue(len(data)>0)
+        
+
 """
     ----------------unpassd test cases-------------------
 
