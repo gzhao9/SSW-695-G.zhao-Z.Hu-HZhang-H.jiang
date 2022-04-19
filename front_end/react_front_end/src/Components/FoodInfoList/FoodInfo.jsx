@@ -26,13 +26,12 @@ export default function FoodInfo(props) {
   return (
     <div style={{ width: "100%" }}>
       <Modal
-        title="Basic Modal"
+        title="Warning"
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>Are you sure you </p>
-        <p>want to delete this food?</p>
+        <p>Are you sure you want to delete this food?</p>
       </Modal>
       <Row justify="space-between">
         {/* <Col span={6}>

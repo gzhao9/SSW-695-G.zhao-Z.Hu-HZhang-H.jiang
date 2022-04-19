@@ -31,35 +31,6 @@ export default function FoodPage() {
         }
         console.log(response.data);
       });
-    // setFoodData([
-    //   {
-    //     food_name: "cookie",
-    //     type: "B",
-    //     weight: 254,
-    //     carbohydrate: 25,
-    //     protein: 45,
-    //     fat: 15,
-    //     calorie_cost: 635,
-    //   },
-    //   {
-    //     food_name: "apple",
-    //     type: "LA",
-    //     weight: 122,
-    //     carbohydrate: 11,
-    //     protein: 22,
-    //     fat: 33,
-    //     calorie_cost: 444,
-    //   },
-    //   {
-    //     food_name: "pizza",
-    //     type: "D",
-    //     weight: 1,
-    //     carbohydrate: 2,
-    //     protein: 3,
-    //     fat: 4,
-    //     calorie_cost: 666,
-    //   },
-    // ]);
   }, []);
 
   foodData.map((item) => {

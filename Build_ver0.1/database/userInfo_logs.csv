@@ -1,0 +1,10 @@
+infoId,userId,userName,gender,height,weight,birthday,fatRate,allergySource,isVegan,mealPlan,BMR,infoDate
+1,'GW','a','M',182.00,103.00,1997-07-07,29,"'fish,soy'",0,'keepHealth',2264,2022-04-11
+2,hu@jiang.com,hy,M,175.00,120.00,NULL,24,NULL,NULL,NULL,1000,2022-04-04
+3,hy@zhang.com,hy,M,180.00,120.00,NULL,30,NULL,NULL,NULL,1000,2022-04-05
+4,hzz@zhang.com,hy,M,180.00,120.00,NULL,34,NULL,NULL,NULL,1300,2022-04-08
+28,GW,a,M,182.00,103.00,1995-07-07,29,"fish, soy",0,keepHealth,2264,2022-04-12
+29,GW,a,M,182.00,103.00,1995-07-07,29,"fish, soy",1,keepHealth,2264,2022-04-12
+30,GW,a,M,182.00,103.00,1995-07-07,29,"fish, soy",0,keepHealth,2264,2022-04-12
+31,GW123,a,M,182.00,103.00,1995-07-07,29,"fish, soy",0,keepHealth,2264,2022-04-12
+32,GW1234,a,M,182.00,103.00,1995-07-07,29,"fish, soy",0,keepHealth,2264,2022-04-12

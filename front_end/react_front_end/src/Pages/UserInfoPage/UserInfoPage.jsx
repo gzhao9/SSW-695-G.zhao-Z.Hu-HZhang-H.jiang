@@ -62,67 +62,6 @@ export default function UserInfoPage() {
   useEffect(() => {
     setIsLoading(true);
     getInfo();
-
-    // axios.post("/getUserInfo/" + userID, { date: chosenDate }).then((value) => {
-    //   let data = JSON.parse(value.data);
-    //   setUserData(data[data.length - 1]);
-    //   // console.log(data[data.length - 1]);
-    //   axios
-    //     .post("/getDietLogs/" + userID, { date: chosenDate })
-    //     .then((response) => {
-    //       if (response.data[0].isNone) {
-    //         setMealInfo([]);
-    //       } else {
-    //         setMealInfo(response.data);
-    //       }
-    //       console.log(response.data);
-    //       // setMealInfo([
-    //       //   {
-    //       //     food_name: "cookie",
-    //       //     type: "B",
-    //       //     weight: 254,
-    //       //     carbohydrate: 25,
-    //       //     protein: 45,
-    //       //     fat: 15,
-    //       //     calorie_cost: 635,
-    //       //   },
-    //       //   {
-    //       //     food_name: "apple",
-    //       //     type: "LA",
-    //       //     weight: 122,
-    //       //     carbohydrate: 11,
-    //       //     protein: 22,
-    //       //     fat: 33,
-    //       //     calorie_cost: 444,
-    //       //   },
-    //       //   {
-    //       //     food_name: "pizza",
-    //       //     type: "D",
-    //       //     weight: 1,
-    //       //     carbohydrate: 2,
-    //       //     protein: 3,
-    //       //     fat: 4,
-    //       //     calorie_cost: 666,
-    //       //   },
-    //       // ]);
-    //       setIsLoading(false);
-    //       axios
-    //         .post("/getExerciseLogs/" + userID, { date: chosenDate })
-    //         .then((response) => {
-    // setExerciseInfo([
-    //   { exercise_name: "Run", minute: 30, calorie: 100 },
-    //   { exercise_name: "Walk", minute: 30, calorie: 100 },
-    //   { exercise_name: "Baseball", minute: 30, calorie: 100 },
-    //   { exercise_name: "Basketball", minute: 30, calorie: 100 },
-    // ]);
-    //           if (response.data[0].isNone) {
-    //             setExerciseInfo([]);
-    //           } else {
-    //             setExerciseInfo(response.data);
-    //           }
-    //         });
-    //     });
-    // });
   }, [chosenDate]);
 
   useEffect(() => {

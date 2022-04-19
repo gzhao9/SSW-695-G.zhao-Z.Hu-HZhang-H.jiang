@@ -192,7 +192,7 @@ export default function FoodDetailPage() {
             },
           ]}
         >
-          <Select style={{ float: "left" }}>
+          <Select style={{ float: "left", textAlign: "left" }}>
             <Option value="B">Breakfast</Option>
             <Option value="L">Lunch</Option>
             <Option value="D">Dinner</Option>
@@ -264,7 +264,7 @@ export default function FoodDetailPage() {
 
         <Form.Item
           style={{ marginLeft: "10%", marginRight: "10%" }}
-          label="Protein (kcal)"
+          label="Protein (g)"
           name="protein"
           initialValue={state.foodInfo.protein}
           // rules={[
@@ -287,7 +287,7 @@ export default function FoodDetailPage() {
 
         <Form.Item
           style={{ marginLeft: "10%", marginRight: "10%" }}
-          label="Fat (kcal)"
+          label="Fat (g)"
           name="fat"
           initialValue={state.foodInfo.fat}
           // rules={[
