@@ -1,5 +1,0 @@
-foodId,foodName,comefrom,foodType,protein,fat,carbohydrate,energy,sugar,va,vc,unitWeight,totalWeight
-1886337,bacon,webapi,"Bacon, Sausages & Ribs",26.70,40.00,0.00,467.00,0.00,0.00,0.00,NULL,NULL
-2056092,beef,webapi,"Canned Meat",20.00,5.88,0.00,129.00,0.00,0.00,0.00,NULL,NULL
-2095236,"Cheddar cheese",webapi,Cheese,25.00,35.70,0.00,432.00,0.00,0.00,0.00,NULL,NULL
-2157166,"Cheddar cheese",webapi,Cheese,24.40,32.60,1.91,1670.00,0.00,0.00,0.00,NULL,80.00
