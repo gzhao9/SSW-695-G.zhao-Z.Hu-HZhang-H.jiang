@@ -9,9 +9,9 @@ import mysql.connector
 # )
 
 config = {
-    'host' : "35.245.128.110",
-    'user' : "root",
-    'password' : "695695",
-    'database' : 'mealplan',
+    'host' : "195.179.237.102",
+    'user' : "u160415146_mealplan",
+    'password' : "Ssw695695",
+    'database' : 'u160415146_calorieshop',
 }
 
