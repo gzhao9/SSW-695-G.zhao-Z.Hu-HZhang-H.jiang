@@ -43,10 +43,10 @@ class test_list_copy(unittest.TestCase):
         }
 
     def test_login(self):
-        self.assertTrue(verify_login("GW","ggww"))
+        self.assertTrue(verify_login("gw@123.com","ggww"))
 
-    def test_register(self):
-        self.assertFalse(verify_register("GW","ggww"))
+    # def test_register(self):
+    #     self.assertFalse(verify_register("GW@gw.com","ggww"))
 
 
     # def test_update_user_info(self):
