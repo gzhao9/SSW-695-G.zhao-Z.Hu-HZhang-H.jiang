@@ -8,10 +8,18 @@ import mysql.connector
 #     db = 'mealplan'
 # )
 
-config = {
-    'host' : "195.179.237.102",
-    'user' : "u160415146_mealplan",
-    'password' : "Ssw695695",
-    'database' : 'u160415146_calorieshop',
-}
+# config = {
+#     'host' : "195.179.237.102",
+#     'user' : "u160415146_mealplan",
+#     'password' : "Ssw695695",
+#     'database' : 'u160415146_calorieshop',
+# }
 
+
+
+config = {
+    'host' : "localhost",
+    'user' : "root",
+    'password' : "123456",
+    'database' : 'mealplan',
+}
