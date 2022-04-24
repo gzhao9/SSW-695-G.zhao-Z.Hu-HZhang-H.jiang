@@ -18,8 +18,8 @@ import mysql.connector
 
 
 config = {
-    'host' : "localhost",
-    'user' : "root",
-    'password' : "123456",
+    'host' : "rm-t4n6170324fk9s28zko.mysql.singapore.rds.aliyuncs.com",
+    'user' : "ssw695",
+    'password' : "Ssw695695",
     'database' : 'mealplan',
 }
