@@ -135,7 +135,13 @@ class test_list_copy(unittest.TestCase):
         data = get_exercise_logs(userId,date)
         print(data)
         self.assertTrue(len(data)>0)
-        
+    
+
+    def test_give_recommandation(self):
+        energy = 3000
+        userId = 'GW'
+        data = give_recommandation(UserId, energy)
+        print(data)
 
 """
     ----------------unpassd test cases-------------------

@@ -251,3 +251,12 @@ def format_food_detail(foodInfoList,foodName):
     
     return fooddatalist
 
+# --------------------------recommandation----------------------------------
+def give_recommandation(UserId, remaincalorie):
+    foodlist = list()
+    allergyres = flask_db_operate.findEleInTable('allergy', tableuserInfo, 'userId', userId)
+    allergy = allergyres[0]
+    if(allergy != '' and allergy != '[]'):
+        res = flask_db_operate.recommandinTable(tablefoodInfo, 'energy', remaincalorie, 'foodType', allergy)
+    foodlist.append(res)
+    return foodlist

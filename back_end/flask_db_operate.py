@@ -55,6 +55,10 @@ def build_delete_SQL(tableName, colName,colValue):
         sql = "delete from %s where %s = %s;" % (tableName, colName, colValue)
     return sql
 
+def build_recommand_SQL(tableName, colName1, colValues1, colName2, colValues2):
+    sql = "select * from %s where %s < %s and %s like %" + colValues2 + "%" % (tableName, colName1, colValues1, colName2)
+    return sql
+
 
 # ------------------------------find information----------------------
 # find all data in table
@@ -132,6 +136,22 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
     #     SQL = "select * from %s where %s = %s and %s = %s"
     # SQL = "select * from %s where %s = %s and %s = %s"
     RES_SQL = build_double_search_SQL(tableName, colName1, colValues1, colName2, colValues2)
+    mycursor.execute(RES_SQL)
+    myresult = mycursor.fetchall()
+    field_names = [i[0] for i in mycursor.description]
+    if len(myresult)>=1:
+        result=list()
+        for i in myresult:
+            result.append(dict(zip(field_names,i)))
+        #result=json.dumps(result)
+    else:
+        result=[{'isNone':True}]
+    return to_json(result)
+
+
+
+def recommandinTable(tableName, colName1, colValues1, colName2, colValues2):
+    RES_SQL = build_recommand_SQL(tableName, colName1, colValues1, colName2, colValues2)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
     field_names = [i[0] for i in mycursor.description]
