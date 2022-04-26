@@ -140,7 +140,7 @@ class test_list_copy(unittest.TestCase):
     def test_give_recommandation(self):
         energy = 3000
         userId = 'GW'
-        data = give_recommandation(UserId, energy)
+        data = give_recommandation(userId, energy)
         print(data)
 
 """
