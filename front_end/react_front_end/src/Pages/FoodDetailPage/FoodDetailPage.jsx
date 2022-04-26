@@ -7,6 +7,7 @@ import {
   Switch,
   AutoComplete,
   Select,
+  Table,
 } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
@@ -15,21 +16,53 @@ import axios from "axios";
 export default function FoodDetailPage() {
   const { state } = useLocation();
   const { date, userID, isAdd, foodInfo } = state;
-  const calorieRef = useRef();
-  const carboRef = useRef();
-  const proteinRef = useRef();
-  const fatRef = useRef();
   const unitRef = useRef();
   const { Option } = Select;
   const [options, setOptions] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
   const [foodData, setFoodData] = useState({});
   const [manuallyInput, setManuallyInput] = useState(true);
-  // const [calorieVal, setCalorieVal] = useState(0);
-  // const [proteinVal, setProteinVal] = useState(0);
-  // const [carboVal, setCarboVal] = useState(0);
-  // const [fatVal, setFatVal] = useState(0);
+  const [calorieVal, setCalorieVal] = useState(0);
+  const [proteinVal, setProteinVal] = useState(0);
+  const [carboVal, setCarboVal] = useState(0);
+  const [fatVal, setFatVal] = useState(0);
+  const [unit, setUnit] = useState(0);
+  const [dataSource, setDataSource] = useState([
+    {
+      key: "1",
+      name: "Calorie",
+      unit: 0,
+    },
+    {
+      key: "2",
+      name: "Carbohydrates",
+      unit: 0,
+    },
+    {
+      key: "3",
+      name: "Proteins",
+      unit: 0,
+    },
+    {
+      key: "4",
+      name: "Fat",
+      unit: 0,
+    },
+  ]);
   const navigate = useNavigate();
+
+  const tableColumn = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Unit",
+      dataIndex: "unit",
+      key: "unit",
+    },
+  ];
 
   let t = null;
 
@@ -76,19 +109,22 @@ export default function FoodDetailPage() {
   }
 
   function onFinish(values) {
+    if (Object.keys(foodData).length === 0) {
+      alert("Please select the food info!");
+      return;
+    }
     let processedData = {
-      // isAdd: isAdd,
       userId: userID,
       Date: date,
       foodId: foodData.foodId,
-      unit: values.unit,
-      manuallyInput: values.manuallyInput,
+      unit: unit,
+      manuallyInput: false,
       mealType: values.type,
       foodInfo: {
-        energy: values.calorie_rate,
-        carbohydrate: values.carbohydrate,
-        fat: values.fat,
-        protein: values.protein,
+        energy: calorieVal,
+        carbohydrate: carboVal,
+        fat: fatVal,
+        protein: proteinVal,
         foodName: values.foodName,
       },
     };
@@ -106,19 +142,48 @@ export default function FoodDetailPage() {
       return;
     }
     const { energy, carbohydrate, protein, fat } = foodData;
-    // setCalorieVal(energy * value);
-    // setCarboVal(carbohydrate * value);
-    // setFatVal(fat * value);
-    // setProteinVal(protein * value);
-    calorieRef.current.value = energy * value;
-    proteinRef.current.value = protein * value;
-    fatRef.current.value = fat * value;
-    carboRef.current.value = carbohydrate * value;
+    setCalorieVal(energy * value);
+    setCarboVal(carbohydrate * value);
+    setFatVal(fat * value);
+    setProteinVal(protein * value);
+    setUnit(value);
   }
 
-  function switchManuallyInput(checked) {
-    setManuallyInput(!checked);
-  }
+  useEffect(() => {
+    if (foodData === null) {
+      return;
+    }
+    const { energy, carbohydrate, protein, fat } = foodData;
+    setCalorieVal(energy * unit);
+    setCarboVal(carbohydrate * unit);
+    setFatVal(fat * unit);
+    setProteinVal(protein * unit);
+  }, [foodData]);
+
+  useEffect(() => {
+    setDataSource([
+      {
+        key: "1",
+        name: "Calorie",
+        unit: Math.round(calorieVal * 100) / 100,
+      },
+      {
+        key: "2",
+        name: "Carbohydrates",
+        unit: Math.round(carboVal * 100) / 100,
+      },
+      {
+        key: "3",
+        name: "Proteins",
+        unit: Math.round(proteinVal * 100) / 100,
+      },
+      {
+        key: "4",
+        name: "Fat",
+        unit: Math.round(fatVal * 100) / 100,
+      },
+    ]);
+  }, [calorieVal, carboVal, fatVal, proteinVal, foodData]);
 
   useEffect(() => {
     console.log(foodData);
@@ -138,6 +203,7 @@ export default function FoodDetailPage() {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
+        layout="vertical"
       >
         <Form.Item
           style={{ marginLeft: "10%", marginRight: "10%" }}
@@ -202,115 +268,17 @@ export default function FoodDetailPage() {
           </Select>
         </Form.Item>
 
-        <Form.Item
+        <Table
+          columns={tableColumn}
+          dataSource={dataSource}
+          pagination={false}
           style={{ marginLeft: "10%", marginRight: "10%" }}
-          label="Manually Input"
-          name="manuallyInput"
-          valuePropName="checked"
-          initialValue={false}
-        >
-          <Switch
-            style={{ float: "left" }}
-            onChange={switchManuallyInput}
-            disabled
-          />
-        </Form.Item>
-
-        <Form.Item
-          style={{ marginLeft: "10%", marginRight: "10%" }}
-          label="Calorie (kcal)"
-          name="calorie_rate"
-          initialValue={state.foodInfo.calorie_cost}
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "Please input the calorie!",
-          //   },
-          // ]}
-        >
-          <InputNumber
-            style={{ float: "left" }}
-            ref={calorieRef}
-            // value={calorieVal}
-            disabled={manuallyInput}
-            min={0}
-            max={10000}
-            precision={2}
-          />
-        </Form.Item>
-
-        <Form.Item
-          style={{ marginLeft: "10%", marginRight: "10%" }}
-          label="Carbohydrate (g)"
-          name="carbohydrate"
-          initialValue={state.foodInfo.carbohydrate}
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "Please input the carbohydrate!",
-          //   },
-          // ]}
-        >
-          <InputNumber
-            style={{ float: "left" }}
-            ref={carboRef}
-            // value={carboVal}
-            disabled={manuallyInput}
-            min={0}
-            max={10000}
-            precision={2}
-          />
-        </Form.Item>
-
-        <Form.Item
-          style={{ marginLeft: "10%", marginRight: "10%" }}
-          label="Protein (g)"
-          name="protein"
-          initialValue={state.foodInfo.protein}
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "Please input the protein!",
-          //   },
-          // ]}
-        >
-          <InputNumber
-            style={{ float: "left" }}
-            ref={proteinRef}
-            // value={proteinVal}
-            disabled={manuallyInput}
-            min={0}
-            max={10000}
-            precision={2}
-          />
-        </Form.Item>
-
-        <Form.Item
-          style={{ marginLeft: "10%", marginRight: "10%" }}
-          label="Fat (g)"
-          name="fat"
-          initialValue={state.foodInfo.fat}
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "Please input the fat!",
-          //   },
-          // ]}
-        >
-          <InputNumber
-            style={{ float: "left" }}
-            ref={fatRef}
-            // value={fatVal}
-            disabled={manuallyInput}
-            min={0}
-            max={10000}
-            precision={2}
-          />
-        </Form.Item>
+        ></Table>
 
         <br />
 
         <Form.Item
+          style={{ marginTop: "10%" }}
           wrapperCol={{
             offset: 0,
             span: 16,
@@ -329,26 +297,6 @@ export default function FoodDetailPage() {
             {state.isAdd ? "Add Food" : "Change Food Info"}
           </Button>
         </Form.Item>
-        {!state.isAdd ? (
-          <Form.Item
-            wrapperCol={{
-              offset: 0,
-              span: 16,
-            }}
-          >
-            <Button
-              type="primary"
-              style={{
-                width: "80%",
-                height: "50px",
-                borderRadius: "25px",
-                bottom: "20px",
-              }}
-            >
-              Delete Food
-            </Button>
-          </Form.Item>
-        ) : null}
       </Form>
     </div>
   );

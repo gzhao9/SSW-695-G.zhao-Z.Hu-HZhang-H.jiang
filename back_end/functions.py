@@ -14,7 +14,7 @@ import flask_db_operate
 
 # -------------------------API config----------------------
 # with open('apikey.txt', mode='r') as api:
-with open('./back_end/apikey.txt', mode='r') as api:
+with open('./apikey.txt', mode='r') as api:
     API_KEY = api.read()
 
 

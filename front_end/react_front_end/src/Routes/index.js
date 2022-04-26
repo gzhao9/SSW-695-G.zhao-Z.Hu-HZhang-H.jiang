@@ -4,6 +4,7 @@ import SignUpComponent from "../Pages/SignUpPage/SignUpComponent";
 import GetUserInfoPage from "../Pages/GetUserInfoPage/GetUserInfoPage";
 import FoodPage from "../Pages/FoodInfoPage/FoodPage";
 import FoodDetailPage from "../Pages/FoodDetailPage/FoodDetailPage";
+import FoodCustomPage from "../Pages/FoodCustomPage/FoodCustomPage";
 import UserInfoPage from "../Pages/UserInfoPage/UserInfoPage";
 import ExerciseInfoPage from "../Pages/ExerciseInfoPage/ExerciseInfoPage";
 import ExerciseDetailPage from "../Pages/ExerciseDetailPage/ExerciseDetailPage";
@@ -32,6 +33,10 @@ export default [
   {
     path: "/foodDetailPage",
     element: <FoodDetailPage />,
+  },
+  {
+    path: "/foodCustomPage",
+    element: <FoodCustomPage />,
   },
   {
     path: "/userInfoPage",

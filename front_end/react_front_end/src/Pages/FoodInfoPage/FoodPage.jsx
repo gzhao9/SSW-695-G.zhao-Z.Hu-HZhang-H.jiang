@@ -53,19 +53,28 @@ export default function FoodPage() {
         totalFat={totalFat}
         totalProtein={totalProtein}
       />
-      <Affix offsetBottom={0}>
-        <Button
-          type="primary"
-          style={{ width: "100%", height: "50px" }}
-          onClick={() => {
-            navigate("/foodDetailPage", {
-              state: { isAdd: true, foodInfo: {}, date: date, userID: userID },
-            });
-          }}
-        >
-          Add more food
-        </Button>
-      </Affix>
+      <Button
+        type="primary"
+        style={{ width: "100%", height: "50px", marginTop: "3%" }}
+        onClick={() => {
+          navigate("/foodDetailPage", {
+            state: { isAdd: true, foodInfo: {}, date: date, userID: userID },
+          });
+        }}
+      >
+        Add more food
+      </Button>
+      <Button
+        type="primary"
+        style={{ width: "100%", height: "50px", marginTop: "3%" }}
+        onClick={() => {
+          navigate("/foodCustomPage", {
+            state: { isAdd: true, foodInfo: {}, date: date, userID: userID },
+          });
+        }}
+      >
+        Add custom food
+      </Button>
     </div>
   );
 }
