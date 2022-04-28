@@ -136,7 +136,8 @@ def get_deit_logs(userId,date):
 
 
 def get_exercise_logs(userId,date):
-    return flask_db_operate.findInTableWithTwoLimit(tablesportRecord, 'userId', userId, 'sportDate', date)
+    result = flask_db_operate.findInTableWithTwoLimit(tablesportRecord, 'userId', userId, 'sportDate', date)
+    return result
 
 
 #--------------------------update information-----------------------------
