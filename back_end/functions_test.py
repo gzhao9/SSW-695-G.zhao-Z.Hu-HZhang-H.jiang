@@ -86,14 +86,6 @@ class test_list_copy(unittest.TestCase):
         print(type(data))
         self.assertTrue(len(data)>0)
 
-
-    def test_get_exercise_logs(self):
-        userId = 'GW'
-        date = datetime.strptime("2022-04-1", '%Y-%m-%d')
-        data = get_exercise_logs(userId, date)
-        print(data)
-
-
     def test_get_infoId(self):
         userId = 'GW'
         data = get_infoId(userId)
@@ -150,7 +142,11 @@ class test_list_copy(unittest.TestCase):
         print(data[0])
         self.assertTrue(len(data)>0)
 
-
+    def test_get_exercise_logs(self):
+        userId = 'GW'
+        date = datetime.strptime("2022-04-28", '%Y-%m-%d')
+        data = get_exercise_logs(userId, date)
+        print(data)
     # def test_update_exercise_info(self):
     #     userId = 'GW'
     #     data = update_exercise_info(userId, self.exerciseInfo)

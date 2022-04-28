@@ -136,7 +136,10 @@ def get_deit_logs(userId,date):
 
 
 def get_exercise_logs(userId,date):
-    result = flask_db_operate.findInTableWithTwoLimit(tablesportRecord, 'userId', userId, 'sportDate', date)
+    result = json.loads(flask_db_operate.findInTableWithTwoLimit(tablesportRecord, 'userId', userId, 'sportDate', date))
+    for res in result:
+        res['exercise_name'] = res.pop('exerciseName')
+        res['minute'] = res.pop('durition')
     return result
 
 
