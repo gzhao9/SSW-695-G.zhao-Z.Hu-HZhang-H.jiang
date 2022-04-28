@@ -186,7 +186,10 @@ def aaa(userId,info):
     return foodId
 
 def update_exercise_info(userId,info):
-    return flask_db_operate.updateinTable(tablesportRecord, info, 'userId', userId)
+    info['userId'] = userId
+    info['durition'] = info.pop('minute')
+    info['sportDate'] = datetime.now()
+    return flask_db_operate.insertintoTable(tablesportRecord, info)
 
 
 # --------------------------delete information----------------------------

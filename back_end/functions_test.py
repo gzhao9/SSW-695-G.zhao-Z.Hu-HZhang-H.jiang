@@ -21,7 +21,7 @@ class test_list_copy(unittest.TestCase):
         }
 
     foodInfo = {
-    'foodName': 'bilibili',
+    'foodName': 'ccc',
     'foodType': 'fruit',
     'totalWeight': 20,
     'protein': 1,
@@ -41,6 +41,11 @@ class test_list_copy(unittest.TestCase):
         'unit':251,
         'foodInfo':foodInfo,
         }
+    exerciseInfo ={
+        'exerciseName':'walk',
+        'minute':60,
+        'calorie':200,
+    }
 
     def test_login(self):
         self.assertTrue(verify_login("gw@123.com","ggww"))
@@ -85,6 +90,7 @@ class test_list_copy(unittest.TestCase):
         userId = 'GW'
         sportdate = datetime.strptime("2022-04-1", '%Y-%m-%d')
         data = get_exercise_logs(userId, sportdate)
+        print(data)
         self.assertTrue(len(data)>0)
 
 
@@ -142,7 +148,13 @@ class test_list_copy(unittest.TestCase):
         userId = 'GW'
         data = give_recommandation(userId, energy)
         print(data[0])
+        self.assertTrue(len(data)>0)
 
+
+    def test_update_exercise_info(self):
+        userId = 'GW'
+        data = update_exercise_info(userId, self.exerciseInfo)
+        print(data)
 
 """
     ----------------unpassd test cases-------------------
