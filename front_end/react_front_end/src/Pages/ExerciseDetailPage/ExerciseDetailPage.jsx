@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import { Button, Input, InputNumber, Form } from "antd";
 
@@ -8,8 +8,12 @@ export default function ExerciseDetailPage() {
   const { state } = useLocation();
   const { exerciseInfo, isAdd, userID, date } = state;
   const { exercise_name, minute, calorie } = exerciseInfo;
+  const navigate = useNavigate();
   function onFinish(values) {
     console.log("Success:", values);
+    axios.post("/updateExerciseInfo/" + userID, values).then((response) => {
+      navigate("/userInfoPage", { state: { userID: userID, date: date } });
+    });
   }
   function onFinishFailed(errorInfo) {
     console.log("Failed:", errorInfo);

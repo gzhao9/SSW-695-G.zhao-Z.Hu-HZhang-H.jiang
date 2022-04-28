@@ -90,7 +90,7 @@ export default function GetUserInfoPage() {
           name="birthday"
           initialValue={
             userData.birthday
-              ? moment(userData.birthday, "MM-DD-YYYY")
+              ? moment(userData.birthday, "YYYY-MM-DD")
               : moment()
           }
           rules={[

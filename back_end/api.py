@@ -15,7 +15,7 @@ def test(username):
 # -------------------Login and Register page---------------------------
 @app.route('/verifyLogin', methods = ['GET','POST'])
 def verifyLogin():
-    data = json.loads(request.get_data())   
+    data = json.loads(request.get_data())
     result= {
         "isSuccess":verify_login(data['userID'],data['password']),
     }
@@ -128,19 +128,19 @@ def getExerciseLogs(userId):
     #data = json.loads(request.get_data())
     #result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
     exmaple=[
-        { 'exercise_name': "Run", 'minute': 30, 'calorie': 100
+        { 'exercise_name': "Run", 'minute': 30, 'calorie': 100, 'sportRecordId': 0
         },
-        { 'exercise_name': "Walk", 'minute': 30, 'calorie': 100
+        { 'exercise_name': "Walk", 'minute': 30, 'calorie': 100, 'sportRecordId': 1
         },
-        { 'exercise_name': "Baseball", 'minute': 30, 'calorie': 100
+        { 'exercise_name': "Baseball", 'minute': 30, 'calorie': 100, 'sportRecordId': 2
         },
-        { 'exercise_name': "Basketball", 'minute': 30, 'calorie': 100
+        { 'exercise_name': "Basketball", 'minute': 30, 'calorie': 100, 'sportRecordId': 3
         }
     ]
     return json.dumps(exmaple)
 
 @app.route('/delete_Exercise', methods = ['GET','POST'])
-def delete_Exercise(userId):
+def delete_Exercise():
     data = json.loads(request.get_data())
     isSuccess=delete_sport_info(data['sportRecordId'])
     result= {
