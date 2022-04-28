@@ -56,7 +56,13 @@ def build_delete_SQL(tableName, colName,colValue):
     return sql
 
 def build_recommand_SQL(tableName, colName1, colValues1, colName2, colValues2):
-    sql = "select * from %s where %s < %s and %s like %" + colValues2 + "%" % (tableName, colName1, colValues1, colName2)
+    sql1 = "select * from %s where %s < %s and %s" % (tableName, colName1, colValues1, colName2)
+    sql2 = " not like '%" + colValues2 + "%';"
+    sql = sql1 + sql2
+    return sql
+
+def build_recommandAll_SQL(tableName, colName1, colValues1):
+    sql = "select * from %s where %s < %s" % (tableName, colName1, colValues1)
     return sql
 
 
@@ -151,18 +157,13 @@ def findInTableWithTwoLimit(tableName, colName1, colValues1, colName2, colValues
 
 
 def recommandinTable(tableName, colName1, colValues1, colName2, colValues2):
-    RES_SQL = build_recommand_SQL(tableName, colName1, colValues1, colName2, colValues2)
+    if colValues2 is None:
+        RES_SQL = build_recommandAll_SQL(tableName, colName1, colValues1)
+    else:
+        RES_SQL = build_recommand_SQL(tableName, colName1, colValues1, colName2, colValues2)
     mycursor.execute(RES_SQL)
     myresult = mycursor.fetchall()
-    field_names = [i[0] for i in mycursor.description]
-    if len(myresult)>=1:
-        result=list()
-        for i in myresult:
-            result.append(dict(zip(field_names,i)))
-        #result=json.dumps(result)
-    else:
-        result=[{'isNone':True}]
-    return to_json(result)
+    return myresult
 #
 #
 #
@@ -234,52 +235,3 @@ def formatSQL(dataDict):
             val.append(value)
     return val
 
-
-
-
-# # insert into foodInfo, if success, return true, else return false
-# def insertFood(foodDict):
-#     table = "foodInfo"
-#     placeholders = ','.join(['%s'] * len(foodDict))
-#     cols = ','.join(foodDict.keys())
-#     if not (findIfInTable(table, 'foodId', foodDict['foodId'])):
-#         SQL = "insert into %s (%s) values (%s);"
-#         RES_SQL = SQL % (table, cols, placeholders)
-#         # print('RES_SQL:'+RES_SQL)
-#         mycursor.execute(RES_SQL, list(foodDict.values()))
-#         mydb.commit()
-#         return True
-#     else:
-#         return False
-
-# # insert into userinfo table, if success, return true, else return false
-# def insertUserInfo(userInfoDict):
-#     table = "userInfo_logs"
-#     placeholders = ','.join(['%s'] * len(userInfoDict))
-#     cols = ','.join(userInfoDict.keys())
-#     if not findIfInTable(table, 'userId', userInfoDict['userId']):
-#         SQL = "insert into %s (%s) values (%s);"
-#         RES_SQL = SQL % (table, cols, placeholders)
-#         print(RES_SQL)
-#         # print('RES_SQL:'+RES_SQL)
-#         mycursor.execute(RES_SQL, list(userInfoDict.values()))
-#         mydb.commit()
-#         return True
-#     else:
-#         return False
-
-
-# # insert into meal record table, if success, return true, else return false
-# def insertMealRecord(mealDict):
-#     table = "mealRecord"
-#     placeholders = ','.join(['%s'] * len(mealDict))
-#     cols = ','.join(mealDict.keys())
-#     if True:
-#         SQL = "insert into %s (%s) values (%s);"
-#         RES_SQL = SQL % (table, cols, placeholders)
-#         print(RES_SQL)
-#         mycursor.execute(RES_SQL, list(mealDict.values()))
-#         mydb.commit()
-#         return True
-#     else:
-#         return False

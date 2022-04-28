@@ -141,7 +141,8 @@ class test_list_copy(unittest.TestCase):
         energy = 3000
         userId = 'GW'
         data = give_recommandation(userId, energy)
-        print(data)
+        print(data[0])
+
 
 """
     ----------------unpassd test cases-------------------

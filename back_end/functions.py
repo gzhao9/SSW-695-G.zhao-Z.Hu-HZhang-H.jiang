@@ -14,7 +14,7 @@ import flask_db_operate
 
 # -------------------------API config----------------------
 # with open('apikey.txt', mode='r') as api:
-with open('./apikey.txt', mode='r') as api:
+with open('back_end/apikey.txt', mode='r') as api:
     API_KEY = api.read()
 
 
@@ -252,11 +252,11 @@ def format_food_detail(foodInfoList,foodName):
     return fooddatalist
 
 # --------------------------recommandation----------------------------------
-def give_recommandation(UserId, remaincalorie):
-    foodlist = list()
-    allergyres = flask_db_operate.findEleInTable('allergy', tableuserInfo, 'userId', userId)
-    allergy = allergyres[0]
+def give_recommandation(userId, remaincalorie):
+    allergyres = flask_db_operate.findEleInTable('allergySource', tableuserInfo, 'userId', userId)
+    allergy = allergyres[len(allergyres) - 1][0]
     if(allergy != '' and allergy != '[]'):
         res = flask_db_operate.recommandinTable(tablefoodInfo, 'energy', remaincalorie, 'foodType', allergy)
-    foodlist.append(res)
-    return foodlist
+    else:
+        res = flask_db_operate.recommandinTable(tablefoodInfo, 'energy', remaincalorie, 'foodType', None)
+    return res
