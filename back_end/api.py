@@ -125,19 +125,19 @@ def getExerciseInfo(userId):
 
 @app.route('/getExerciseLogs/<userId>', methods = ['GET','POST'])
 def getExerciseLogs(userId):    
-    data = json.loads(request.get_data())
-    result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
-    # exmaple=[
-    #     { 'exercise_name': "Run", 'minute': 30, 'calorie': 100, 'sportRecordId': 0
-    #     },
-    #     { 'exercise_name': "Walk", 'minute': 30, 'calorie': 100, 'sportRecordId': 1
-    #     },
-    #     { 'exercise_name': "Baseball", 'minute': 30, 'calorie': 100, 'sportRecordId': 2
-    #     },
-    #     { 'exercise_name': "Basketball", 'minute': 30, 'calorie': 100, 'sportRecordId': 3
-    #     }
-    # ]
-    return json.dumps(result)
+    #data = json.loads(request.get_data())
+    #result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    exmaple=[
+        { 'exercise_name': "Run", 'minute': 30, 'calorie': 100, 'sportRecordId': 0
+        },
+        { 'exercise_name': "Walk", 'minute': 30, 'calorie': 100, 'sportRecordId': 1
+        },
+        { 'exercise_name': "Baseball", 'minute': 30, 'calorie': 100, 'sportRecordId': 2
+        },
+        { 'exercise_name': "Basketball", 'minute': 30, 'calorie': 100, 'sportRecordId': 3
+        }
+    ]
+    return json.dumps(exmaple)
 
 @app.route('/delete_Exercise', methods = ['GET','POST'])
 def delete_Exercise():
