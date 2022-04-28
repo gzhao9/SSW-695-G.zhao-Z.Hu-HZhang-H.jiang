@@ -147,6 +147,11 @@ class test_list_copy(unittest.TestCase):
         date = datetime.strptime("2022-04-28", '%Y-%m-%d')
         data = get_exercise_logs(userId, date)
         print(data)
+    
+    def test_delete_sport_info(self):
+        id = 3
+        date = delete_sport_info(id)
+        self.assertTrue(date)
     # def test_update_exercise_info(self):
     #     userId = 'GW'
     #     data = update_exercise_info(userId, self.exerciseInfo)
