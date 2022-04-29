@@ -238,7 +238,7 @@ def food_search(userId,keyword):
         apifind=call_food_API(keyword)
         if apifind is not None:
             newID=update_food_info("webapi",apifind)
-            return [apifind]
+            return [get_food_info("webapi",newID)]
         else:
             return [{"isNone":True}]
         
