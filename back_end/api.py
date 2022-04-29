@@ -128,17 +128,6 @@ def getExerciseInfo(userId):
 def getExerciseLogs(userId):    
     data = json.loads(request.get_data())
     result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
-    # result=get_exercise_logs(userId,datetime.now())
-    # exmaple=[
-    #     { 'exercise_name': "Run", 'minute': 30, 'calorie': 100, 'sportRecordId': 0
-    #     },
-    #     { 'exercise_name': "Walk", 'minute': 30, 'calorie': 100, 'sportRecordId': 1
-    #     },
-    #     { 'exercise_name': "Baseball", 'minute': 30, 'calorie': 100, 'sportRecordId': 2
-    #     },
-    #     { 'exercise_name': "Basketball", 'minute': 30, 'calorie': 100, 'sportRecordId': 3
-    #     }
-    # ]
     return json.dumps(result)
 
 @app.route('/delete_Exercise', methods = ['GET','POST'])

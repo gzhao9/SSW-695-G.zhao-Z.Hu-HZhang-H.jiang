@@ -156,10 +156,10 @@ export default function FoodDetailPage() {
       return;
     }
     const { energy, carbohydrate, protein, fat } = foodData;
-    setCalorieVal(energy * unit);
-    setCarboVal(carbohydrate * unit);
-    setFatVal(fat * unit);
-    setProteinVal(protein * unit);
+    setCalorieVal(energy* (unit/100));
+    setCarboVal(carbohydrate* (unit/100));
+    setFatVal(fat* (unit/100));
+    setProteinVal(protein* (unit/100));
     setFoodName(foodData.foodName);
   }, [foodData]);
 
