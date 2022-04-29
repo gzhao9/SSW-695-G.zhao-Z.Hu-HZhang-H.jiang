@@ -23,7 +23,7 @@ tablelogin = 'login'
 
 tableuserInfo = 'userInfo_logs'
 
-tablefoodInfo = 'foodInfo'
+tablefoodInfo = 'foodinfo'
 
 tablesportInfo = 'basicsportinfo'
 
@@ -167,8 +167,13 @@ def update_food_info(userId,foodInfo):
     return foodId
 
 def update_meal_info(userId,mealdata):
-    # if mealdata['manuallyInput']=='true':
-    mealdata['foodId']=update_food_info(userId,mealdata['foodInfo'])
+    if mealdata['manuallyInput']=='true':
+        mealdata['foodInfo']['energy']=int(mealdata['foodInfo']['energy']*100/mealdata['unit'])
+        mealdata['foodInfo']['carbohydrate']=int(mealdata['foodInfo']['carbohydrate']*100/mealdata['unit'])
+        mealdata['foodInfo']['fat']=int(mealdata['foodInfo']['fat']*100/mealdata['unit'])
+        mealdata['foodInfo']['protein']=int(mealdata['foodInfo']['protein']*100/mealdata['unit'])
+        mealdata['foodId']=update_food_info(userId,mealdata['foodInfo'])
+
 
     
     #because when manuallyInput by user, the food info not in database, so it dose not have foodID. update_food_info(userId,info) will return the new foodID store in database.
@@ -216,12 +221,13 @@ def call_food_API(foodName):
     else:
         return None
 
+
 def food_search(userId,keyword):
     namelist=get_fooodIdandName()
     namelist.reverse()
     result=list()
     for info in namelist:
-        if info[0].lower().startswith(keyword.lower()):
+        if keyword.lower() in info[0].lower() or info[0].lower().startswith(keyword.lower()):
             foodinfo=get_food_info("webapi",info[1])
             if foodinfo['comefrom']==userId or foodinfo['comefrom']=='webapi':
                 result.append(foodinfo)
@@ -232,7 +238,7 @@ def food_search(userId,keyword):
         apifind=call_food_API(keyword)
         if apifind is not None:
             newID=update_food_info("webapi",apifind)
-            return [get_food_info(userId,newID)]
+            return [apifind]
         else:
             return [{"isNone":True}]
         

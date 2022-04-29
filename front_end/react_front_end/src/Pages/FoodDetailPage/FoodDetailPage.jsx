@@ -144,10 +144,10 @@ export default function FoodDetailPage() {
       return;
     }
     const { energy, carbohydrate, protein, fat } = foodData;
-    setCalorieVal(energy * value);
-    setCarboVal(carbohydrate * value);
-    setFatVal(fat * value);
-    setProteinVal(protein * value);
+    setCalorieVal(energy * value/100.0);
+    setCarboVal(carbohydrate * value/100.0);
+    setFatVal(fat * value/100.0);
+    setProteinVal(protein * value/100.0);
     setUnit(value);
   }
 
@@ -156,10 +156,10 @@ export default function FoodDetailPage() {
       return;
     }
     const { energy, carbohydrate, protein, fat } = foodData;
-    setCalorieVal(energy * unit);
-    setCarboVal(carbohydrate * unit);
-    setFatVal(fat * unit);
-    setProteinVal(protein * unit);
+    setCalorieVal(energy* unit/100.0);
+    setCarboVal(carbohydrate* unit/100.0);
+    setFatVal(fat* unit/100.0);
+    setProteinVal(protein* unit/100.0);
     setFoodName(foodData.foodName);
   }, [foodData]);
 
