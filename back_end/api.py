@@ -95,7 +95,7 @@ def getDietLogs(userId):
     data = json.loads(request.get_data())
     result=get_deit_logs(userId,data['date'])
     # result=get_deit_logs(userId,datetime.today())    
-    result=json.dumps(result)
+    result=json.dumps(result) 
     return result
 
 @app.route('/delete_food', methods = ['GET','POST'])
