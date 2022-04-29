@@ -6,7 +6,7 @@ import {
   Card,
   List,
   Skeleton,
-  Button,
+  Typography,
   DatePicker,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -147,6 +147,25 @@ export default function UserInfoPage() {
           headStyle={{ textAlign: "left" }}
         >
           {remainedCalorie} kcal
+        </Card>
+        <Card
+          title="Your Advice"
+          type="inner"
+          style={{
+            width: "90%",
+            marginLeft: "5%",
+            marginRight: "5%",
+            marginTop: "30px",
+            marginBottom: "30px",
+            textAlign: "left",
+            fontWeight: "bolder",
+            color: "#2F4F4F",
+          }}
+          headStyle={{ textAlign: "left" }}
+        >
+          <Typography.Paragraph>
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          </Typography.Paragraph>
         </Card>
         <Card
           title="My Meal"

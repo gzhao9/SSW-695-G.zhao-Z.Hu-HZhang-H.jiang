@@ -109,6 +109,20 @@
             "totalWeight": null
         }
     ]
+	
+	[
+        "/getAdvice/<userId> "
+    ],
+	
+	["FRONT→END"],
+    {
+        "date":"2022-04-29"
+    },
+	
+	["END→FRONT"],
+    {
+		"advice":"abcdefgaaaaaaaaaaaaaaaaa"
+	}
 
 
 
