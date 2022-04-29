@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   Button,
   Form,
-  Input,
+  Row,
   InputNumber,
   Switch,
   AutoComplete,
@@ -27,6 +27,7 @@ export default function FoodDetailPage() {
   const [carboVal, setCarboVal] = useState(0);
   const [fatVal, setFatVal] = useState(0);
   const [unit, setUnit] = useState(0);
+  const [foodName, setFoodName] = useState("");
   const [dataSource, setDataSource] = useState([
     {
       key: "1",
@@ -76,6 +77,7 @@ export default function FoodDetailPage() {
   };
 
   const onSelect = (data) => {
+    setOptions([]);
     console.log("onSelect", data);
     fetchedData.map((item) => {
       if (item.foodName === data) {
@@ -158,6 +160,7 @@ export default function FoodDetailPage() {
     setCarboVal(carbohydrate * unit);
     setFatVal(fat * unit);
     setProteinVal(protein * unit);
+    setFoodName(foodData.foodName);
   }, [foodData]);
 
   useEffect(() => {
@@ -267,6 +270,17 @@ export default function FoodDetailPage() {
             <Option value="DA">Additional Dinner</Option>
           </Select>
         </Form.Item>
+
+        <p
+          style={{
+            float: "left",
+            marginLeft: "10%",
+            marginRight: "10%",
+            fontWeight: "bolder",
+          }}
+        >
+          Chosen Food: {!foodName || foodName.length === 0 ? "None" : foodName}
+        </p>
 
         <Table
           columns={tableColumn}
