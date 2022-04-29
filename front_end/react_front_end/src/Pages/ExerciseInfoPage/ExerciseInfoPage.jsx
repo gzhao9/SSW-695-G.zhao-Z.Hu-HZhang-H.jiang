@@ -16,7 +16,7 @@ export default function ExerciseInfoPage() {
     axios
       .post("/getExerciseLogs/" + userID, { date: date })
       .then((response) => {
-        if (response.data[0].isNone) {
+        if (response.data.isNone) {
           setExerciseInfo([]);
         } else {
           setExerciseInfo(response.data);

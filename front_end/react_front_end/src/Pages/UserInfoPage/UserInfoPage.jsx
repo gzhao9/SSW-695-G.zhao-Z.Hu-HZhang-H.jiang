@@ -51,7 +51,7 @@ export default function UserInfoPage() {
     } else {
       setMealInfo(dietInfo.data);
     }
-    if (sportInfo.data[0].isNone) {
+    if (sportInfo.data.isNone) {
       setExerciseInfo([]);
     } else {
       setExerciseInfo(sportInfo.data);
