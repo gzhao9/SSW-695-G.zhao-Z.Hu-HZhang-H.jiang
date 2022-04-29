@@ -21,15 +21,15 @@ with open('back_end/apikey.txt', mode='r') as api:
 # -----------------------table name----------------------------
 tablelogin = 'login'
 
-tableuserInfo = 'userInfo_logs'
+tableuserInfo = 'userinfo_logs'
 
 tablefoodInfo = 'foodinfo'
 
 tablesportInfo = 'basicsportinfo'
 
-tablemealRecord = 'mealRecord'
+tablemealRecord = 'mealrecord'
 
-tablesportRecord = 'sportRecord'
+tablesportRecord = 'sportrecord'
 
 
 
@@ -181,6 +181,7 @@ def update_meal_info(userId,mealdata):
     del mealdata['manuallyInput']
     mealdata['userId']=userId
     mealdata['mealDate']=mealdata.pop("Date")
+    mealdata['foodId'] = flask_db_operate.findId()[0]
     return flask_db_operate.insertintoTable(tablemealRecord, mealdata)
 
 def aaa(userId,info):
