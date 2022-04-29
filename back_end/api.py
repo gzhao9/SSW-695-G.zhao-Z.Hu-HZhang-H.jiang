@@ -127,6 +127,7 @@ def getExerciseInfo(userId):
 def getExerciseLogs(userId):    
     data = json.loads(request.get_data())
     result=get_exercise_logs(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    # result=get_exercise_logs(userId,datetime.now())
     # exmaple=[
     #     { 'exercise_name': "Run", 'minute': 30, 'calorie': 100, 'sportRecordId': 0
     #     },
