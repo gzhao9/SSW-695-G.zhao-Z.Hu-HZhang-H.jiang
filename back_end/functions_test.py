@@ -145,12 +145,19 @@ class test_list_copy(unittest.TestCase):
     
     def test_delete_sport_info(self):
         id = 3
-        date = delete_sport_info(id)
-        self.assertTrue(date)
+        data = delete_sport_info(id)
+        self.assertTrue(data)
     # def test_update_exercise_info(self):
     #     userId = 'GW'
     #     data = update_exercise_info(userId, self.exerciseInfo)
     #     print(data)
+
+    def test_give_advise(self):
+        userId = 'root@root.com'
+        date = datetime.date(datetime.today())
+        # date = datetime.now()
+        data = give_advise(userId, date)
+        print(data)
 
 """
     ----------------unpassd test cases-------------------

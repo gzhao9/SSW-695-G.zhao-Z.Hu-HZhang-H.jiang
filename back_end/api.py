@@ -139,11 +139,21 @@ def delete_Exercise():
     }
     return result
 
+# -------------------------------search food with like----------------------
 @app.route('/serach_food_result/<userId>', methods = ['GET','POST'])
 def seraching_food_result(userId):
     data = json.loads(request.get_data())
     result=food_search(userId,data['keywords'])
     return json.dumps(result)
+
+# -----------------------------give advise----------------------------------
+@app.route('/give_advise/<userId>', methods = ['GET','POST'])
+def give_the_advise(userId):
+    data = json.loads(request.get_data())
+    result = give_advise(userId, data['date'])
+    return json.dumps(result)
+
+
 
 if __name__ == "__main__":
     app.run()

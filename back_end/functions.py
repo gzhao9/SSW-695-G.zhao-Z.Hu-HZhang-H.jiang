@@ -269,3 +269,26 @@ def give_recommandation(userId, remaincalorie):
     else:
         res = flask_db_operate.recommandinTable(tablefoodInfo, 'energy', remaincalorie, 'foodType', None)
     return res
+
+
+def give_advise(userId,date):
+    dietres = get_deit_logs(userId,date)
+    if dietres == {"isNone":True}:
+        return "You have ate nothing today! Enjoy your meal!"
+    carbohydrate = 0
+    protein = 0
+    fat = 0
+    calorie = 0
+    for i in dietres:
+        carbohydrate += i['carbohydrate']
+        protein += i['protein']
+        fat += i['fat']
+        calorie += i['calorie_cost']
+    res = {
+        'totalcarbohydrate':carbohydrate,
+        'totalprotein':protein,
+        'totalfat':fat,
+        'totalcalorie':calorie,
+    }
+    return res
+    
