@@ -51,14 +51,6 @@ def verify_register(userId,password):
     canreg = flask_db_operate.insertintoTable(tablelogin,userInfo)
     return canreg
 
-# -----------------------Insert info into table--------------------
-def add_sport():
-    sportInfo = {
-
-    }
-    flask_db_operate.insertintoTable(tablesportInfo, sportInfo)
-
-
 
 # -------------------obtain info function---------------------------
 def get_BMR(userId):
