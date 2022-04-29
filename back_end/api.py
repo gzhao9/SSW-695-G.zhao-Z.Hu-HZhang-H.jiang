@@ -106,6 +106,7 @@ def delete_food():
         "isSuccess":isSuccess,
     }
     return result
+    
 #---------------------------Exercise info----------------------------------------
 
 @app.route('/updateExerciseInfo/<userId>', methods = ['GET','POST'])
