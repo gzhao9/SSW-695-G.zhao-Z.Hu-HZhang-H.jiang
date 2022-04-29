@@ -221,25 +221,6 @@ def call_food_API(foodName):
     else:
         return None
 
-def food_search1(userId,keyword):
-    namelist=get_fooodIdandName()
-    namelist.reverse()
-    result=list()
-    for info in namelist:
-        if info[0].lower().startswith(keyword.lower()):
-            foodinfo=get_food_info("webapi",info[1])
-            if foodinfo['comefrom']==userId or foodinfo['comefrom']=='webapi':
-                result.append(foodinfo)
-    if len(result)>0:
-        return result
-
-    else:
-        apifind=call_food_API(keyword)
-        if apifind is not None:
-            newID=update_food_info("webapi",apifind)
-            return [get_food_info(userId,newID)]
-        else:
-            return [{"isNone":True}]
 
 def food_search(userId,keyword):
     namelist=get_fooodIdandName()
@@ -257,7 +238,7 @@ def food_search(userId,keyword):
         apifind=call_food_API(keyword)
         if apifind is not None:
             newID=update_food_info("webapi",apifind)
-            return [get_food_info(userId,newID)]
+            return [apifind]
         else:
             return [{"isNone":True}]
         
