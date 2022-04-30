@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Divider, Button, Affix } from "antd";
+import { Divider, Button, Skeleton } from "antd";
 import axios from "axios";
 import Header from "../../Components/Header/Header";
 import FoodInfoList from "../../Components/FoodInfoList/FoodInfoList";
@@ -19,6 +19,7 @@ export default function FoodPage() {
   const { userID, date } = state;
 
   const [foodData, setFoodData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -29,7 +30,8 @@ export default function FoodPage() {
         } else {
           setFoodData(response.data);
         }
-        console.log(response.data);
+        setIsLoading(false);
+        // console.log(response.data);
       });
   }, []);
 
@@ -44,37 +46,50 @@ export default function FoodPage() {
   return (
     <div className="FoodInfoPg">
       <Header headerText="Food Information" />
-      <FoodInfoList foodInfo={foodData} date={date} userID={userID} />
-      <Divider> Calorie Data </Divider>
-      <CalorieInfoBlock totalCalorie={totalCalorie} />
-      <Divider> Nutrition Data </Divider>
-      <NutritionInfoBlock
-        totalCarbo={totalCarbo}
-        totalFat={totalFat}
-        totalProtein={totalProtein}
-      />
-      <Button
-        type="primary"
-        style={{ width: "100%", height: "50px", marginTop: "3%" }}
-        onClick={() => {
-          navigate("/foodDetailPage", {
-            state: { isAdd: true, foodInfo: {}, date: date, userID: userID },
-          });
+      <Skeleton
+        avatar
+        loading={isLoading}
+        paragraph={{ rows: 20 }}
+        style={{
+          marginLeft: "5%",
+          marginRight: "5%",
+          marginTop: "10%",
+          width: "90%",
         }}
+        active
       >
-        Add more food
-      </Button>
-      <Button
-        type="primary"
-        style={{ width: "100%", height: "50px", marginTop: "3%" }}
-        onClick={() => {
-          navigate("/foodCustomPage", {
-            state: { isAdd: true, foodInfo: {}, date: date, userID: userID },
-          });
-        }}
-      >
-        Add custom food
-      </Button>
+        <FoodInfoList foodInfo={foodData} date={date} userID={userID} />
+        <Divider> Calorie Data </Divider>
+        <CalorieInfoBlock totalCalorie={totalCalorie} />
+        <Divider> Nutrition Data </Divider>
+        <NutritionInfoBlock
+          totalCarbo={totalCarbo}
+          totalFat={totalFat}
+          totalProtein={totalProtein}
+        />
+        <Button
+          type="primary"
+          style={{ width: "100%", height: "50px", marginTop: "3%" }}
+          onClick={() => {
+            navigate("/foodDetailPage", {
+              state: { isAdd: true, foodInfo: {}, date: date, userID: userID },
+            });
+          }}
+        >
+          Add more food
+        </Button>
+        <Button
+          type="primary"
+          style={{ width: "100%", height: "50px", marginTop: "3%" }}
+          onClick={() => {
+            navigate("/foodCustomPage", {
+              state: { isAdd: true, foodInfo: {}, date: date, userID: userID },
+            });
+          }}
+        >
+          Add custom food
+        </Button>
+      </Skeleton>
     </div>
   );
 }
