@@ -108,7 +108,7 @@
             "unitWeight": null,
             "totalWeight": null
         }
-    ]
+    ],
 	
 	[
         "/getAdvice/<userId> "
@@ -123,7 +123,64 @@
     {
 		"advice":"abcdefgaaaaaaaaaaaaaaaaa"
 	}
+,
 
+[
+    "/recomandationFoods/<userId> "
+],
 
+["FRONT→END"],
+{
+    "date":"2022-04-29"
+},
+
+["END→FRONT"],
+[
+    {
+        "foodId": 13,
+        "foodName": "bilibili",
+        "comefrom": "hy@zhang.com",
+        "foodType": "fruit",
+        "protein": 1.0,
+        "fat": 23.0,
+        "carbohydrate": 6.0,
+        "energy": 80.0,
+        "sugar": 1.8,
+        "va": 0.0,
+        "vc": 200.0,
+        "unitWeight": null,
+        "totalWeight": 20.0
+    },
+    {
+        "foodId": 12,
+        "foodName": "bilibili",
+        "comefrom": "hy@zhang.com",
+        "foodType": "fruit",
+        "protein": 1.0,
+        "fat": 23.0,
+        "carbohydrate": 6.0,
+        "energy": 80.0,
+        "sugar": 1.8,
+        "va": 0.0,
+        "vc": 200.0,
+        "unitWeight": null,
+        "totalWeight": 20.0
+    },
+    {
+        "foodId": 2,
+        "foodName": "beef",
+        "comefrom": "webapi",
+        "foodType": "Canned Meat",
+        "protein": 20.0,
+        "fat": 5.88,
+        "carbohydrate": 0.0,
+        "energy": 129.0,
+        "sugar": 0.0,
+        "va": 0.0,
+        "vc": 0.0,
+        "unitWeight": null,
+        "totalWeight": null
+    }
+]
 
 ]
