@@ -1,4 +1,5 @@
 from math import remainder
+from tkinter import N
 from unittest import result
 from flask import Flask,make_response,json,render_template,request,redirect,url_for
 import json
@@ -11,7 +12,7 @@ from datetime import date
 import get_food_nutrient
 
 import flask_db_operate
-
+from fitness_tools.meals.meal_maker import MakeMeal
 # -------------------------API config----------------------
 # with open('apikey.txt', mode='r') as api:
 with open('back_end/apikey.txt', mode='r') as api:
@@ -84,10 +85,19 @@ def get_fooodIdandName():
     res = flask_db_operate.showTwoCol(tablefoodInfo, colName2, colName1)
     return res
     
-
-
 def get_user_info(userId,date):
     return flask_db_operate.findInTableWithTwoLimit(tableuserInfo, 'userId', userId, 'infoDate', date)
+
+def get_user_info1(userId,date):
+    #return flask_db_operate.findInTableWithTwoLimit(tableuserInfo, 'userId', userId, 'infoDate', date)
+    user_logs=get_user_logs(userId)
+    user_logs=json.loads(user_logs)
+    result=user_logs[-1]
+    for i in range(1,len(user_logs)):
+        if date <user_logs[i-1]['infoDate'] and date > user_logs[i]['infoDate']:
+            result= user_logs[i-1]
+    #result['infoDate']=datetime.strptime( result['infoDate'], '%Y-%m-%d')
+    return result
 
 def get_user_logs(userId):
     return flask_db_operate.findInTable(tableuserInfo, 'userId', userId)
@@ -142,17 +152,13 @@ def get_exercise_logs(userId,date):
 def update_user_info(userId,info):
     age=19
     info['userId']=userId
-    info['BMR']=cal_BMR(info['gender'],info['weight'],info['height'],age)
-    if info['mealPlan']=='buildMuscle':
-        info['BMR']*=1.2
-    if info['mealPlan']=='loseWeight':
-        info['BMR']*=0.8
+    info['BMR']=cal_info(info['weight'],info['height'],info['fatRate'],info['gender'],info['mealPlan'])['max_calories']
     info['fatRate'] # calculation
 
     info['infoDate']=info.pop('date')
     info['userName']=info.pop('fullName')
 
-    info['isVegan']=1 if info['isVegan']=='true' else 0
+    info['isVegan']=1 if info['isVegan'] is True else 0
 
     return flask_db_operate.insertintoTable(tableuserInfo, info)
 
@@ -216,6 +222,45 @@ def cal_BMR(gender,weight,height,age):
     else:
         return 655.1 + (9.6 * weight) + (1.8 * height) - (4.7 * age)
 
+def cal_info(weight,height,fat,gender,goal):
+    #calculate the BMI and Fat
+    h=height/100
+    over_fat=None
+    over_bmi=None
+    if gender.lower().startswith('m'):        
+        over_fat=True if fat>25 else over_fat        
+        over_fat=False if fat<15 else over_fat
+    else:    
+        over_fat=True if fat>30 else over_fat        
+        over_fat=False if fat<20 else over_fat
+    bmi=weight/(h*h)
+    over_bmi =True if bmi>18.5 else over_bmi   
+    over_bmi =False if bmi<=18.5 else over_bmi   
+    
+    #get the body type of user
+    bodr_type='mesomorph' 
+    if over_bmi is True and over_fat is True:
+        bodr_type='endomorph'
+    if over_fat is False:
+        bodr_type='mesomorph' 
+    if over_bmi is False and over_fat is True:
+        bodr_type='ectomorph'
+    
+    if goal=="buildMuscle":
+        goal="weight_gain"
+    elif goal=='keepHealth':
+        goal="maintenance"
+    elif goal=="loseWeight":
+        goal="weight_loss"
+    else:
+        goal=None
+    
+    weight=int(weight*2.2)
+    obj = MakeMeal(weight, goal=goal, activity_level='moderate',
+               body_type=bodr_type).daily_requirements()
+    obj['body_type']=bodr_type
+    return obj
+
 # ------------------------get food nutrient-------------------------------
 def call_food_API(foodName):
     foodInfoList = get_food_nutrient.call_API(foodName, API_KEY)
@@ -275,10 +320,17 @@ def give_recommandation(userId, remaincalorie):
 
 
 def give_advise(userId,date):
+    info=json.loads(get_user_logs(userId))[-1]
+    data=cal_info(info['weight'],info['height'],info['fatRate'],info['gender'],info['mealPlan'])    
+    body_advise={
+        'endomorph':"Your body is endomorph. You should lower your body fat percentage and maintain muscle. Endomorphs have a medium to large frame and tend to be very shapely.", 
+        'ectomorph':"Your body is ectomorph. You have a very perfect body shape, keep it!",
+        'mesomorph':"Your body is mesomorph. you have little mass (fat and muscle). You need to gain weight. "
+    }
     dietres = get_deit_logs(userId,date)
     if dietres == {"isNone":True}:
         return {
-		"advice":"No eating foods"
+		"advice":body_advise[data['body_type']]+"No eating foods. Advice will given after eating"
 	}
     carbohydrate = 0
     protein = 0
@@ -296,7 +348,7 @@ def give_advise(userId,date):
         'totalcalorie':calorie,
     }
     result={
-		"advice":"Coming soon"
+		"advice":body_advise[data['body_type']]+" Diet Analysis, Coming soon"
 	}
     return result
     

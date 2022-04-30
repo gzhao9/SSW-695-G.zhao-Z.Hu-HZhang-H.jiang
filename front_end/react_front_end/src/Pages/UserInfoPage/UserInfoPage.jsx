@@ -48,7 +48,7 @@ export default function UserInfoPage() {
     if (realUserInfo[0].isNone) {
       setUserData(lastInfo.data);
     } else {
-      setUserData(realUserInfo[realUserInfo.length - 1]);
+      setUserData(realUserInfo.data);
     }
     console.log(dietInfo.data, sportInfo.data);
     if (dietInfo.data.isNone) {

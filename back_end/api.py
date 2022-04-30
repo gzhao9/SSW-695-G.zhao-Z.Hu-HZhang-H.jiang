@@ -5,6 +5,7 @@ import json
 from functions import *
 from datetime import datetime
 
+
 app = Flask(__name__)
 #------------for test----------
 @app.route('/test/<username>', methods = ['GET','POST'])
@@ -49,6 +50,7 @@ def updateUserInfo(userId):
 def getUserInfo(userId):    
     data = json.loads(request.get_data())
     result=get_user_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    #result=get_user_info1(userId,data['date'])
     return json.dumps(result)
 
 #Get a list of all the history information records for a certain user
