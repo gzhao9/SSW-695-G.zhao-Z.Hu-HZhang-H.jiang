@@ -44,11 +44,11 @@ export default function UserInfoPage() {
       date: chosenDate,
     });
     setAdvice(adviceInfo.data.advice);
-    const realUserInfo = JSON.parse(userInfo.data);
-    if (realUserInfo[0].isNone) {
+    //const realUserInfo = JSON.parse(userInfo.data);
+    if (userInfo.isNone) {
       setUserData(lastInfo.data);
     } else {
-      setUserData(realUserInfo.data);
+      setUserData(userInfo.data);
     }
     console.log(dietInfo.data, sportInfo.data);
     if (dietInfo.data.isNone) {

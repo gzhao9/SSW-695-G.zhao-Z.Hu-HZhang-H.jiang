@@ -49,9 +49,9 @@ def updateUserInfo(userId):
 @app.route('/getUserInfo/<userId>', methods = ['GET','POST'])
 def getUserInfo(userId):    
     data = json.loads(request.get_data())
-    result=get_user_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
-    #result=get_user_info1(userId,data['date'])
-    return json.dumps(result)
+    #result=get_user_info(userId,datetime.strptime(data['date'], '%Y-%m-%d'))
+    result=get_user_info1(userId,data['date'])
+    return result
 
 #Get a list of all the history information records for a certain user
 @app.route('/getUserInfo_logs/<userId>', methods = ['GET','POST'])
@@ -62,8 +62,8 @@ def getUserInfo_logs(userId):
 #Get a list of all last information records for a certain user
 @app.route('/get_last_UserInfo/<userId>', methods = ['GET','POST'])
 def get_last_UserInfo(userId):    
-    result= json.loads(get_user_logs(userId))
-    return result[-1]
+    result= json.loads(get_user_logs(userId))[-1]
+    return result
 
 @app.route('/delete_user_info', methods = ['GET','POST'])
 def delete_user_infos():    

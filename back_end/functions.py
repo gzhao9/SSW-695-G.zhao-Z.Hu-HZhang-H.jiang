@@ -92,10 +92,11 @@ def get_user_info1(userId,date):
     #return flask_db_operate.findInTableWithTwoLimit(tableuserInfo, 'userId', userId, 'infoDate', date)
     user_logs=get_user_logs(userId)
     user_logs=json.loads(user_logs)
-    result=user_logs[-1]
     for i in range(1,len(user_logs)):
-        if date <user_logs[i-1]['infoDate'] and date > user_logs[i]['infoDate']:
+        if date >= user_logs[i-1]['infoDate'] and date < user_logs[i]['infoDate']:
             result= user_logs[i-1]
+    if date >= user_logs[-1]['infoDate']:
+        result=user_logs[-1]
     #result['infoDate']=datetime.strptime( result['infoDate'], '%Y-%m-%d')
     return result
 

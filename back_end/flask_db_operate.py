@@ -6,7 +6,7 @@ from datetime import date
 from datetime import datetime
 
 mydb = mysql.connector.connect(**config)
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(buffered=True)
 
 def to_json(data):
     for i in range(len(data)):
