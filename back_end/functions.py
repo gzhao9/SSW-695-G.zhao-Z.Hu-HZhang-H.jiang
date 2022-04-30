@@ -167,7 +167,7 @@ def update_food_info(userId,foodInfo):
     return foodId
 
 def update_meal_info(userId,mealdata):
-    if mealdata['manuallyInput']=='true':
+    if mealdata['manuallyInput'] is True:
         mealdata['foodInfo']['energy']=int(mealdata['foodInfo']['energy']*100/mealdata['unit'])
         mealdata['foodInfo']['carbohydrate']=int(mealdata['foodInfo']['carbohydrate']*100/mealdata['unit'])
         mealdata['foodInfo']['fat']=int(mealdata['foodInfo']['fat']*100/mealdata['unit'])
@@ -181,7 +181,6 @@ def update_meal_info(userId,mealdata):
     del mealdata['manuallyInput']
     mealdata['userId']=userId
     mealdata['mealDate']=mealdata.pop("Date")
-    mealdata['foodId'] = flask_db_operate.findId()[0]
     return flask_db_operate.insertintoTable(tablemealRecord, mealdata)
 
 def aaa(userId,info):
@@ -239,7 +238,7 @@ def food_search(userId,keyword):
         apifind=call_food_API(keyword)
         if apifind is not None:
             newID=update_food_info("webapi",apifind)
-            return [apifind]
+            return [get_food_info("webapi",newID)]
         else:
             return [{"isNone":True}]
         
@@ -290,5 +289,8 @@ def give_advise(userId,date):
         'totalfat':fat,
         'totalcalorie':calorie,
     }
-    return res
+    result={
+		"advice":"abcdefgaaaaaaaaaaaaaaaaa"
+	}
+    return result
     

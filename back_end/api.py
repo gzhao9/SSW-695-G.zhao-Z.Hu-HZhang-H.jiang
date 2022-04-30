@@ -147,7 +147,7 @@ def seraching_food_result(userId):
     return json.dumps(result)
 
 # -----------------------------give advise----------------------------------
-@app.route('/give_advise/<userId>', methods = ['GET','POST'])
+@app.route('/getAdvice/<userId>', methods = ['GET','POST'])
 def give_the_advise(userId):
     data = json.loads(request.get_data())
     result = give_advise(userId, data['date'])
