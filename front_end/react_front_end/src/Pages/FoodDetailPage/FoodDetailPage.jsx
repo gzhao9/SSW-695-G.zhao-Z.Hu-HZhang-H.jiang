@@ -15,7 +15,7 @@ import axios from "axios";
 
 export default function FoodDetailPage() {
   const { state } = useLocation();
-  const { date, userID, isAdd, foodInfo } = state;
+  const { date, userID, foodInfo } = state;
   const unitRef = useRef();
   const { Option } = Select;
   const [options, setOptions] = useState([]);
@@ -144,10 +144,10 @@ export default function FoodDetailPage() {
       return;
     }
     const { energy, carbohydrate, protein, fat } = foodData;
-    setCalorieVal(energy * value/100.0);
-    setCarboVal(carbohydrate * value/100.0);
-    setFatVal(fat * value/100.0);
-    setProteinVal(protein * value/100.0);
+    setCalorieVal((energy * value) / 100.0);
+    setCarboVal((carbohydrate * value) / 100.0);
+    setFatVal((fat * value) / 100.0);
+    setProteinVal((protein * value) / 100.0);
     setUnit(value);
   }
 
@@ -156,10 +156,10 @@ export default function FoodDetailPage() {
       return;
     }
     const { energy, carbohydrate, protein, fat } = foodData;
-    setCalorieVal(energy* unit/100.0);
-    setCarboVal(carbohydrate* unit/100.0);
-    setFatVal(fat* unit/100.0);
-    setProteinVal(protein* unit/100.0);
+    setCalorieVal((energy * unit) / 100.0);
+    setCarboVal((carbohydrate * unit) / 100.0);
+    setFatVal((fat * unit) / 100.0);
+    setProteinVal((protein * unit) / 100.0);
     setFoodName(foodData.foodName);
   }, [foodData]);
 
@@ -189,8 +189,12 @@ export default function FoodDetailPage() {
   }, [calorieVal, carboVal, fatVal, proteinVal, foodData]);
 
   useEffect(() => {
-    console.log(foodData);
-  }, [foodData]);
+    console.log(foodInfo);
+    if (!foodInfo) {
+      return;
+    }
+    setFoodData(foodInfo);
+  }, []);
 
   return (
     <div>
@@ -212,7 +216,7 @@ export default function FoodDetailPage() {
           style={{ marginLeft: "10%", marginRight: "10%" }}
           label="Food Name"
           name="foodName"
-          initialValue={state.foodInfo.food_name}
+          initialValue={foodInfo.foodName}
           rules={[
             {
               required: true,
@@ -308,7 +312,7 @@ export default function FoodDetailPage() {
               bottom: "20px",
             }}
           >
-            {state.isAdd ? "Add Food" : "Change Food Info"}
+            Add Food
           </Button>
         </Form.Item>
       </Form>

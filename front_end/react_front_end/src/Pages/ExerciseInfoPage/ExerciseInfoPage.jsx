@@ -50,6 +50,7 @@ export default function ExerciseInfoPage() {
         }}
         active
       >
+        <Divider>Exercise Information</Divider>
         <List
           bordered
           style={{ backgroundColor: "white" }}

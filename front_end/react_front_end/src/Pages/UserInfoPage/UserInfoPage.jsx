@@ -29,6 +29,8 @@ export default function UserInfoPage() {
   const [BMR, setBMR] = useState(0);
   const [advice, setAdvice] = useState("");
 
+  axios.defaults.timeout = 30000;
+
   async function getInfo() {
     const userInfo = await axios.post("/getUserInfo/" + userID, {
       date: chosenDate,
@@ -125,6 +127,10 @@ export default function UserInfoPage() {
               state={{ userID: userID, userData: userData }}
             >
               View My Info
+            </Link>
+            <br />
+            <Link style={{ color: "royalblue" }} to="/login">
+              Log out
             </Link>
           </Col>
         </Row>

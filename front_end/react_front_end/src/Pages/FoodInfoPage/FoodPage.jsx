@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Divider, Button, Skeleton } from "antd";
+import { Divider, Button, Skeleton, List } from "antd";
 import axios from "axios";
 import Header from "../../Components/Header/Header";
 import FoodInfoList from "../../Components/FoodInfoList/FoodInfoList";
+import RecommendedFoodInfo from "../../Components/FoodInfoList/RecommendedFoodInfo";
 import CalorieInfoBlock from "../../Components/FoodInfoList/CalorieInfoBlock";
 import NutritionInfoBlock from "../../Components/FoodInfoList/NutritionInfoBlock";
 import JsonText from "../../Example_JSON/FOOD_INFO_EXAMPLE.json";
@@ -19,10 +20,11 @@ export default function FoodPage() {
   const { userID, date } = state;
 
   const [foodData, setFoodData] = useState([]);
+  const [recommendFoodData, setRecommendFoodData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    axios
+  async function getInfo() {
+    await axios
       .post("/getDietLogs/" + userID, { date: date })
       .then(function (response) {
         if (response.data.isNone) {
@@ -30,9 +32,21 @@ export default function FoodPage() {
         } else {
           setFoodData(response.data);
         }
-        setIsLoading(false);
-        // console.log(response.data);
       });
+    await axios
+      .post("/recomandationFoods/" + userID, { date: date })
+      .then(function (response) {
+        if (response.data.isNone) {
+          setRecommendFoodData([]);
+        } else {
+          setRecommendFoodData(response.data);
+        }
+      });
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    getInfo();
   }, []);
 
   foodData.map((item) => {
@@ -58,6 +72,7 @@ export default function FoodPage() {
         }}
         active
       >
+        <Divider> Food Information </Divider>
         <FoodInfoList foodInfo={foodData} date={date} userID={userID} />
         <Divider> Calorie Data </Divider>
         <CalorieInfoBlock totalCalorie={totalCalorie} />
@@ -66,6 +81,21 @@ export default function FoodPage() {
           totalCarbo={totalCarbo}
           totalFat={totalFat}
           totalProtein={totalProtein}
+        />
+        <Divider> Recommended Food </Divider>
+        <List
+          bordered
+          style={{ backgroundColor: "white" }}
+          dataSource={recommendFoodData}
+          renderItem={(item) => (
+            <List.Item>
+              <RecommendedFoodInfo
+                foodInfo={item}
+                date={date}
+                userID={userID}
+              />
+            </List.Item>
+          )}
         />
         <Button
           type="primary"
