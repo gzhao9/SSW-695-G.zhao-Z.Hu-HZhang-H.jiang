@@ -27,6 +27,7 @@ export default function UserInfoPage() {
   const [userName, setUserName] = useState("");
   const [remainedCalorie, setRemainedCalorie] = useState(0);
   const [BMR, setBMR] = useState(0);
+  const [advice, setAdvice] = useState("");
 
   async function getInfo() {
     const userInfo = await axios.post("/getUserInfo/" + userID, {
@@ -39,6 +40,10 @@ export default function UserInfoPage() {
     const sportInfo = await axios.post("/getExerciseLogs/" + userID, {
       date: chosenDate,
     });
+    const adviceInfo = await axios.post("/getAdvice/" + userID, {
+      date: chosenDate,
+    });
+    setAdvice(adviceInfo.data.advice);
     const realUserInfo = JSON.parse(userInfo.data);
     if (realUserInfo[0].isNone) {
       setUserData(lastInfo.data);
@@ -163,9 +168,7 @@ export default function UserInfoPage() {
           }}
           headStyle={{ textAlign: "left" }}
         >
-          <Typography.Paragraph>
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          </Typography.Paragraph>
+          <Typography.Paragraph>{advice}</Typography.Paragraph>
         </Card>
         <Card
           title="My Meal"
