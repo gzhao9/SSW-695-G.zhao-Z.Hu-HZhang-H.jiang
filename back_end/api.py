@@ -155,6 +155,11 @@ def give_the_advise(userId):
     result = give_advise(userId, data['date'])
     return json.dumps(result)
 
+@app.route('/recomandationFoods/<userId>', methods = ['GET','POST'])
+def give_the_advise(userId):
+    result=food_search(userId,'b')
+    return json.dumps(result)
+
 
 
 if __name__ == "__main__":
