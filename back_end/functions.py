@@ -292,7 +292,7 @@ def give_advise(userId,date):
         'totalcalorie':calorie,
     }
     result={
-		"advice":"abcdefgaaaaaaaaaaaaaaaaa"
+		"advice":"Coming soon"
 	}
     return result
     
