@@ -27,7 +27,7 @@ export default function UserInfoPage() {
   const [userName, setUserName] = useState("");
   const [remainedCalorie, setRemainedCalorie] = useState(0);
   const [BMR, setBMR] = useState(0);
-  const [advice, setAdvice] = useState("");
+  const [advice, setAdvice] = useState([]);
 
   axios.defaults.timeout = 30000;
 
@@ -45,8 +45,9 @@ export default function UserInfoPage() {
     const adviceInfo = await axios.post("/getAdvice/" + userID, {
       date: chosenDate,
     });
-    setAdvice(adviceInfo.data.advice);
-    //const realUserInfo = JSON.parse(userInfo.data);
+    let adviceData = adviceInfo.data.advice;
+    // let adviceData = "aaaaaaa\naaaaaaa";
+    setAdvice(adviceData.split("\n"));
     if (userInfo.isNone) {
       setUserData(lastInfo.data);
     } else {
@@ -174,7 +175,10 @@ export default function UserInfoPage() {
           }}
           headStyle={{ textAlign: "left" }}
         >
-          <Typography.Paragraph>{advice}</Typography.Paragraph>
+          {advice.map((item) => {
+            return <Typography.Paragraph>{item}</Typography.Paragraph>;
+          })}
+          {/* <Typography.Paragraph>{advice}</Typography.Paragraph> */}
         </Card>
         <Card
           title="My Meal"
