@@ -156,7 +156,7 @@ def give_the_advise(userId):
     return json.dumps(result)
 
 @app.route('/recomandationFoods/<userId>', methods = ['GET','POST'])
-def give_the_advise(userId):
+def recomandationFoods(userId):
     result=food_search(userId,'b')
     return json.dumps(result)
 
