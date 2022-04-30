@@ -273,7 +273,9 @@ def give_recommandation(userId, remaincalorie):
 def give_advise(userId,date):
     dietres = get_deit_logs(userId,date)
     if dietres == {"isNone":True}:
-        return "You have ate nothing today! Enjoy your meal!"
+        return {
+		"advice":"No eating foods"
+	}
     carbohydrate = 0
     protein = 0
     fat = 0
