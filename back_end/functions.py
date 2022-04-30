@@ -143,6 +143,10 @@ def update_user_info(userId,info):
     age=19
     info['userId']=userId
     info['BMR']=cal_BMR(info['gender'],info['weight'],info['height'],age)
+    if info['mealPlan']=='buildMuscle':
+        info['BMR']*=1.2
+    if info['mealPlan']=='loseWeight':
+        info['BMR']*=0.8
     info['fatRate'] # calculation
 
     info['infoDate']=info.pop('date')
