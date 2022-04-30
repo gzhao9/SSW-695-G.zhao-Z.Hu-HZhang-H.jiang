@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Header from "../../Components/Header/Header";
 import ExerciseInfo from "../../Components/ExerciseInfoList/ExerciseInfo";
-import { List, Divider, Affix, Button } from "antd";
+import { List, Divider, Affix, Button, Skeleton } from "antd";
 import "../../UniversalStyle/UniversalStyle.css";
 
 export default function ExerciseInfoPage() {
@@ -11,6 +11,7 @@ export default function ExerciseInfoPage() {
   const { userID, date } = state;
   const [exerciseInfo, setExerciseInfo] = useState([]);
   const [totalCalorie, setTotalCalorie] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     axios
@@ -21,6 +22,7 @@ export default function ExerciseInfoPage() {
         } else {
           setExerciseInfo(response.data);
         }
+        setIsLoading(false);
       });
   }, []);
 
@@ -36,20 +38,31 @@ export default function ExerciseInfoPage() {
   return (
     <div className="backGround">
       <Header headerText="Exercise Information" />
-      <List
-        bordered
-        style={{ backgroundColor: "white" }}
-        dataSource={exerciseInfo}
-        renderItem={(item) => (
-          <List.Item>
-            <ExerciseInfo exerciseInfo={item} date={date} userID={userID} />
-          </List.Item>
-        )}
-      />
-      <Divider>Calorie Consumption</Divider>
-      <p className="infoNameText">Total Calorie:</p>
-      <p className="infoCalorieText">{totalCalorie} kcal</p>
-      <Affix offsetBottom={0}>
+      <Skeleton
+        avatar
+        loading={isLoading}
+        paragraph={{ rows: 20 }}
+        style={{
+          marginLeft: "5%",
+          marginRight: "5%",
+          marginTop: "10%",
+          width: "90%",
+        }}
+        active
+      >
+        <List
+          bordered
+          style={{ backgroundColor: "white" }}
+          dataSource={exerciseInfo}
+          renderItem={(item) => (
+            <List.Item>
+              <ExerciseInfo exerciseInfo={item} date={date} userID={userID} />
+            </List.Item>
+          )}
+        />
+        <Divider>Calorie Consumption</Divider>
+        <p className="infoNameText">Total Calorie:</p>
+        <p className="infoCalorieText">{totalCalorie} kcal</p>
         <Button
           type="primary"
           style={{ width: "100%", height: "50px" }}
@@ -66,7 +79,7 @@ export default function ExerciseInfoPage() {
         >
           Add more exercise
         </Button>
-      </Affix>
+      </Skeleton>
     </div>
   );
 }
