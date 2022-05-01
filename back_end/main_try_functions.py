@@ -22,5 +22,6 @@ print(info)
 #     }),
 # content_type='application/json',
 # )
-data = food_statistic()
+
+data = food_search1("root@root.com","")
 print(data)

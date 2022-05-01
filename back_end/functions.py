@@ -272,8 +272,10 @@ def call_food_API(foodName):
         return None
 
 def food_statistic():
+    col=["foodId","foodName","comefrom","foodType","protein","fat","carbohydrate","energy","sugar","va","vc","unitWeight","totalWeight"]
     fooddate = flask_db_operate.showTable(tablefoodInfo)
-    return fooddate
+    fooddate.reverse()
+    return [dict(zip(col,i)) for i in fooddate]
 
 
 
@@ -281,6 +283,20 @@ def food_statistic():
 
 def food_search(userId,keyword):
     
+    namelist=food_statistic()
+    result=[v for v in namelist if (keyword.lower() in v['foodName'].lower()) and (v['comefrom']==userId or v['comefrom']=='webapi')]
+    if len(result)>0:
+        return result
+    else:
+        apifind=call_food_API(keyword)
+        if apifind is not None:
+            newID=update_food_info("webapi",apifind)
+            return [get_food_info("webapi",newID)]
+        else:
+            return [{"isNone":True}]
+        
+def food_search1(userId,keyword):
+
     namelist=get_fooodIdandName()
     namelist.reverse()
     result=list()
@@ -301,8 +317,6 @@ def food_search(userId,keyword):
             return [get_food_info("webapi",newID)]
         else:
             return [{"isNone":True}]
-        
-
 # ------------------------format food info with detail----------------------
 def format_food_detail(foodInfoList,foodName):
     fooddatalist = list()
@@ -357,11 +371,11 @@ def give_advise(userId,date):
     dietres = get_deit_logs(userId,date)
     foodAdvise="No eating foods. Advice will given after eating."
     #if not eat eveythings, recomend the first 3 foods added
-    if dietres == {"isNone":True}:
-        foor_Rec=food_search(userId,'')[:5]
+    foor_Rec=food_statistic()
+    if dietres == {"isNone":True}:        
         return {
             "Advise":{"advice":body_advise+"\n"+foodAdvise},
-            "recomandationFoods":foor_Rec
+            "recomandationFoods":[i for i in foor_Rec if i["comefrom"]=='webapi'][:5]
 	}
 
     #calcuate the dara of foods
@@ -420,11 +434,29 @@ def give_advise(userId,date):
                     if k=='over_calorie':
                         continue
                     foodAdvise+=f"\nYour {k[5:]} intake is not enough, you at least get {-1*v} grams of {k[5:]} from food"
-    #======================
-    foor_Rec=food_search(userId,'')[:3]
+    #======================food recomendation=====================
+
+    def rems(limitation,food):
+        return (limitation['over_calorie']<0) and (limitation ['over_protein']>=0 and food['protein']<5) and (limitation ['over_carbohydrate']>=0 and food['carbohydrate']<5) and(limitation ['over_fat']>=0 and food['fat']<5) and (food["comefrom"]=='webapi')               
+    foor_Recon=list()
+    for v in foor_Rec:
+        if rems(limitation,v):
+            foor_Recon.append(v)
+    if len(foor_Recon)==0:
+        foor_Recon=foor_Rec[0:1]
+    #========================diet rocord============    
+    Summary=""
+    if (protein+fat+carbohydrate)!=0:
+        ratos=dict()
+        ratos['protein']=round(protein/(protein*100+fat+carbohydrate), 2)  
+        ratos['carbohydrate']=round(carbohydrate*100/(protein+fat+carbohydrate), 2)  
+        ratos['fat']=round(fat*100/(protein+fat+carbohydrate), 2)  
+        Summary=f"Today's ratio.\nprotein:{ratos['protein']}% \n fat:{ratos['fat']}% \ncarbohydrate:{ratos['carbohydrate']}%\n"
+        
+
     result={
-            "Advise":{"advice":body_advise+"\n"+foodAdvise},
-            "recomandationFoods":foor_Rec
+            "Advise":{"advice":body_advise+"\n\n"+foodAdvise+"\n\n"+Summary},
+            "recomandationFoods":foor_Recon
 	}
     return result
     
