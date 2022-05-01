@@ -273,6 +273,7 @@ def call_food_API(foodName):
 
 
 def food_search(userId,keyword):
+    
     namelist=get_fooodIdandName()
     namelist.reverse()
     result=list()
@@ -366,8 +367,7 @@ def give_advise(userId,date):
         protein += i['protein']
         fat += i['fat']
         calorie += i['calorie_cost']
-    limitation =dict()  
-    {
+    limitation ={
         'over_carbohydrate':0,
         'over_protein':0,
         'over_fat':0,
@@ -406,7 +406,7 @@ def give_advise(userId,date):
                     continue
                 foodAdvise+=f"\n {k[5:]} \t Remaining:{-1*v} grams"
         else:
-            for k,v in limitation:
+            for k,v in limitation.items():
                 if v>=0:                    
                     foodAdvise+=f"\nYou are over eat the {k[5:]} by {v} grams, Avoid foods containing {k[5:]}"
                 else:
