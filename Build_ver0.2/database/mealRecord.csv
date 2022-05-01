@@ -1,0 +1,6 @@
+mealRecordId,userId,mealDate,foodName,mealType
+1,hy@zhang.com,2022-04-01,"cheddar cheese",L
+2,hy@zhang.com,2022-04-01,"cheddar cheese",L
+3,hy@zhang.com,2022-04-01,Apple,B
+4,hy@zhang.com,2022-04-01,Milk,B
+5,hy@zhang.com,2022-04-01,steak,D

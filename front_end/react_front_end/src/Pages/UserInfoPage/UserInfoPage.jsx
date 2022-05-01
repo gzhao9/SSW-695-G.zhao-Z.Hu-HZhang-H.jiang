@@ -161,7 +161,7 @@ export default function UserInfoPage() {
           {remainedCalorie} kcal
         </Card>
         <Card
-          title="Your Advice"
+          title="Advice"
           type="inner"
           style={{
             width: "90%",
@@ -175,8 +175,10 @@ export default function UserInfoPage() {
           }}
           headStyle={{ textAlign: "left" }}
         >
-          {advice.map((item) => {
-            return <Typography.Paragraph>{item}</Typography.Paragraph>;
+          {advice.map((item, key) => {
+            return (
+              <Typography.Paragraph key={key}>{item}</Typography.Paragraph>
+            );
           })}
           {/* <Typography.Paragraph>{advice}</Typography.Paragraph> */}
         </Card>
