@@ -153,11 +153,14 @@ def seraching_food_result(userId):
 def give_the_advise(userId):
     data = json.loads(request.get_data())
     result = give_advise(userId, data['date'])
+    result=result['Advise']
     return json.dumps(result)
 
 @app.route('/recomandationFoods/<userId>', methods = ['GET','POST'])
 def recomandationFoods(userId):
-    result=food_search(userId,'b')
+    data = json.loads(request.get_data())
+    result=give_advise(userId, data['date'])
+    result=result['recomandationFoods']
     return json.dumps(result)
 
 

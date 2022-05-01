@@ -281,6 +281,8 @@ def food_search(userId,keyword):
             foodinfo=get_food_info("webapi",info[1])
             if foodinfo['comefrom']==userId or foodinfo['comefrom']=='webapi':
                 result.append(foodinfo)
+                if len(result)>6:
+                    return result
     if len(result)>0:
         return result
 
@@ -321,18 +323,40 @@ def give_recommandation(userId, remaincalorie):
 
 
 def give_advise(userId,date):
+    """
+
+    the advise includr 3 parts:body advise, meal advise, food recommandation
+    At the homepage, the body advise and meal advise will shown as text in
+    At the mealrecords page, the food recommandation will shown as the choice.
+
+    """
+    # ------------------advise about body------------------------
+    #read the user body info
     info=json.loads(get_user_logs(userId))[-1]
-    data=cal_info(info['weight'],info['height'],info['fatRate'],info['gender'],info['mealPlan'])    
+    body_data=cal_info(info['weight'],info['height'],info['fatRate'],info['gender'],info['mealPlan'])
+    #get the body type and give the adivse.
     body_advise={
         'endomorph':"Your body is endomorph. You should lower your body fat percentage and maintain muscle. Endomorphs have a medium to large frame and tend to be very shapely.", 
         'ectomorph':"Your body is ectomorph. You have a very perfect body shape, keep it!",
         'mesomorph':"Your body is mesomorph. you have little mass (fat and muscle). You need to gain weight. "
     }
+
+    body_advise=body_advise[body_data['body_type']]
+    #===================================================================================
+
+    #===================diet advise===============================================
+    #get the food logs set defeaut advise is remaind to eat somethings
     dietres = get_deit_logs(userId,date)
+    foodAdvise="No eating foods. Advice will given after eating."
+    #if not eat eveythings, recomend the first 3 foods added
     if dietres == {"isNone":True}:
+        foor_Rec=food_search(userId,'')[:5]
         return {
-		"advice":body_advise[data['body_type']]+"No eating foods. Advice will given after eating"
+            "Advise":{"advice":body_advise+"\n"+foodAdvise},
+            "recomandationFoods":foor_Rec
 	}
+
+    #calcuate the dara of foods
     carbohydrate = 0
     protein = 0
     fat = 0
@@ -342,14 +366,58 @@ def give_advise(userId,date):
         protein += i['protein']
         fat += i['fat']
         calorie += i['calorie_cost']
-    res = {
-        'totalcarbohydrate':carbohydrate,
-        'totalprotein':protein,
-        'totalfat':fat,
-        'totalcalorie':calorie,
+    limitation =dict()  
+    {
+        'over_carbohydrate':0,
+        'over_protein':0,
+        'over_fat':0,
+        'over_calorie':0,
     }
+    # cal weather over eat.
+    if carbohydrate>body_data['max_carbs']:
+        limitation['over_carbohydrate']=carbohydrate-body_data['max_carbs']
+    elif carbohydrate<body_data['min_carbs']:
+        limitation['over_carbohydrate']=carbohydrate-body_data['min_carbs']
+
+    if fat>body_data['max_fat']:
+        limitation['over_fat']=fat-body_data['max_fat']
+    elif fat<body_data['min_fat']:
+        limitation['over_fat']=fat-body_data['min_fat']
+
+    if protein>body_data['max_protein']:
+        limitation['over_protein']=protein-body_data['max_protein']
+    elif protein<body_data['min_protein']:
+        limitation['over_protein']=protein-body_data['min_protein']
+
+    if calorie>body_data['max_calories']:
+        limitation['over_calorie']=calorie-body_data['max_calories']
+    elif calorie<body_data['min_calories']:
+        limitation['over_calorie']=calorie-body_data['min_calories']
+
+
+    # give the advise of differen item of over eat.
+    if limitation['over_calorie']>=0:
+        foodAdvise="You have enough calorie intake for today."
+    else:
+        if (limitation['over_carbohydrate']>=0 and limitation['over_fat']>=0 and limitation['over_protein']>=0) or (limitation['over_carbohydrate']<0 and limitation['over_fat']<0 and limitation['over_protein']<0):
+            foodAdvise=f"\nYou can eat at whatever you want"
+            for k,v in limitation.items():
+                if k=='over_calorie':
+                    continue
+                foodAdvise+=f"\n {k[5:]} \t Remaining:{-1*v} grams"
+        else:
+            for k,v in limitation:
+                if v>=0:                    
+                    foodAdvise+=f"\nYou are over eat the {k[5:]} by {v} grams, Avoid foods containing {k[5:]}"
+                else:
+                    if k=='over_calorie':
+                        continue
+                    foodAdvise+=f"\nYour {k[5:]} intake is not enough, you at least get {-1*v} grams of {k[5:]} from food"
+    #======================
+    foor_Rec=food_search(userId,'')[:3]
     result={
-		"advice":body_advise[data['body_type']]+" Diet Analysis, Coming soon"
+            "Advise":{"advice":body_advise+"\n"+foodAdvise},
+            "recomandationFoods":foor_Rec
 	}
     return result
     
