@@ -4,14 +4,14 @@ from datetime import datetime
 from api import  app
 
 
-response = app.test_client().post(
-'/serach_food_result/hy@zhang.com', 
-data=json.dumps({
+# response = app.test_client().post(
+# '/serach_food_result/hy@zhang.com', 
+# data=json.dumps({
      
-        "keywords":"b"
+#         "keywords":"b"
     
-}),
-content_type='application/json',
-)
-data = response.get_data(as_text=True)
-print(json.loads(data))
+# }),
+# content_type='application/json',
+# )
+data = response.food_statistic(as_text=True)
+print(data)

@@ -15,12 +15,12 @@ print(info)
 
 {'min_calories': 600, 'max_calories': 700, 'min_fat': 20.0, 'max_fat': 23.0, 'min_protein': 45.0, 'max_protein': 52.0, 'min_carbs': 60.0, 'max_carbs': 70.0, 'body_type': 'mesomorph'}
 """
-response = app.test_client().post(
-"/recomandationFoods/root@root.com", 
-data=json.dumps({
-        "date":"2022-04-01"
-    }),
-content_type='application/json',
-)
-data = response.get_data(as_text=True)
-print(json.loads(data)[:10])
+# response = app.test_client().post(
+# "/recomandationFoods/root@root.com", 
+# data=json.dumps({
+#         "date":"2022-04-01"
+#     }),
+# content_type='application/json',
+# )
+data = food_statistic()
+print(data)

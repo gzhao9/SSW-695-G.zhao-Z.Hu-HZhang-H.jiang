@@ -271,6 +271,13 @@ def call_food_API(foodName):
     else:
         return None
 
+def food_statistic():
+    fooddate = flask_db_operate.showTable(tablefoodInfo)
+    return fooddate
+
+
+
+
 
 def food_search(userId,keyword):
     
