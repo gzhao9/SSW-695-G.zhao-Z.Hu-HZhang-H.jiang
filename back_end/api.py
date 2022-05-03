@@ -8,6 +8,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 #------------for test----------
+
 @app.route('/test/<username>', methods = ['GET','POST'])
 def test(username):
     data=get_user_logs(username)
