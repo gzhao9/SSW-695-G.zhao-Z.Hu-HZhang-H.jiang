@@ -14,8 +14,8 @@ import get_food_nutrient
 import flask_db_operate
 from fitness_tools.meals.meal_maker import MakeMeal
 # -------------------------API config----------------------
-# with open('apikey.txt', mode='r') as api:
 with open('apikey.txt', mode='r') as api:
+# with open('back_end/apikey.txt', mode='r') as api:
     API_KEY = api.read()
 
 

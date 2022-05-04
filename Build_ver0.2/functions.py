@@ -14,8 +14,8 @@ import get_food_nutrient
 import flask_db_operate
 from fitness_tools.meals.meal_maker import MakeMeal
 # -------------------------API config----------------------
-# with open('apikey.txt', mode='r') as api:
 with open('apikey.txt', mode='r') as api:
+# with open('back_end/apikey.txt', mode='r') as api:
     API_KEY = api.read()
 
 
@@ -125,7 +125,8 @@ def get_deit_logs(userId,date):
             return i
         foodinfo=get_food_info('webapi',i['foodId'])
         tem={
-		'food_name': foodinfo['foodName'],
+		'food_name': foodinfo['foodType'],
+        # 'Description': foodinfo['foodType'],
 		'type': i['mealType'],
 		'weight': i['unit'],
 		'carbohydrate': int(foodinfo['carbohydrate']*i['unit']/100),
@@ -325,6 +326,7 @@ def format_food_detail(foodInfoList,foodName):
         foodCategory = foodInfoList['foods'][i]['foodCategory']
         foodDetailInfo = foodInfoList['foods'][i]['foodNutrients']
         # foodName = foodInfoList['foods'][i]['lowercaseDescription']
+        foodName = foodInfoList['foods'][i]['description']
         fooddata = get_food_nutrient.format_food(foodName, foodCategory, foodDetailInfo)
         fooddatalist.append(fooddata)
         # break after 10 result

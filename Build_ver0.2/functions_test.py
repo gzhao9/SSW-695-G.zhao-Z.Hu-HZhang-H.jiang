@@ -5,6 +5,8 @@ import unittest
 
 
 class test_list_copy(unittest.TestCase):
+    
+
     info={
             
         'date': datetime.now(),
@@ -80,9 +82,10 @@ class test_list_copy(unittest.TestCase):
 
     def test_get_deit_logs(self):
         # userId = self.info['userId']
-        userId = 'GW'
+        userId = 'r@r.co'
         # mealdate = "2022-04-29"
-        mealdate = datetime.date(datetime.today())
+        # mealdate = datetime.date(datetime.today())
+        mealdate = "2022-05-01"
         data = get_deit_logs(userId, mealdate)
         print(data)
         self.assertTrue(len(data)>0)
@@ -111,6 +114,11 @@ class test_list_copy(unittest.TestCase):
     #     userId = 'GW'
     #     data = update_food_info(us erId,self.foodInfo)
     #     self.assertTrue(data == 9)
+
+    def test_call_food_api(self):
+        foodName = 'chik'
+        data = call_food_API(foodName)
+        print(data)
 
     # def test_update_meal_info(self):
     #     userId = self.mealdata['userId']
@@ -143,10 +151,10 @@ class test_list_copy(unittest.TestCase):
         data = get_exercise_logs(userId, date)
         print(data)
     
-    def test_delete_sport_info(self):
-        id = 3
-        data = delete_sport_info(id)
-        self.assertTrue(data)
+    # def test_delete_sport_info(self):
+    #     id = 3
+    #     data = delete_sport_info(id)
+    #     self.assertTrue(data)
     # def test_update_exercise_info(self):
     #     userId = 'GW'
     #     data = update_exercise_info(userId, self.exerciseInfo)
