@@ -5,7 +5,7 @@ from flask import Flask,make_response,json,render_template,request,redirect,url_
 import json
 #import csv
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from datetime import date
 
 
@@ -203,7 +203,7 @@ def aaa(userId,info):
 def update_exercise_info(userId,info):
     info['userId'] = userId
     info['durition'] = info.pop('minute')
-    info['sportDate'] = datetime.now()
+    info['sportDate'] = datetime.now()-timedelta(hours=12)
     return flask_db_operate.insertintoTable(tablesportRecord, info)
 
 
