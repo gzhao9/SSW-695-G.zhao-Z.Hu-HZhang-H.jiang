@@ -443,7 +443,7 @@ def give_advise(userId,date):
         if rems(limitation,v):
             foor_Recon.append(v)
     if len(foor_Recon)==0:
-        foor_Recon=foor_Rec[0:1]
+        foor_Recon=[i for i in foor_Rec if i["comefrom"]=='webapi'][:5]
     #========================diet rocord============    
     Summary=""
     if (protein+fat+carbohydrate)!=0:
