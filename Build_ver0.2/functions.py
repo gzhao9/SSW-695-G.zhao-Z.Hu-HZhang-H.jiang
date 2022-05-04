@@ -13,6 +13,7 @@ import get_food_nutrient
 
 import flask_db_operate
 from fitness_tools.meals.meal_maker import MakeMeal
+import random
 # -------------------------API config----------------------
 with open('apikey.txt', mode='r') as api:
 # with open('back_end/apikey.txt', mode='r') as api:
@@ -268,7 +269,7 @@ def call_food_API(foodName):
     foodInfoList = get_food_nutrient.call_API(foodName, API_KEY)
     foodFormatList = format_food_detail(foodInfoList,foodName)
     if len(foodFormatList)>0:
-        return foodFormatList[0]
+        return foodFormatList
     else:
         return None
 
@@ -287,12 +288,16 @@ def food_search(userId,keyword):
     namelist=food_statistic()
     result=[v for v in namelist if (keyword.lower() in v['foodName'].lower()) and (v['comefrom']==userId or v['comefrom']=='webapi')]
     if len(result)>0:
+    # if False:
         return result
     else:
         apifind=call_food_API(keyword)
         if apifind is not None:
-            newID=update_food_info("webapi",apifind)
-            return [get_food_info("webapi",newID)]
+            food_list=list()
+            for item in apifind:
+                newID=update_food_info("webapi",item)
+                food_list.append(get_food_info("webapi",newID))
+            return food_list
         else:
             return [{"isNone":True}]
         
@@ -326,11 +331,14 @@ def format_food_detail(foodInfoList,foodName):
         foodCategory = foodInfoList['foods'][i]['foodCategory']
         foodDetailInfo = foodInfoList['foods'][i]['foodNutrients']
         # foodName = foodInfoList['foods'][i]['lowercaseDescription']
-        foodName = foodInfoList['foods'][i]['description']
-        fooddata = get_food_nutrient.format_food(foodName, foodCategory, foodDetailInfo)
+        if i>0:
+            if foodInfoList['foods'][i-1]['description']==foodInfoList['foods'][i]['description']:
+                continue
+        foodName1 =foodInfoList['foods'][i]['description']
+        fooddata = get_food_nutrient.format_food(foodName1, foodCategory, foodDetailInfo)
         fooddatalist.append(fooddata)
         # break after 10 result
-        if i <= 10:
+        if i > 5:
             break
     
     return fooddatalist
@@ -354,6 +362,7 @@ def give_advise(userId,date):
     At the mealrecords page, the food recommandation will shown as the choice.
 
     """
+    random.seed(datetime.now())
     # ------------------advise about body------------------------
     #read the user body info
     info=json.loads(get_user_logs(userId))[-1]
@@ -377,7 +386,7 @@ def give_advise(userId,date):
     if dietres == {"isNone":True}:        
         return {
             "Advise":{"advice":body_advise+"\n"+foodAdvise},
-            "recomandationFoods":[i for i in foor_Rec if i["comefrom"]=='webapi'][:5]
+            "recomandationFoods":[ foor_Rec[i] for i in random.sample(range(len(foor_Rec)),7) if foor_Rec[i]["comefrom"]=='webapi']
 	}
 
     #calcuate the dara of foods
@@ -441,11 +450,11 @@ def give_advise(userId,date):
     def rems(limitation,food):
         return (limitation['over_calorie']<0) and (limitation ['over_protein']>=0 and food['protein']<5) and (limitation ['over_carbohydrate']>=0 and food['carbohydrate']<5) and(limitation ['over_fat']>=0 and food['fat']<5) and (food["comefrom"]=='webapi')               
     foor_Recon=list()
-    for v in foor_Rec:
-        if rems(limitation,v):
-            foor_Recon.append(v)
+    for v in random.sample(range(len(foor_Rec)),7):
+        if rems(limitation,foor_Rec[v]):
+            foor_Recon.append(foor_Rec[v])
     if len(foor_Recon)==0:
-        foor_Recon=[i for i in foor_Rec if i["comefrom"]=='webapi'][:5]
+        foor_Recon=[ foor_Rec[i] for i in random.sample(range(len(foor_Rec)),7) if foor_Rec[i]["comefrom"]=='webapi']
     #========================diet rocord============    
     Summary=""
     if (protein+fat+carbohydrate)!=0:

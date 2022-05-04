@@ -116,7 +116,7 @@ class test_list_copy(unittest.TestCase):
     #     self.assertTrue(data == 9)
 
     def test_call_food_api(self):
-        foodName = 'chik'
+        foodName = 'beef'
         data = call_food_API(foodName)
         print(data)
 

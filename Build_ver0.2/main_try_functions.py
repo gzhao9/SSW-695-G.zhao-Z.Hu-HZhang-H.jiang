@@ -22,6 +22,15 @@ print(info)
 #     }),
 # content_type='application/json',
 # )
+rwa='Noddles,Dumpling,Pizza,Hambuger,Chicken feet,Chicken ,Chicken wing,Chicken breast,Turkey,French fries,Tofu,Yogurt,Milk,Reduce fat Milk,Sweet potato,Sweet potato leaves,Chocolate,Coffe,Ice cream,Peanuts,Peanut oil,Peanuts sauce,Corn,Corn oil,Pineapple,Watermelon,Carrots,Cucumber,Pumkin'
+rwa=rwa.split(',')
+for foodname in rwa:
+    b=datetime.now()
+    print(foodname)
+    data = food_search("root@root.com",foodname)
 
-data = food_search1("root@root.com","")
+    data=food_search("root@root.com",'Duck')
+    l=datetime.now()
+    print(l-b)
+
 print(data)
