@@ -459,7 +459,7 @@ def give_advise(userId,date):
     Summary=""
     if (protein+fat+carbohydrate)!=0:
         ratos=dict()
-        ratos['protein']=round(protein/(protein*100+fat+carbohydrate), 2)  
+        ratos['protein']=round(protein*100/(protein+fat+carbohydrate), 2)  
         ratos['carbohydrate']=round(carbohydrate*100/(protein+fat+carbohydrate), 2)  
         ratos['fat']=round(fat*100/(protein+fat+carbohydrate), 2)  
         Summary=f"Today's ratio.\nprotein:{ratos['protein']}% \n fat:{ratos['fat']}% \ncarbohydrate:{ratos['carbohydrate']}%\n"
