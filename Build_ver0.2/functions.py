@@ -109,10 +109,11 @@ def get_food_info(comefrom,foodId):
         foodId=int(foodId)
     except:
         pass
-    if comefrom == 'webapi':
-        return json.loads(flask_db_operate.findInTable(tablefoodInfo, 'foodId', foodId))[0]
-    else:
-        return json.loads(flask_db_operate.findInTableWithTwoLimit(tablefoodInfo, 'comefrom', comefrom, 'foodId', foodId))[0]
+    result=None
+    result= json.loads(flask_db_operate.findInTableWithTwoLimit(tablefoodInfo, 'comefrom', comefrom, 'foodId', foodId))[0]
+    if result=={"isNone":True}:       
+        result=json.loads(flask_db_operate.findInTable(tablefoodInfo, 'foodId', foodId))[0]
+    return result
 
 def get_exercise_info(sportId):
     return flask_db_operate.findInTable(tablesportInfo, 'sportId', sportId)
@@ -124,9 +125,9 @@ def get_deit_logs(userId,date):
     for i in data:
         if i=={"isNone":True}:
             return i
-        foodinfo=get_food_info('webapi',i['foodId'])
+        foodinfo=get_food_info(userId,i['foodId'])
         tem={
-		'food_name': foodinfo['foodType'],
+		'food_name': foodinfo['foodName'],
         # 'Description': foodinfo['foodType'],
 		'type': i['mealType'],
 		'weight': i['unit'],
@@ -370,8 +371,8 @@ def give_advise(userId,date):
     #get the body type and give the adivse.
     body_advise={
         'endomorph':"Your body is endomorph. You should lower your body fat percentage and maintain muscle. Endomorphs have a medium to large frame and tend to be very shapely.", 
-        'ectomorph':"Your body is ectomorph. You have a very perfect body shape, keep it!",
-        'mesomorph':"Your body is mesomorph. you have little mass (fat and muscle). You need to gain weight. "
+        'ectomorph':"Your body is ectomorph. you have little mass (fat and muscle). You need to gain weight.",
+        'mesomorph':"Your body is mesomorph.  You have a very perfect body shape, keep it!"
     }
 
     body_advise=body_advise[body_data['body_type']]
@@ -385,7 +386,7 @@ def give_advise(userId,date):
     foor_Rec=food_statistic()
     if dietres == {"isNone":True}:        
         return {
-            "Advise":{"advice":body_advise+"\n"+foodAdvise},
+            "Advise":{"advice":body_advise+"\n---------\n"+foodAdvise},
             "recomandationFoods":[ foor_Rec[i] for i in random.sample(range(len(foor_Rec)),7) if foor_Rec[i]["comefrom"]=='webapi']
 	}
 
@@ -429,7 +430,7 @@ def give_advise(userId,date):
 
     # give the advise of differen item of over eat.
     if limitation['over_calorie']>=0:
-        foodAdvise="You have enough calorie intake for today."
+        foodAdvise="You have enough calorie intake for today.Even if you still have calories left, it is not recommended to continue the diet for health reasons."
     else:
         if (limitation['over_carbohydrate']>=0 and limitation['over_fat']>=0 and limitation['over_protein']>=0) or (limitation['over_carbohydrate']<0 and limitation['over_fat']<0 and limitation['over_protein']<0):
             foodAdvise=f"\nYou can eat at whatever you want"
@@ -466,7 +467,7 @@ def give_advise(userId,date):
         
 
     result={
-            "Advise":{"advice":body_advise+"\n\n"+foodAdvise+"\n\n"+Summary},
+            "Advise":{"advice":body_advise+"\n---------\n"+foodAdvise+"\n---------\n"+Summary},
             "recomandationFoods":foor_Recon
 	}
     return result
