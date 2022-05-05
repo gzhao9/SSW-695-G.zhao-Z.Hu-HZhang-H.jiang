@@ -238,16 +238,14 @@ def cal_info(weight,height,fat,gender,goal):
         over_fat=True if fat>30 else over_fat        
         over_fat=False if fat<20 else over_fat
     bmi=weight/(h*h)
-    over_bmi =True if bmi>18.5 else over_bmi   
+    over_bmi =True if bmi>25 else over_bmi   
     over_bmi =False if bmi<=18.5 else over_bmi   
     
     #get the body type of user
     bodr_type='mesomorph' 
     if over_bmi is True and over_fat is True:
         bodr_type='endomorph'
-    if over_fat is False:
-        bodr_type='mesomorph' 
-    if over_bmi is False and over_fat is True:
+    if over_bmi is False:
         bodr_type='ectomorph'
     
     if goal=="buildMuscle":
